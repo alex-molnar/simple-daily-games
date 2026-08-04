@@ -1,0 +1,70 @@
+
+#guesses-container {
+    width: 100%;
+    height: 80%;
+}
+
+#input-container {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2vw;
+    padding: 0 2vw;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#header-container {
+    width: 100%;
+    height: 18vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    height: 18vw;
+    width: 18vw;
+    font-size: 2.5vw;
+}
+
+.guess-circle {
+    width: 18vw;
+    height: 18vw;
+    margin: 0 1vw;
+    font-size: 2.5vw;
+}
+
+.guess-row {
+    width: 100vw;
+    margin-top: 16px;
+}
+
+.guess-header {
+    width: 100vw;
+    font-size: 2.5vw;
+}
+
+#submit-button {
+    height: 70%;
+    width: 22%;
+    flex-shrink: 0;
+    font-size: 3.5vw;
+}
+
+#hint-button {
+    height: 70%;
+    width: calc(0.7 * 10vh);
+    flex-shrink: 0;
+    font-size: 5vw;
+}
+
+#guess-input {
+    height: 70%;
+    flex: 1;
+    min-width: 0;
+    font-size: 4vw;
+}
