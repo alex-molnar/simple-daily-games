@@ -1,0 +1,93 @@
+name: Build and Deploy FlagScale Applications
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'flag-games/**'
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME_GRAYSCALE: kingbrady/grayscale
+  IMAGE_NAME_INVERTEDLE: kingbrady/invertedle
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Grayscale
+        uses: docker/build-push-action@v6
+        with:
+          context: flag-games
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME_GRAYSCALE }}:${{ steps.version.outputs.VERSION }}
+            ${{ env.IMAGE_NAME_GRAYSCALE }}:latest
+          build-args: |
+            FLAVOUR=grayscale
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Update grayscale deployment image tag
+        run: |
+          sed -i "s|image: kingbrady/grayscale:.*|image: kingbrady/grayscale:${{ steps.version.outputs.VERSION }}|" kube/grayscale/deployment.yaml
+
+      - name: Build and push Invertedle
+        uses: docker/build-push-action@v6
+        with:
+          context: flag-games
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME_INVERTEDLE }}:${{ steps.version.outputs.VERSION }}
+            ${{ env.IMAGE_NAME_INVERTEDLE }}:latest
+          build-args: |
+            FLAVOUR=invertedle
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Update invertedle deployment image tag
+        run: |
+          sed -i "s|image: kingbrady/invertedle:.*|image: kingbrady/invertedle:${{ steps.version.outputs.VERSION }}|" kube/invertedle/deployment.yaml
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f kube/grayscale/deployment.yaml
+          kubectl rollout status deployment/grayscale -n simple-daily-games --timeout=120s
+          kubectl apply -f kube/invertedle/deployment.yaml
+          kubectl rollout status deployment/invertedle -n simple-daily-games --timeout=120s
+
+      - name: Cleanup kubeconfig
+        if: always()
+        run: rm -f ~/.kube/config
