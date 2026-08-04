@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: simple-daily-games
+    app.kubernetes.io/name: simple-daily-games
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: simple-daily-games
+  namespace: simple-daily-games
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - countryle.kak.im
+      secretName: countryle-tls
+    - hosts:
+        - capitale.kak.im
+      secretName: capitale-tls
+    - hosts:
+        - grayscale.kak.im
+      secretName: grayscale-tls
+    - hosts:
+        - invertedle.kak.im
+      secretName: invertedle-tls
+  rules:
+    - host: countryle.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: countryle
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: capitale.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: capitale
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: grayscale.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: grayscale
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: invertedle.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: invertedle
+              port:
+                number: 80
+          path: /
+          pathType: Prefix

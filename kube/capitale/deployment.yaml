@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capitale
+  namespace: simple-daily-games
+  labels:
+    app: capitale
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capitale
+  template:
+    metadata:
+      labels:
+        app: capitale
+    spec:
+      containers:
+      - name: capitale
+        image: kingbrady/capitale:3.0.0
+        ports:
+        - containerPort: 80

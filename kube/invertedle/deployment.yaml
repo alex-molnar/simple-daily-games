@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invertedle
+  namespace: simple-daily-games
+  labels:
+    app: invertedle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invertedle
+  template:
+    metadata:
+      labels:
+        app: invertedle
+    spec:
+      containers:
+      - name: invertedle
+        image: kingbrady/invertedle:2.0.0
+        ports:
+        - containerPort: 80

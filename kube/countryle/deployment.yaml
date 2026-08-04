@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: countryle
+  namespace: simple-daily-games
+  labels:
+    app: countryle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: countryle
+  template:
+    metadata:
+      labels:
+        app: countryle
+    spec:
+      containers:
+      - name: countryle
+        image: kingbrady/countryle:3.0.0
+        ports:
+        - containerPort: 80
