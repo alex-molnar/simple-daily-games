@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlagScale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Title -->
+    <h1 class="game-title" id="game-title">FlagScale</h1>
+    
+    <!-- Image placeholder -->
+    <div class="image-container">
+      <img id="flag-image" src="" alt="Flag">
+    </div>
+
+    <!-- Game description -->
+    <p class="game-description" id="game-description"></p>
+
+    <!-- Input and Guess button -->
+    <div class="input-section">
+      <input 
+        type="text" 
+        class="guess-input" 
+        id="guess-input" 
+        placeholder="Country..."
+        autocomplete="off"
+      >
+      <button class="guess-button" id="submit-button">GUESS</button>
+      <div id="suggestions-container"></div>
+    </div>
+
+    <!-- 6 guess rows -->
+    <div class="guesses-container" id="guesses-container">
+        <div class="guess-row active" data-row="1">Guess 1 / 6</div>
+        <div class="guess-row" data-row="2"></div>
+        <div class="guess-row" data-row="3"></div>
+        <div class="guess-row" data-row="4"></div>
+        <div class="guess-row" data-row="5"></div>
+        <div class="guess-row" data-row="6"></div>
+    </div>
+  </div>
+
+  <!-- Guess feedback popup -->
+  <div class="feedback-overlay" id="feedback-overlay">
+    <div class="feedback-circle" id="feedback-circle">
+      <img id="feedback-flag" src="" alt="Original Flag">
+    </div>
+  </div>
+</body>
+</html>
