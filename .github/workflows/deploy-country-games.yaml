@@ -1,4 +1,4 @@
-name: Build and Deploy Capitale
+name: Build and Deploy Country Games
 
 on:
   push:

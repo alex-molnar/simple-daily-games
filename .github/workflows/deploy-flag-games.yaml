@@ -1,4 +1,4 @@
-name: Build and Deploy FlagScale Applications
+name: Build and Deploy Flag Games
 
 on:
   push:
