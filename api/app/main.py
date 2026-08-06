@@ -1,15 +1,19 @@
-from fastapi import FastAPI # pyright: ignore[reportMissingImports]
+from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
-from .db.connection import connect
+from .db.implementations import save_new_user
+from .model import NewUserRequest
+
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def wrap(data, endpoint: str, method: str, response: Response):
+    if type(data) == str:
+        response.status_code = 500
+        return {"error": data, "endpoint": endpoint, "method": method}
+    else:
+        return data
 
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/users/register", status_code=201)
+def register_user(data: NewUserRequest, response: Response):
+    return wrap(save_new_user(data.gameId), endpoint="/users/register", method="POST", response=response)
