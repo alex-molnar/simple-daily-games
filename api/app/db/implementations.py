@@ -41,3 +41,13 @@ def _update_template(user_id: str, game_id: str, field: str) -> dict | str:
 
 def update_start(user_id: str, game_id: str) -> dict | str:
     return _update_template(user_id, game_id, 'started')
+
+def update_failed(user_id: str, game_id: str) -> dict | str:
+    return _update_template(user_id, game_id, 'failures')
+
+def update_success(user_id: str, game_id: str, attempts: int) -> dict | str:
+    return (
+        _update_template(user_id, game_id, f'attempts{attempts}')
+        if attempts <= 6
+        else _update_template(user_id, game_id, 'attempts_plus')
+    )
