@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
-from .db.implementations import save_new_user
-from .model import NewUserRequest
+from .db.implementations import save_new_user, update_start
+from .model import NewUserRequest, RegisterScoreRequest
 
 
 app = FastAPI()
@@ -17,3 +17,7 @@ def wrap(data, endpoint: str, method: str, response: Response):
 @app.post("/users/register", status_code=201)
 def register_user(data: NewUserRequest, response: Response):
     return wrap(save_new_user(data.gameId), endpoint="/users/register", method="POST", response=response)
+
+@app.put("/users/start_game", status_code=200)
+def start_game(data: RegisterScoreRequest, response: Response):
+    return wrap(update_start(data.userId, data.gameId), endpoint="/users/start_game", method="PUT", response=response)

@@ -20,3 +20,24 @@ def save_new_user(game_id: str) -> dict | str:
     except Exception as e:
         print(f'Error inserting new user: {e}')
         return str(e)
+
+def _update_template(user_id: str, game_id: str, field: str) -> dict | str:
+    config = load_config()
+    try:
+        with connect(**config) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"UPDATE results SET {field} = {field} + 1 WHERE userId = %s AND gameId = %s RETURNING {field}", (user_id, game_id))
+                value = cur.fetchone()[0]
+                conn.commit()
+                print(f'Updated {field} count for user: {user_id} and game: {game_id}')
+                return {
+                    'userId': user_id,
+                    'gameId': game_id,
+                    field: value
+                }
+    except Exception as e:
+        print(f'Error updating {field} count: {e}')
+        return str(e)
+
+def update_start(user_id: str, game_id: str) -> dict | str:
+    return _update_template(user_id, game_id, 'started')
