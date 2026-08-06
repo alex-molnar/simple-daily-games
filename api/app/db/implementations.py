@@ -64,3 +64,25 @@ def update_success(user_id: str, game_id: str, attempts: int) -> dict | str:
         if attempts <= 6
         else _update_template(user_id, game_id, 'attempts_plus')
     )
+
+def get_stats_by(**kwargs) -> dict | str:
+    if not kwargs:
+        return "No parameters provided for stats retrieval"
+    config = load_config()
+    try:
+        with connect(**config) as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM results WHERE " + ' AND '.join([f"{key} = %s" for key in kwargs.keys()])
+                cur.execute(query, tuple(kwargs.values()))
+                result = cur.fetchone()
+                if result:
+                    columns = [desc[0] for desc in cur.description]
+                    return dict(zip(columns, result))
+                else:
+                    return f"No results found for {kwargs}"
+    except Exception as e:
+        print(f'Error retrieving stats: {e}')
+        return str(e)
+
+def get_stats_by_game_and_user(game_id: str, user_id: str) -> dict | str:
+    return get_stats_by(gameId=game_id, userId=user_id)

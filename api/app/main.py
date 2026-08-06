@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
-from .db.implementations import test_connection, save_new_user, update_start, update_failed, update_success
+from .db.implementations import test_connection, save_new_user, update_start, update_failed, update_success, get_stats_by_game_and_user
 
 
 app = FastAPI()
@@ -41,3 +41,7 @@ def success_game(gameId: str, userId: str, attempts: int, response: Response = N
         if attempts > 0
         else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/users/<userId>/success_game/<attempts>", method="POST", response=response, status_code=400)
     )
+
+@app.get("/games/{gameId}/users/{userId}/stats", status_code=200)
+def get_user_stats_endpoint(gameId: str, userId: str, response: Response):
+    return wrap(get_stats_by_game_and_user(gameId, userId), endpoint="/games/<gameId>/users/<userId>/stats", method="GET", response=response)
