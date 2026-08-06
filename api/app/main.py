@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
-from .db.implementations import save_new_user, update_start, update_failed, update_success
+from .db.implementations import test_connection, save_new_user, update_start, update_failed, update_success
 
 
 app = FastAPI()
@@ -12,6 +12,15 @@ def wrap(data, endpoint: str, method: str, response: Response, status_code: int 
         return {"error": data, "endpoint": endpoint, "method": method}
     else:
         return data
+
+
+@app.get("/health", status_code=200)
+def health_check(response: Response):
+    return wrap({'status': 'up'}, endpoint="/health", method="GET", response=response, status_code=200)
+
+@app.get("/readiness", status_code=200)
+def readiness_check(response: Response):
+    return wrap(test_connection(), endpoint="/readiness", method="GET", response=response, status_code=200)
 
 @app.post("/games/{gameId}/users/register", status_code=201)
 def register_user(gameId: str, response: Response):

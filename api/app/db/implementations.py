@@ -4,6 +4,19 @@ from uuid import uuid4
 from .config import load_config
 
 
+def test_connection() -> dict | str:
+    config = load_config()
+    try:
+        with connect(**config) as _:
+            print('Connected to the PostgreSQL server.')
+            return {
+                'application': 'up',
+                'db': 'up'
+            }
+    except Exception as e:
+        print(f'Error connecting to the PostgreSQL server: {e}')
+        return "Couldn't connect to the PostgreSQL server"
+
 def save_new_user(game_id: str) -> dict | str:
     config = load_config()
     try:
