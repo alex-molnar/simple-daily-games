@@ -24,6 +24,9 @@ spec:
     - hosts:
         - invertedle.kak.im
       secretName: invertedle-tls
+    - hosts:
+        - api.games.kak.im
+      secretName: api-games-tls
   rules:
     - host: countryle.kak.im
       http:
@@ -61,6 +64,16 @@ spec:
         - backend:
             service:
               name: invertedle
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: api.games.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: api
               port:
                 number: 80
           path: /
