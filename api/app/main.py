@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
 from .db.implementations import test_connection, save_new_game, update_start, update_failed, update_success, get_stats_by_game_and_date
@@ -24,8 +26,11 @@ def readiness_check(response: Response):
 
 @app.post("/games/register/{gameId}", status_code=201)
 def register_user(gameId: str, response: Response):
-    date = '2026-08-07' 
-    return wrap(save_new_game(gameId, date), endpoint="/games/register/<gameId>", method="POST", response=response)
+    return wrap(save_new_game(gameId), endpoint="/games/register/<gameId>", method="POST", response=response)
+
+@app.post("/games/{gameId}/extend", status_code=201)
+def register_user(gameId: str, response: Response):
+    return wrap(save_new_game(gameId), endpoint="/games/register/<gameId>", method="POST", response=response)
 
 @app.post("/games/{gameId}/date/{date}/start_game", status_code=200)
 def start_game(gameId: str, date: str, response: Response):

@@ -1,5 +1,5 @@
 from psycopg2 import connect # pyright: ignore[reportMissingModuleSource, reportMissingImports]
-from uuid import uuid4
+from datetime import datetime, timedelta
 
 from .config import load_config
 
@@ -17,17 +17,21 @@ def test_connection() -> dict | str:
         print(f'Error connecting to the PostgreSQL server: {e}')
         return "Couldn't connect to the PostgreSQL server"
 
-def save_new_game(game_id: str, date: str) -> dict | str:
+def save_new_game(game_id: str) -> dict | str:
     config = load_config()
     try:
         with connect(**config) as conn:
             with conn.cursor() as cur:
-                cur.execute("INSERT INTO results (date, gameId) VALUES (%s, %s)", (date, game_id))
+                query = "INSERT INTO results (date, gameId) VALUES " + ", ".join(["(%s, %s)"] * 365) + " ON CONFLICT (date, gameId) DO NOTHING"
+                now = datetime.now()
+                gameIds = [game_id] * 365
+                dates = [(now + timedelta(days=day)).strftime("%Y-%m-%d") for day in range(365)]
+                cur.execute(query, tuple([item for pair in zip(dates, gameIds) for item in pair]))
                 conn.commit()
-                print(f'Inserted new game: {date} for game: {game_id}')
+                print(f'Inserted rows for a year  game {game_id}')
                 return {
-                    'date': date,
-                    'gameId': game_id
+                    'gameId': game_id,
+                    "message": "Game dates saved for the next 365 days"
                 }
     except Exception as e:
         print(f'Error inserting new game: {e}')
