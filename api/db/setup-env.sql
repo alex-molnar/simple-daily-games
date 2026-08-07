@@ -1,6 +1,6 @@
 CREATE TABLE results (
-    userId UUID NOT NULL,
-    gameId VARCHAR(32) NOT NULL,
+    gameId VARCHAR(64) NOT NULL,
+    date VARCHAR(32) NOT NULL,
     started SMALLINT CHECK (started >= 0) NOT NULL DEFAULT 0,
     attempts1 SMALLINT CHECK (attempts1 >= 0) NOT NULL DEFAULT 0,
     attempts2 SMALLINT CHECK (attempts2 >= 0) NOT NULL DEFAULT 0,
@@ -10,7 +10,5 @@ CREATE TABLE results (
     attempts6 SMALLINT CHECK (attempts6 >= 0) NOT NULL DEFAULT 0,
     attempts_plus SMALLINT CHECK (attempts_plus >= 0) NOT NULL DEFAULT 0,
     failures SMALLINT CHECK (failures >= 0) NOT NULL DEFAULT 0,
-    PRIMARY KEY (userId, gameId)
+    PRIMARY KEY (gameId, date)
 );
-
-CREATE INDEX idx_results_userId ON results (gameId);

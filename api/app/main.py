@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
-from .db.implementations import test_connection, save_new_user, update_start, update_failed, update_success, get_stats_by_game_and_user
+from .db.implementations import test_connection, save_new_game, update_start, update_failed, update_success, get_stats_by_game_and_date
 
 
 app = FastAPI()
@@ -22,26 +22,27 @@ def health_check(response: Response):
 def readiness_check(response: Response):
     return wrap(test_connection(), endpoint="/readiness", method="GET", response=response, status_code=200)
 
-@app.post("/games/{gameId}/users/register", status_code=201)
+@app.post("/games/register/{gameId}", status_code=201)
 def register_user(gameId: str, response: Response):
-    return wrap(save_new_user(gameId), endpoint="/games/<gameId>/users/register", method="POST", response=response)
+    date = '2026-08-07' 
+    return wrap(save_new_game(gameId, date), endpoint="/games/register/<gameId>", method="POST", response=response)
 
-@app.post("/games/{gameId}/users/{userId}/start_game", status_code=200)
-def start_game(gameId: str, userId: str, response: Response):
-    return wrap(update_start(userId, gameId), endpoint="/games/<gameId>/users/<userId>/start_game", method="POST", response=response)
+@app.post("/games/{gameId}/date/{date}/start_game", status_code=200)
+def start_game(gameId: str, date: str, response: Response):
+    return wrap(update_start(date, gameId), endpoint="/games/<gameId>/date/<date>/start_game", method="POST", response=response)
 
-@app.post("/games/{gameId}/users/{userId}/failed_game", status_code=200)
-def failed_game(gameId: str, userId: str, response: Response):
-    return wrap(update_failed(userId, gameId), endpoint="/games/<gameId>/users/<userId>/failed_game", method="POST", response=response)
+@app.post("/games/{gameId}/date/{date}/failed_game", status_code=200)
+def failed_game(gameId: str, date: str, response: Response):
+    return wrap(update_failed(date, gameId), endpoint="/games/<gameId>/date/<date>/failed_game", method="POST", response=response)
 
-@app.post("/games/{gameId}/users/{userId}/success_game/{attempts}", status_code=200)
-def success_game(gameId: str, userId: str, attempts: int, response: Response = None):
+@app.post("/games/{gameId}/date/{date}/success_game/{attempts}", status_code=200)
+def success_game(gameId: str, date: str, attempts: int, response: Response = None):
     return (
-        wrap(update_success(userId, gameId, attempts), endpoint="/games/<gameId>/users/<userId>/success_game/<attempts>", method="POST", response=response)
+        wrap(update_success(date, gameId, attempts), endpoint="/games/<gameId>/date/<date>/success_game/<attempts>", method="POST", response=response)
         if attempts > 0
-        else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/users/<userId>/success_game/<attempts>", method="POST", response=response, status_code=400)
+        else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/date/<date>/success_game/<attempts>", method="POST", response=response, status_code=400)
     )
 
-@app.get("/games/{gameId}/users/{userId}/stats", status_code=200)
-def get_user_stats_endpoint(gameId: str, userId: str, response: Response):
-    return wrap(get_stats_by_game_and_user(gameId, userId), endpoint="/games/<gameId>/users/<userId>/stats", method="GET", response=response)
+@app.get("/games/{gameId}/date/{date}/stats", status_code=200)
+def get_user_stats_endpoint(gameId: str, date: str, response: Response):
+    return wrap(get_stats_by_game_and_date(gameId, date), endpoint="/games/<gameId>/date/<date>/stats", method="GET", response=response)
