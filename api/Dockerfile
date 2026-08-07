@@ -1,7 +1,6 @@
 
-FROM kingbrady/fast-api-base:0.1.0
+FROM kingbrady/fast-api-base:1.0.0-multi-architecture
 
 COPY ./app /code/app
-COPY ./db/database.ini /code/db/database.ini
 
 CMD ["fastapi", "run", "app/main.py", "--port", "80"]
