@@ -18,11 +18,11 @@ def wrap(data, endpoint: str, method: str, response: Response, status_code: int 
 
 @app.get("/health", status_code=200)
 def health_check(response: Response):
-    return wrap({'status': 'up'}, endpoint="/health", method="GET", response=response, status_code=200)
+    return wrap({'status': 'up'}, endpoint="/health", method="GET", response=response)
 
 @app.get("/readiness", status_code=200)
 def readiness_check(response: Response):
-    return wrap(test_connection(), endpoint="/readiness", method="GET", response=response, status_code=200)
+    return wrap(test_connection(), endpoint="/readiness", method="GET", response=response, status_code=503)
 
 @app.post("/games/register/{gameId}", status_code=201)
 def register_user(gameId: str, response: Response):
