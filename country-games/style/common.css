@@ -519,3 +519,40 @@ body {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+
+.stats-popup-tabs {
+  display: inline-flex;
+  gap: 6px;
+  margin: 4px 0 12px;
+  padding: 4px;
+  border-radius: 10px;
+  background: #eef3f7;
+}
+
+.stats-popup-tab {
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  color: #415467;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease, transform 120ms ease;
+}
+
+.stats-popup-tab:hover {
+  background: #dfe8ef;
+  color: #233241;
+}
+
+.stats-popup-tab.is-active {
+  background: #ffffff;
+  color: #123a5f;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.stats-popup-tab:focus-visible {
+  outline: 2px solid #2d8fcb;
+  outline-offset: 2px;
+}

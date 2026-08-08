@@ -125,7 +125,7 @@ function displayWinningGuessRow(guessName, rowNumber, initial = false) {
         updateStats(gameTitle, stats)
     }
 
-    const popup = createStatsPopup(stats)
+    const popup = createStatsPopup(stats, {playerCompletionKey: `games_with_attempts_${rowNumber}`})
     setTimeout(() => popup.open(), 1500)
 }
 
@@ -151,8 +151,8 @@ function displayGameOverRow(initial = false) {
         updateStats(gameTitle, stats)
     }
 
+    const popup = createStatsPopup(stats, {playerCompletionKey: 'games_failed'})
     setTimeout(() => popup.open(), 1500)
-    updateStats(gameTitle, stats)
 }
 
 document.title = gameTitle.capitalize()

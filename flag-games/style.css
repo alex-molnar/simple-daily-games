@@ -528,3 +528,42 @@ body {
                 font-size: 0.88rem;
         }
 }
+
+.stats-popup-tabs {
+  display: inline-flex;
+  gap: 6px;
+  margin: 4px 0 12px;
+  padding: 4px;
+  border-radius: 10px;
+    background: #1f1f33;
+    border: 1px solid #3d3d5c;
+}
+
+.stats-popup-tab {
+    border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: transparent;
+    color: #a0a0b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.stats-popup-tab:hover {
+    background: #3a3a55;
+    color: #e6e7f2;
+}
+
+.stats-popup-tab.is-active {
+    background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+    color: #ffffff;
+    border-color: #7f78ff;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.35);
+}
+
+.stats-popup-tab:focus-visible {
+    outline: 2px solid #ff6b9d;
+  outline-offset: 2px;
+}

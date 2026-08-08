@@ -170,13 +170,13 @@ function displayNewGuessRow(guess, no) {
     }
 }
 
-function incrementStats(successful){
+function getCategory(successful){
     if (successful && noOfGuesses > 6) {
-        stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
+        return "games_with_attempts_plus"
     } else if (successful) {
-        stats[`games_with_attempts_${noOfGuesses}`] = stats[`games_with_attempts_${noOfGuesses}`] + 1
+        return `games_with_attempts_${noOfGuesses}`
     } else {
-        stats.games_failed = stats.games_failed + 1
+        return "games_failed"
     }
 }
 
@@ -208,12 +208,14 @@ function displayWinningGuessRow(triggerConfetti = false, initial = false) {
         launchConfetti()
     } 
 
+    let category = getCategory(triggerConfetti)
+
     if (!initial) {
-        incrementStats(triggerConfetti)
+        stats[category] = stats[category] + 1
         updateStats(gameTitle, stats)
     }
 
-    const popup = createStatsPopup(stats)
+    const popup = createStatsPopup(stats, {playerCompletionKey: category})
     setTimeout(() => popup.open(), 1500)
 }
 
