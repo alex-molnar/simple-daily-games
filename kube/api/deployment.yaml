@@ -21,7 +21,7 @@ spec:
             secretName: postgres-secret
       containers:
         - name: api
-          image: kingbrady/simple-daily-games-api:0.2.0
+          image: kingbrady/simple-daily-games-api:1.1.1
           ports:
             - containerPort: 80
           env:
