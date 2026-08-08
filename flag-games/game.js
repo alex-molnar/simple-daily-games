@@ -121,7 +121,7 @@ function displayWinningGuessRow(guessName, rowNumber, initial = false) {
     launchConfetti()
 
     if (!initial) {
-        stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
+        stats[`games_with_attempts_${rowNumber}`] = stats[`games_with_attempts_${rowNumber}`] + 1
         updateStats(gameTitle, stats)
     }
 
