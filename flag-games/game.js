@@ -1,14 +1,16 @@
 import { capitalize } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { getRandomSelectionForToday, getItemForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
+import { getRandomSelectionForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
 import { format } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { loadGame } from 'https://assets.kak.im/api/javascript/gameHandler.js'
+import { loadGame, getStats, updateStats } from 'https://assets.kak.im/api/javascript/gameHandler.js'
 import { launchConfetti } from 'https://assets.kak.im/api/javascript/animations.js'
 import { countryData, countryNames } from 'https://assets.kak.im/api/javascript/countryData.js'
+import { createStatsPopup } from 'https://assets.kak.im/api/javascript/statsPopup.js'
 
 let gameTitle = PARAM_GAME_TITLE
 const validCountries = countryNames.filter(country => countryData[country].flag !== undefined)
 let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)
 let todaysSolution = countryData[todaysSolutionName]
+let stats = getStats(gameTitle)
 
 const explanations = {
     "grayscale": "Guess the country which's flag is displayed in grayscale above. Wrong guesses give you additional hints.",
@@ -34,10 +36,10 @@ function displayRowsCallback(guessName, rowNumber, initial) {
     }
 
     if (guessName === todaysSolutionName) {
-        displayWinningGuessRow(guessName, rowNumber)
+        displayWinningGuessRow(guessName, rowNumber, initial)
     } else if (rowNumber >= 6) {
         displayNewGuessRow(guessName, rowNumber)
-        displayGameOverRow()
+        displayGameOverRow(initial)
     } else {
         displayNewGuessRow(guessName, rowNumber)
     }
@@ -97,7 +99,7 @@ function displayNewGuessRow(guessName, rowNumber) {
     }
 }
 
-function displayWinningGuessRow(guessName, rowNumber) {
+function displayWinningGuessRow(guessName, rowNumber, initial = false) {
     const guessData = countryData[guessName].country
     const todaysData = todaysSolution.country
 
@@ -117,10 +119,17 @@ function displayWinningGuessRow(guessName, rowNumber) {
     submitButton.disabled = true
 
     launchConfetti()
+
+    if (!initial) {
+        stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
+        updateStats(gameTitle, stats)
+    }
+
+    const popup = createStatsPopup(stats)
+    setTimeout(() => popup.open(), 1500)
 }
 
-function displayGameOverRow() {
-    console.log("Game over! The answer was:", todaysSolutionName)
+function displayGameOverRow(initial = false) {
     // Create message element above guess rows
     const guessesContainer = document.getElementById("guesses-container")
     const answerMessage = document.createElement("div")
@@ -136,6 +145,14 @@ function displayGameOverRow() {
     guessInput.placeholder = "Game over!"
     guessInput.value = ""
     submitButton.disabled = true
+
+    if (!initial) {
+        stats.games_failed = stats.games_failed + 1
+        updateStats(gameTitle, stats)
+    }
+
+    setTimeout(() => popup.open(), 1500)
+    updateStats(gameTitle, stats)
 }
 
 document.title = gameTitle.capitalize()
