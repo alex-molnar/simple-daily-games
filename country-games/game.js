@@ -1,7 +1,7 @@
 import { capitalize, unLe } from 'https://assets.kak.im/api/javascript/stringUtils.js'
 import { getRandomSelectionForToday, getItemForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
 import { format } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { loadGame } from 'https://assets.kak.im/api/javascript/gameHandler.js'
+import { loadGame, getStats, updateStats } from 'https://assets.kak.im/api/javascript/gameHandler.js'
 import { launchConfetti } from 'https://assets.kak.im/api/javascript/animations.js'
 import { countryData, countryNames } from 'https://assets.kak.im/api/javascript/countryData.js'
 
@@ -27,6 +27,7 @@ let gameTitleUnLe = gameTitle.unLe()
 let todaysSolutionCountry = getRandomSelectionForToday(countryNames, gameTitle)
 let todaysSolution = countryData[todaysSolutionCountry][gameTitleUnLe]
 let todaysSolutionName = getSolutionNameByGameTitle[gameTitle](countryData[todaysSolutionCountry])
+let stats = getStats(gameTitle)
 
 const guessTemplate = `
 <div class="guess-header">{10}</div>
@@ -194,7 +195,18 @@ function displayWinningGuessRow(triggerConfetti = false) {
     
     if (triggerConfetti) {
         launchConfetti()
+
+        if (noOfGuesses > 6) {
+            stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
+        } else {
+            stats[`games_with_attempts_${noOfGuesses}`] = stats[`games_with_attempts_${noOfGuesses}`] + 1
+        }
+    } else {
+        stats.games_failed = stats.games_failed + 1
     }
+    
+    console.log(stats)
+    updateStats(gameTitle, stats)
 }
 
 document.title = `${gameTitle.capitalize()} v2`
