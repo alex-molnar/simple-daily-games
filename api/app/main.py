@@ -8,6 +8,8 @@ app = FastAPI()
 
 
 def wrap(data, endpoint: str, method: str, response: Response, status_code: int = 500):
+    if method == "GET":
+        response.headers["Content-Type"] = "application/json"
     if type(data) == str:
         response.status_code = status_code
         return {"error": data, "endpoint": endpoint, "method": method}
