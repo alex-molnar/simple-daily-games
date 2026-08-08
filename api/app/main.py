@@ -1,10 +1,20 @@
 from datetime import datetime
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
+from fastapi.middleware.cors import CORSMiddleware # pyright: ignore[reportMissingImports]
 
 from .db.implementations import test_connection, save_new_game, update_start, update_failed, update_success, get_stats_by_game_and_date
 
 
 app = FastAPI()
+
+# Add CORS middleware to allow cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def wrap(data, endpoint: str, method: str, response: Response, status_code: int = 500):
