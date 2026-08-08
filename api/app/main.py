@@ -1,5 +1,4 @@
-from datetime import datetime, timedelta
-
+from datetime import datetime
 from fastapi import FastAPI, Response # pyright: ignore[reportMissingImports]
 
 from .db.implementations import test_connection, save_new_game, update_start, update_failed, update_success, get_stats_by_game_and_date
@@ -51,3 +50,7 @@ def success_game(gameId: str, date: str, attempts: int, response: Response = Non
 @app.get("/games/{gameId}/date/{date}/stats", status_code=200)
 def get_user_stats_endpoint(gameId: str, date: str, response: Response):
     return wrap(get_stats_by_game_and_date(gameId, date), endpoint="/games/<gameId>/date/<date>/stats", method="GET", response=response)
+
+@app.get("/games/{gameId}/today", status_code=200)
+def get_today_game(gameId: str, response: Response):
+    return wrap(get_stats_by_game_and_date(gameId, datetime.now().strftime("%Y-%m-%d")), endpoint="/games/<gameId>/today", method="GET", response=response)
