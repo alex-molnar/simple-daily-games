@@ -41,15 +41,25 @@ def register_user(gameId: str, response: Response):
 
 @app.post("/games/{gameId}/extend", status_code=201)
 def register_user(gameId: str, response: Response):
-    return wrap(save_new_game(gameId), endpoint="/games/register/<gameId>", method="POST", response=response)
+    return wrap(save_new_game(gameId), endpoint="/games/<gameId>/extend", method="POST", response=response)
 
 @app.post("/games/{gameId}/date/{date}/start_game", status_code=200)
 def start_game(gameId: str, date: str, response: Response):
     return wrap(update_start(date, gameId), endpoint="/games/<gameId>/date/<date>/start_game", method="POST", response=response)
 
+@app.post("/games/{gameId}/date/today/start_game", status_code=200)
+def start_game_today(gameId: str, response: Response):
+    today = datetime.now().strftime("%Y-%m-%d")
+    return wrap(update_start(today, gameId), endpoint="/games/<gameId>/date/today/start_game", method="POST", response=response)
+
 @app.post("/games/{gameId}/date/{date}/failed_game", status_code=200)
 def failed_game(gameId: str, date: str, response: Response):
     return wrap(update_failed(date, gameId), endpoint="/games/<gameId>/date/<date>/failed_game", method="POST", response=response)
+
+@app.post("/games/{gameId}/date/today/failed_game", status_code=200)
+def failed_game_today(gameId: str, response: Response):
+    today = datetime.now().strftime("%Y-%m-%d")
+    return wrap(update_failed(today, gameId), endpoint="/games/<gameId>/date/today/failed_game", method="POST", response=response)
 
 @app.post("/games/{gameId}/date/{date}/success_game/{attempts}", status_code=200)
 def success_game(gameId: str, date: str, attempts: int, response: Response = None):
@@ -57,6 +67,15 @@ def success_game(gameId: str, date: str, attempts: int, response: Response = Non
         wrap(update_success(date, gameId, attempts), endpoint="/games/<gameId>/date/<date>/success_game/<attempts>", method="POST", response=response)
         if attempts > 0
         else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/date/<date>/success_game/<attempts>", method="POST", response=response, status_code=400)
+    )
+
+@app.post("/games/{gameId}/date/today/success_game/{attempts}", status_code=200)
+def success_game_today(gameId: str, attempts: int, response: Response = None):
+    today = datetime.now().strftime("%Y-%m-%d")
+    return (
+        wrap(update_success(today, gameId, attempts), endpoint="/games/<gameId>/date/today/success_game/<attempts>", method="POST", response=response)
+        if attempts > 0
+        else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/date/today/success_game/<attempts>", method="POST", response=response, status_code=400)
     )
 
 @app.get("/games/{gameId}/date/{date}/stats", status_code=200)
