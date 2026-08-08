@@ -1,9 +1,10 @@
 import { capitalize, unLe } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { getRandomSelectionForToday, getItemForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
+import { getRandomSelectionForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
 import { format } from 'https://assets.kak.im/api/javascript/stringUtils.js'
 import { loadGame, getStats, updateStats } from 'https://assets.kak.im/api/javascript/gameHandler.js'
 import { launchConfetti } from 'https://assets.kak.im/api/javascript/animations.js'
 import { countryData, countryNames } from 'https://assets.kak.im/api/javascript/countryData.js'
+import { createStatsPopup } from 'https://assets.kak.im/api/javascript/statsPopup.js'
 
 let five_mil = 5000000
 let mil = 1000000
@@ -107,7 +108,7 @@ function getPopulationClass(guessed_population, todays_population) {
 function displayRowsCallback(guessName, rowNumber, initial) {
     noOfGuesses = rowNumber
     if (guessName === todaysSolutionName) {
-        displayWinningGuessRow(noOfGuesses, true)
+        displayWinningGuessRow(true, initial)
     } else {
         displayNewGuessRow(guessName, rowNumber)
     }
@@ -115,7 +116,7 @@ function displayRowsCallback(guessName, rowNumber, initial) {
 
 function onLoadGame() {
     loadGame(gameTitle, todaysSolutionName, Object.values(countryData).map(country => getSolutionNameByGameTitle[gameTitle](country)), displayRowsCallback)
-    document.getElementById("hint-button").addEventListener("click", e => displayWinningGuessRow(false))
+    document.getElementById("hint-button").addEventListener("click", e => displayWinningGuessRow(false, true))
 }
 
 function getDistanceClass(distance) {
@@ -169,7 +170,17 @@ function displayNewGuessRow(guess, no) {
     }
 }
 
-function displayWinningGuessRow(triggerConfetti = false) {
+function incrementStats(successful){
+    if (successful && noOfGuesses > 6) {
+        stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
+    } else if (successful) {
+        stats[`games_with_attempts_${noOfGuesses}`] = stats[`games_with_attempts_${noOfGuesses}`] + 1
+    } else {
+        stats.games_failed = stats.games_failed + 1
+    }
+}
+
+function displayWinningGuessRow(triggerConfetti = false, initial = false) {
     let formattedDiff = formatWinningDiff(todaysSolution, noOfGuesses)
     let container = document.getElementById("guesses-container")
     container.insertAdjacentHTML('beforeend', formattedDiff)
@@ -195,18 +206,15 @@ function displayWinningGuessRow(triggerConfetti = false) {
     
     if (triggerConfetti) {
         launchConfetti()
+    } 
 
-        if (noOfGuesses > 6) {
-            stats.games_with_attempts_plus = stats.games_with_attempts_plus + 1
-        } else {
-            stats[`games_with_attempts_${noOfGuesses}`] = stats[`games_with_attempts_${noOfGuesses}`] + 1
-        }
-    } else {
-        stats.games_failed = stats.games_failed + 1
+    if (!initial) {
+        incrementStats(triggerConfetti)
+        updateStats(gameTitle, stats)
     }
-    
-    console.log(stats)
-    updateStats(gameTitle, stats)
+
+    const popup = createStatsPopup(stats)
+    setTimeout(() => popup.open(), 1500)
 }
 
 document.title = `${gameTitle.capitalize()} v2`
