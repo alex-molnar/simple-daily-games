@@ -122,7 +122,7 @@ function displayWinningGuessRow(guessName, rowNumber, initial = false) {
 
     if (!initial) {
         stats[`games_with_attempts_${rowNumber}`] = stats[`games_with_attempts_${rowNumber}`] + 1
-        updateStats(gameTitle, stats)
+        updateStats(gameTitle, stats, `games_with_attempts_${rowNumber}`)
     }
 
     const popup = createStatsPopup(stats, {playerCompletionKey: `games_with_attempts_${rowNumber}`, gameTitle: gameTitle})
@@ -148,7 +148,7 @@ function displayGameOverRow(initial = false) {
 
     if (!initial) {
         stats.games_failed = stats.games_failed + 1
-        updateStats(gameTitle, stats)
+        updateStats(gameTitle, stats, 'games_failed')
     }
 
     const popup = createStatsPopup(stats, {playerCompletionKey: 'games_failed', gameTitle: gameTitle})

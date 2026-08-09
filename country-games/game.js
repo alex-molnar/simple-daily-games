@@ -212,7 +212,7 @@ function displayWinningGuessRow(triggerConfetti = false, initial = false) {
 
     if (!initial) {
         stats[category] = stats[category] + 1
-        updateStats(gameTitle, stats)
+        updateStats(gameTitle, stats, category)
     }
 
     const popup = createStatsPopup(stats, {playerCompletionKey: category, gameTitle: gameTitle})
