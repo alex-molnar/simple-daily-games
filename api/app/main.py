@@ -66,22 +66,22 @@ def start_game(gameId: str, date: str, response: Response):
     log_request(endpoint="/games/<gameId>/date/<date>/start_game", method="POST", kwargs={"gameId": gameId, "date": date})
     return wrap(update_start(date, gameId), endpoint="/games/<gameId>/date/<date>/start_game", method="POST", response=response)
 
-@app.post("/games/{gameId}/date/today/start_game", status_code=200)
+@app.post("/games/{gameId}/today/start_game", status_code=200)
 def start_game_today(gameId: str, response: Response):
     today = datetime.now().strftime("%Y-%m-%d")
-    log_request(endpoint="/games/<gameId>/date/today/start_game", method="POST", kwargs={"gameId": gameId, "date": today})
-    return wrap(update_start(today, gameId), endpoint="/games/<gameId>/date/today/start_game", method="POST", response=response)
+    log_request(endpoint="/games/<gameId>/today/start_game", method="POST", kwargs={"gameId": gameId, "date": today})
+    return wrap(update_start(today, gameId), endpoint="/games/<gameId>/today/start_game", method="POST", response=response)
 
 @app.post("/games/{gameId}/date/{date}/failed_game", status_code=200)
 def failed_game(gameId: str, date: str, response: Response):
     log_request(endpoint="/games/<gameId>/date/<date>/failed_game", method="POST", kwargs={"gameId": gameId, "date": date})
     return wrap(update_failed(date, gameId), endpoint="/games/<gameId>/date/<date>/failed_game", method="POST", response=response)
 
-@app.post("/games/{gameId}/date/today/failed_game", status_code=200)
+@app.post("/games/{gameId}/today/failed_game", status_code=200)
 def failed_game_today(gameId: str, response: Response):
     today = datetime.now().strftime("%Y-%m-%d")
-    log_request(endpoint="/games/<gameId>/date/today/failed_game", method="POST", kwargs={"gameId": gameId, "date": today})
-    return wrap(update_failed(today, gameId), endpoint="/games/<gameId>/date/today/failed_game", method="POST", response=response)
+    log_request(endpoint="/games/<gameId>/today/failed_game", method="POST", kwargs={"gameId": gameId, "date": today})
+    return wrap(update_failed(today, gameId), endpoint="/games/<gameId>/today/failed_game", method="POST", response=response)
 
 @app.post("/games/{gameId}/date/{date}/success_game/{attempts}", status_code=200)
 def success_game(gameId: str, date: str, attempts: int, response: Response = None):
@@ -92,14 +92,14 @@ def success_game(gameId: str, date: str, attempts: int, response: Response = Non
         else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/date/<date>/success_game/<attempts>", method="POST", response=response, status_code=400)
     )
 
-@app.post("/games/{gameId}/date/today/success_game/{attempts}", status_code=200)
+@app.post("/games/{gameId}/today/success_game/{attempts}", status_code=200)
 def success_game_today(gameId: str, attempts: int, response: Response = None):
     today = datetime.now().strftime("%Y-%m-%d")
-    log_request(endpoint="/games/<gameId>/date/today/success_game/<attempts>", method="POST", kwargs={"gameId": gameId, "attempts": attempts, "date": today})
+    log_request(endpoint="/games/<gameId>/today/success_game/<attempts>", method="POST", kwargs={"gameId": gameId, "attempts": attempts, "date": today})
     return (
-        wrap(update_success(today, gameId, attempts), endpoint="/games/<gameId>/date/today/success_game/<attempts>", method="POST", response=response)
+        wrap(update_success(today, gameId, attempts), endpoint="/games/<gameId>/today/success_game/<attempts>", method="POST", response=response)
         if attempts > 0
-        else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/date/today/success_game/<attempts>", method="POST", response=response, status_code=400)
+        else wrap("Attempts must be greater than 0 for success_game endpoint", endpoint="/games/<gameId>/today/success_game/<attempts>", method="POST", response=response, status_code=400)
     )
 
 @app.get("/games/{gameId}/date/{date}/stats", status_code=200)
@@ -107,7 +107,7 @@ def get_user_stats_endpoint(gameId: str, date: str, response: Response):
     log_request(endpoint="/games/<gameId>/date/<date>/stats", method="GET", kwargs={"gameId": gameId, "date": date})
     return wrap(get_stats_by_game_and_date(gameId, date), endpoint="/games/<gameId>/date/<date>/stats", method="GET", response=response)
 
-@app.get("/games/{gameId}/today", status_code=200)
+@app.get("/games/{gameId}/today/stats", status_code=200)
 def get_today_game(gameId: str, response: Response):
-    log_request(endpoint="/games/<gameId>/today", method="GET", kwargs={"gameId": gameId, "date": datetime.now().strftime("%Y-%m-%d")})
-    return wrap(get_stats_by_game_and_date(gameId, datetime.now().strftime("%Y-%m-%d")), endpoint="/games/<gameId>/today", method="GET", response=response)
+    log_request(endpoint="/games/<gameId>/today/stats", method="GET", kwargs={"gameId": gameId, "date": datetime.now().strftime("%Y-%m-%d")})
+    return wrap(get_stats_by_game_and_date(gameId, datetime.now().strftime("%Y-%m-%d")), endpoint="/games/<gameId>/today/stats", method="GET", response=response)
