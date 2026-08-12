@@ -612,3 +612,17 @@ body {
   outline: 2px solid #2d8fcb;
   outline-offset: 2px;
 }
+
+.stats-popup-kofi {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+}
+
+.stats-popup-kofi img {
+  transition: opacity 150ms ease;
+}
+
+.stats-popup-kofi:hover img {
+  opacity: 0.85;
+}
