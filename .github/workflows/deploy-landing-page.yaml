@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push API
+      - name: Build and push Landing page
         uses: docker/build-push-action@v6
         with:
           context: landing
@@ -47,9 +47,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Update API deployment image tag
+      - name: Update Landing Page deployment image tag
         run: |
-          sed -i "s|image: kingbrady/simple-daily-games-landing-page:.*|image: kingbrady/simple-daily-games-landing-page:${{ steps.version.outputs.VERSION }}|" kube/api/deployment.yaml
+          sed -i "s|image: kingbrady/simple-daily-games-landing-page:.*|image: kingbrady/simple-daily-games-landing-page:${{ steps.version.outputs.VERSION }}|" kube/landing/deployment.yaml
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
@@ -63,7 +63,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f kube/landing/deployment.yaml
-          kubectl rollout status deployment/landing -n simple-daily-games --timeout=120s
+          kubectl rollout status deployment/landing-page -n simple-daily-games --timeout=120s
 
       - name: Cleanup kubeconfig
         if: always()
