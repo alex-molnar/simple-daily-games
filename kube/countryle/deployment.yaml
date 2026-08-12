@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: countryle
-        image: kingbrady/countryle:4.3.0
+        image: kingbrady/countryle:4.4.0
         ports:
         - containerPort: 80
