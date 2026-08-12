@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'landing/**'
+      - 'kube/landing/**'
   workflow_dispatch:
 
 env:

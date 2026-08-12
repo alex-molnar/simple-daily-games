@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'api/**'
+      - 'kube/api/**'
   workflow_dispatch:
 
 env:
