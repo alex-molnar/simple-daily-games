@@ -45,7 +45,35 @@ function displayRowsCallback(guessName, rowNumber, initial) {
     }
 }
 
+const gameNavigation = {
+    'grayscale': { prev: { url: 'https://countryle.kak.im', label: 'Countryle' }, next: { url: 'https://invertedle.kak.im', label: 'Invertedle' } },
+    'invertedle': { prev: { url: 'https://grayscale.kak.im', label: 'Grayscale' }, next: null }
+}
+
+function setupNavigation() {
+    const nav = gameNavigation[gameTitle]
+    if (!nav) return
+
+    const prevEl = document.getElementById('nav-prev')
+    const nextEl = document.getElementById('nav-next')
+
+    if (nav.prev) {
+        prevEl.href = nav.prev.url
+        prevEl.querySelector('.nav-label').textContent = nav.prev.label
+    } else {
+        prevEl.classList.add('hidden')
+    }
+
+    if (nav.next) {
+        nextEl.href = nav.next.url
+        nextEl.querySelector('.nav-label').textContent = nav.next.label
+    } else {
+        nextEl.classList.add('hidden')
+    }
+}
+
 function onLoadGame() {
+    setupNavigation()
     loadGame(gameTitle, todaysSolutionName, validCountries, displayRowsCallback)
     document.getElementById("game-description").textContent = explanations[gameTitle] || ""
     document.getElementById("flag-image").src = todaysSolution[gameTitle]

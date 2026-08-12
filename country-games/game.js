@@ -114,7 +114,35 @@ function displayRowsCallback(guessName, rowNumber, initial) {
     }
 }
 
+const gameNavigation = {
+    'capitale': { prev: null, next: { url: 'https://countryle.kak.im', label: 'Countryle' } },
+    'countryle': { prev: { url: 'https://capitale.kak.im', label: 'Capitale' }, next: { url: 'https://grayscale.kak.im', label: 'Grayscale' } }
+}
+
+function setupNavigation() {
+    const nav = gameNavigation[gameTitle]
+    if (!nav) return
+
+    const prevEl = document.getElementById('nav-prev')
+    const nextEl = document.getElementById('nav-next')
+
+    if (nav.prev) {
+        prevEl.href = nav.prev.url
+        prevEl.querySelector('.nav-label').textContent = nav.prev.label
+    } else {
+        prevEl.classList.add('hidden')
+    }
+
+    if (nav.next) {
+        nextEl.href = nav.next.url
+        nextEl.querySelector('.nav-label').textContent = nav.next.label
+    } else {
+        nextEl.classList.add('hidden')
+    }
+}
+
 function onLoadGame() {
+    setupNavigation()
     loadGame(gameTitle, todaysSolutionName, Object.values(countryData).map(country => getSolutionNameByGameTitle[gameTitle](country)), displayRowsCallback)
     document.getElementById("hint-button").addEventListener("click", e => displayWinningGuessRow(false, true))
 }
