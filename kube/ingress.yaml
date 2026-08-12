@@ -27,6 +27,9 @@ spec:
     - hosts:
         - api.games.kak.im
       secretName: api-games-tls
+    - hosts:
+        - home.games.kak.im
+      secretName: landing-page-games-tls
   rules:
     - host: countryle.kak.im
       http:
@@ -74,6 +77,16 @@ spec:
         - backend:
             service:
               name: api
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: home.games.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: landing-page
               port:
                 number: 80
           path: /
