@@ -7,6 +7,7 @@ metadata:
     app: landing-page
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: landing-page
@@ -15,7 +16,6 @@ spec:
       labels:
         app: landing-page
     spec:
-      revisionHistoryLimit: 1
       containers:
       - name: landing-page
         image: kingbrady/simple-daily-games-landing-page:0.1.0
