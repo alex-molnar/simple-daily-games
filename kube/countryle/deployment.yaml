@@ -15,6 +15,7 @@ spec:
       labels:
         app: countryle
     spec:
+      revisionHistoryLimit: 1
       containers:
       - name: countryle
         image: kingbrady/countryle:4.3.0

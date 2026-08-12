@@ -15,6 +15,7 @@ spec:
       labels:
         app: capitale
     spec:
+      revisionHistoryLimit: 1
       containers:
       - name: capitale
         image: kingbrady/capitale:4.3.0

@@ -15,6 +15,7 @@ spec:
       labels:
         app: landing-page
     spec:
+      revisionHistoryLimit: 1
       containers:
       - name: landing-page
         image: kingbrady/simple-daily-games-landing-page:0.1.0

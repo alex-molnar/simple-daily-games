@@ -15,6 +15,7 @@ spec:
       labels:
         app: invertedle
     spec:
+      revisionHistoryLimit: 1
       containers:
       - name: invertedle
         image: kingbrady/invertedle:2.0.0

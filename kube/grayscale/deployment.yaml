@@ -15,6 +15,7 @@ spec:
       labels:
         app: grayscale
     spec:
+      revisionHistoryLimit: 1
       containers:
       - name: grayscale
         image: kingbrady/grayscale:2.0.0

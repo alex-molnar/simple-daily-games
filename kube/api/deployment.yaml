@@ -15,6 +15,7 @@ spec:
       labels:
         app: api
     spec:
+      revisionHistoryLimit: 1
       volumes:
         - name: postgres-secret-volume
           secret:
