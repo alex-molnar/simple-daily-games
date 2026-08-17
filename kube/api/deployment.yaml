@@ -33,4 +33,12 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_HOSTNAME
               value: postgres.postgres.svc.cluster.local
+            - name: CORS_ALLOW_ORIGINS
+              value: "https://capitale.kak.im,https://countryle.kak.im,https://grayscale.kak.im,https://invertedle.kak.im"
+            - name: CORS_ALLOW_CREDENTIALS
+              value: "true"
+            - name: CORS_ALLOW_METHODS
+              value: "GET,POST"
+            - name: CORS_ALLOW_HEADERS
+              value: "*"
 
