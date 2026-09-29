@@ -25,9 +25,6 @@ spec:
         - invertedle.kak.im
       secretName: invertedle-tls
     - hosts:
-        - api.games.kak.im
-      secretName: api-games-tls
-    - hosts:
         - home.games.kak.im
       secretName: landing-page-games-tls
   rules:
@@ -36,7 +33,7 @@ spec:
         paths:
         - backend:
             service:
-              name: countryle
+              name: static
               port:
                 number: 80
           path: /
@@ -46,7 +43,7 @@ spec:
         paths:
         - backend:
             service:
-              name: capitale
+              name: static
               port:
                 number: 80
           path: /
@@ -56,7 +53,7 @@ spec:
         paths:
         - backend:
             service:
-              name: grayscale
+              name: static
               port:
                 number: 80
           path: /
@@ -66,17 +63,7 @@ spec:
         paths:
         - backend:
             service:
-              name: invertedle
-              port:
-                number: 80
-          path: /
-          pathType: Prefix
-    - host: api.games.kak.im
-      http:
-        paths:
-        - backend:
-            service:
-              name: api
+              name: static
               port:
                 number: 80
           path: /
@@ -86,7 +73,36 @@ spec:
         paths:
         - backend:
             service:
-              name: landing-page
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/instance: simple-daily-games
+    app.kubernetes.io/name: simple-daily-games
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: simple-daily-games-api-ratelimit@kubernetescrd
+  name: api
+  namespace: simple-daily-games
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - api.games.kak.im
+      secretName: api-games-tls
+  rules:
+    - host: api.games.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: api
               port:
                 number: 80
           path: /

@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  unit-and-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+
+  api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: simple-daily-games
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: simple-daily-games
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U simple-daily-games" --health-interval 5s --health-retries 10
+    env:
+      POSTGRES_HOSTNAME: localhost
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: PGPASSWORD=password psql -h localhost -U simple-daily-games -d simple-daily-games -f api/db/setup-env.sql
+      - working-directory: api
+        run: uv run --python 3.12 --no-project --with fastapi==0.141.1 --with httpx==0.28.1 --with pytest==9.1.1 --with psycopg2-binary==2.9.13 python -m pytest -q tests

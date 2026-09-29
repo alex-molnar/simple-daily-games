@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - static.yaml
+  - api.yaml
+  - ingress.yaml
+
+# The single place image tags are set. The committed tag is `latest`, so a manual
+# `kubectl apply -k kube/` never rolls back. The pipeline overrides it with the git
+# SHA at deploy time (`kustomize edit set image`) without committing it.
+images:
+  - name: kingbrady/simple-daily-games-static
+    newTag: latest
+  - name: kingbrady/simple-daily-games-api
+    newTag: latest
