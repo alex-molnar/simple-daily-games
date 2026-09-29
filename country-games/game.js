@@ -1,3 +1,4 @@
+import { gameTitle, siteUrl } from '/shared/env.js'
 import { capitalize, unLe } from '/shared/stringUtils.js'
 import { getRandomSelectionForToday, getDirection, mathDistance } from '/shared/mathHelpers.js'
 import { format } from '/shared/stringUtils.js'
@@ -23,7 +24,6 @@ const getKeyByGameTitle = {
     'countryle': country => country,
 }
 
-let gameTitle = location.hostname.split('.')[0]
 let gameTitleUnLe = gameTitle.unLe()
 let todaysSolutionCountry = getRandomSelectionForToday(countryNames, gameTitle)
 let todaysSolution = countryData[todaysSolutionCountry][gameTitleUnLe]
@@ -115,8 +115,8 @@ function displayRowsCallback(guessName, rowNumber, initial) {
 }
 
 const gameNavigation = {
-    'capitale': { prev: null, next: { url: 'https://countryle.kak.im', label: 'Countryle' } },
-    'countryle': { prev: { url: 'https://capitale.kak.im', label: 'Capitale' }, next: { url: 'https://grayscale.kak.im', label: 'Grayscale' } }
+    'capitale': { prev: null, next: { url: siteUrl('countryle'), label: 'Countryle' } },
+    'countryle': { prev: { url: siteUrl('capitale'), label: 'Capitale' }, next: { url: siteUrl('grayscale'), label: 'Grayscale' } }
 }
 
 function setupNavigation() {

@@ -43,5 +43,10 @@
             </a>
         </main>
     </div>
+    <script type="module">
+        // On test.home.games.kak.im the tiles must point at the test games.
+        import { siteUrl } from "/shared/env.js"
+        for (const tile of document.querySelectorAll("a.game-tile")) tile.href = siteUrl(new URL(tile.href).hostname.split(".")[0])
+    </script>
 </body>
 </html>

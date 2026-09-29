@@ -1,10 +1,11 @@
+import { apiBase } from "./env.js"
 
 export function sendRequest(gameTitle) {
 	if (typeof gameTitle !== "string" || gameTitle.trim().length === 0) {
 		throw new Error("gameTitle must be a non-empty string")
 	}
 
-    const url = `https://api.games.kak.im/games/${gameTitle}/today/stats`
+    const url = `${apiBase}/games/${gameTitle}/today/stats`
 	const request = new XMLHttpRequest()
 
 	// Synchronous request by passing false as the third argument.
@@ -30,7 +31,7 @@ export function postRequest(gameTitle, result, optionalPathPart) {
 
 	const amount = result === 'success_game' ? `/${optionalPathPart}` || '' : ''
 
-	const url = `https://api.games.kak.im/games/${gameTitle}/today/${result}${amount}`
+	const url = `${apiBase}/games/${gameTitle}/today/${result}${amount}`
 	const request = new XMLHttpRequest()
 
 	// Fire-and-forget request: async mode returns immediately.
