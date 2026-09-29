@@ -15,7 +15,7 @@ export async function sendRequest(gameTitle) {
     return response.json()
 }
 
-export function postRequest(gameTitle, result, optionalPathPart) {
+export async function postRequest(gameTitle, result, optionalPathPart) {
 	if (typeof gameTitle !== "string" || gameTitle.trim().length === 0) {
 		throw new Error("gameTitle must be a non-empty string")
 	}
@@ -26,11 +26,11 @@ export function postRequest(gameTitle, result, optionalPathPart) {
 	const amount = result === 'success_game' ? `/${optionalPathPart}` || '' : ''
 
 	const url = `${apiBase}/games/${gameTitle}/today/${result}${amount}`
-	const request = new XMLHttpRequest()
+	// keepalive lets the result reach the API even if the player closes the tab right away.
+	const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}", keepalive: true })
 
-	// Fire-and-forget request: async mode returns immediately.
-	request.open("POST", url, true)
-	request.setRequestHeader("Content-Type", "application/json")
-	request.send("{}")
+	if (!response.ok) {
+		throw new Error(`Request failed with status ${response.status}`)
+	}
 }
 

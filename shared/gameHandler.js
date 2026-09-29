@@ -60,7 +60,17 @@ export function updateStats(gameTitle, stats, result) {
         path = 'success_game'
         amount = result.includes('plus') ? '67' : result.replace('games_with_attempts_', '')
     }
-    postRequest(gameTitle, path, amount)
+    // Resolves once the result is saved (or failed to save), so the caller can refresh global stats.
+    return postRequest(gameTitle, path, amount).catch(error => console.warn("Could not save the result", error))
+}
+
+// Giving up is not a guess, so it is stored next to today's guesses to survive a reload.
+export function markGivenUp(gameTitle) {
+    localStorage.setItem(`${gameTitle}-${currentDate}-gave-up`, "true")
+}
+
+export function hasGivenUp(gameTitle) {
+    return localStorage.getItem(`${gameTitle}-${currentDate}-gave-up`) === "true"
 }
 
 function showGuessError(guessInput, message) {

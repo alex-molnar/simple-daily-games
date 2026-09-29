@@ -2,7 +2,7 @@ import { gameTitle, siteUrl } from '/shared/env.js'
 import { capitalize, unLe } from '/shared/stringUtils.js'
 import { getRandomSelectionForToday, getDirection, mathDistance } from '/shared/mathHelpers.js'
 import { format } from '/shared/stringUtils.js'
-import { loadGame, getStats, updateStats } from '/shared/gameHandler.js'
+import { loadGame, getStats, updateStats, markGivenUp, hasGivenUp } from '/shared/gameHandler.js'
 import { launchConfetti } from '/shared/animations.js'
 import { countryData, countryNames } from '/shared/countryData.js'
 import { createStatsPopup } from '/shared/statsPopup.js'
@@ -29,6 +29,8 @@ let todaysSolutionCountry = getRandomSelectionForToday(countryNames, gameTitle)
 let todaysSolution = countryData[todaysSolutionCountry][gameTitleUnLe]
 let todaysSolutionName = getSolutionNameByGameTitle[gameTitle](countryData[todaysSolutionCountry])
 let stats = getStats(gameTitle)
+// One popup for the whole visit: it starts loading global stats now, so the stats button has something to show.
+const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle, kofiImageNumber: 5})
 
 const guessTemplate = `
 <div class="guess-header">{10}</div>
@@ -143,8 +145,19 @@ function setupNavigation() {
 
 function onLoadGame() {
     setupNavigation()
+    document.getElementById("stats-button").addEventListener("click", () => statsPopup.open())
     loadGame(gameTitle, todaysSolutionName, Object.values(countryData).map(country => getSolutionNameByGameTitle[gameTitle](country)), displayRowsCallback)
-    document.getElementById("hint-button").addEventListener("click", e => displayWinningGuessRow(false, true))
+    if (hasGivenUp(gameTitle)) {
+        displayWinningGuessRow(false, true)
+    } else {
+        document.getElementById("hint-button").addEventListener("click", giveUp)
+    }
+}
+
+// Giving up reveals the answer and counts as a failed game.
+function giveUp() {
+    markGivenUp(gameTitle)
+    displayWinningGuessRow(false, false)
 }
 
 function getDistanceClass(distance) {
@@ -238,13 +251,14 @@ function displayWinningGuessRow(triggerConfetti = false, initial = false) {
 
     let category = getCategory(triggerConfetti)
 
+    let saved = Promise.resolve()
     if (!initial) {
         stats[category] = stats[category] + 1
-        updateStats(gameTitle, stats, category)
+        saved = updateStats(gameTitle, stats, category)
     }
 
-    const popup = createStatsPopup(stats, {playerCompletionKey: category, gameTitle: gameTitle, kofiImageNumber: 5})
-    setTimeout(() => popup.open(), 1500)
+    saved.then(() => statsPopup.update(stats, category))
+    setTimeout(() => statsPopup.open(), 1500)
 }
 
 document.title = `${gameTitle.capitalize()} v2`

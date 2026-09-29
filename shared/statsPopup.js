@@ -239,7 +239,7 @@ function renderStatsView({ stats, order, labels, summaryElement, chartElement, s
 
     return meta
 }
-async function getGlobalStats(playerCompletionKey, gameTitle) {
+async function getGlobalStats(gameTitle) {
     let stat = await sendRequest(gameTitle)
 
     let keyUpdatedStats = {
@@ -250,10 +250,6 @@ async function getGlobalStats(playerCompletionKey, gameTitle) {
         keyUpdatedStats[`games_with_attempts_${i}`] = stat[`attempts${i}`] || 0
     }
     keyUpdatedStats["games_with_attempts_plus"] = stat.attempts_plus || 0
-
-    if (playerCompletionKey) {
-        keyUpdatedStats[playerCompletionKey] = keyUpdatedStats[playerCompletionKey] + 1
-    }
 
     return keyUpdatedStats
 }
@@ -281,22 +277,23 @@ export function createStatsPopup(statsInput, options = {}) {
     }
     const defaultStats = typeof emptyStats !== "undefined" ? emptyStats : fallbackStats
     const defaultLabels = typeof statsLabels !== "undefined" ? statsLabels : fallbackLabels
-    const localStats = normalizeStats(statsInput || defaultStats)
+    let localStats = normalizeStats(statsInput || defaultStats)
     // Loaded in the background so the popup never waits on the API.
     let globalStats = normalizeStats({})
     let globalStatus = "loading"
-    getGlobalStats(options.playerCompletionKey, options.gameTitle)
-        .then(stats => {
-            globalStats = normalizeStats(stats)
-            globalStatus = "ready"
-        })
-        .catch(error => {
-            console.warn("Could not load global stats", error)
-            globalStatus = "failed"
-        })
-        .finally(() => {
-            if (activeTab === "global") setActiveTab("global")
-        })
+    function loadGlobalStats() {
+        globalStatus = "loading"
+        return getGlobalStats(options.gameTitle)
+            .then(stats => {
+                globalStats = normalizeStats(stats)
+                globalStatus = "ready"
+            })
+            .catch(error => {
+                console.warn("Could not load global stats", error)
+                globalStatus = "failed"
+            })
+            .finally(() => setActiveTab(activeTab))
+    }
     const labels = { ...defaultLabels, ...(options.labels || {}) }
     const title = options.title || "Your previous performance"
     const mountTarget = options.mountTarget || document.body
@@ -305,7 +302,7 @@ export function createStatsPopup(statsInput, options = {}) {
         ? statsBarOrder
         : Object.keys(localStats)
     const inferredCompletionKey = inferSingleGameCompletionKey(localStats, order)
-    const playerCompletionKey = options.playerCompletionKey || inferredCompletionKey
+    let playerCompletionKey = options.playerCompletionKey || inferredCompletionKey
 
     const hasProvidedElements = Boolean(options.overlay)
     const overlay = options.overlay || buildStatsElement("div", "stats-popup-overlay")
@@ -402,6 +399,14 @@ export function createStatsPopup(statsInput, options = {}) {
         })
     }
 
+    // Called when the game ends: show the new local stats and fetch the global ones again,
+    // after the caller has posted the result, so this player's game is part of them.
+    function update(statsInput, completionKey) {
+        localStats = normalizeStats(statsInput)
+        playerCompletionKey = completionKey
+        return loadGlobalStats()
+    }
+
     function getGlobalSummary() {
         if (globalStatus === "loading") return "Loading global stats…"
         if (globalStatus === "failed") return "Global stats are unavailable right now."
@@ -421,6 +426,7 @@ export function createStatsPopup(statsInput, options = {}) {
     }
 
     setActiveTab("local")
+    loadGlobalStats()
 
     function close() {
         overlay.hidden = true
@@ -466,6 +472,7 @@ export function createStatsPopup(statsInput, options = {}) {
     return {
         open,
         close,
+        update,
         destroy,
         overlay,
         popup,

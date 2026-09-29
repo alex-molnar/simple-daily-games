@@ -52,7 +52,8 @@
     flex-shrink: 0;
 }
 
-#hint-button {
+#hint-button,
+#stats-button {
     height: 50px;
     width: 50px;
     flex-shrink: 0;
