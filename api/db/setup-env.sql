@@ -1,6 +1,6 @@
 CREATE TABLE results (
     gameId VARCHAR(64) NOT NULL,
-    date VARCHAR(32) NOT NULL,
+    date DATE NOT NULL,
     started SMALLINT CHECK (started >= 0) NOT NULL DEFAULT 0,
     attempts1 SMALLINT CHECK (attempts1 >= 0) NOT NULL DEFAULT 0,
     attempts2 SMALLINT CHECK (attempts2 >= 0) NOT NULL DEFAULT 0,

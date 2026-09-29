@@ -25,6 +25,17 @@ spec:
           image: kingbrady/simple-daily-games-api
           ports:
             - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 80
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            periodSeconds: 20
+            failureThreshold: 3
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -58,3 +69,16 @@ spec:
   selector:
     app: api
   type: ClusterIP
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: api-ratelimit
+  namespace: simple-daily-games
+spec:
+  # Per client IP. If Traefik sits behind another proxy, set sourceCriterion.ipStrategy
+  # (depth or excludedIPs), otherwise every visitor shares one bucket.
+  rateLimit:
+    average: 20
+    period: 1s
+    burst: 40
