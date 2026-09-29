@@ -23,7 +23,7 @@ const getKeyByGameTitle = {
     'countryle': country => country,
 }
 
-let gameTitle = PARAM_GAME_TITLE
+let gameTitle = location.hostname.split('.')[0]
 let gameTitleUnLe = gameTitle.unLe()
 let todaysSolutionCountry = getRandomSelectionForToday(countryNames, gameTitle)
 let todaysSolution = countryData[todaysSolutionCountry][gameTitleUnLe]

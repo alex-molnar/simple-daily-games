@@ -47,8 +47,6 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME_GRAYSCALE }}:${{ steps.version.outputs.VERSION }}
             ${{ env.IMAGE_NAME_GRAYSCALE }}:latest
-          build-args: |
-            FLAVOUR=grayscale
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -65,8 +63,6 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME_INVERTEDLE }}:${{ steps.version.outputs.VERSION }}
             ${{ env.IMAGE_NAME_INVERTEDLE }}:latest
-          build-args: |
-            FLAVOUR=invertedle
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

@@ -6,7 +6,7 @@ import { launchConfetti } from 'https://assets.kak.im/api/javascript/animations.
 import { countryData, countryNames } from 'https://assets.kak.im/api/javascript/countryData.js'
 import { createStatsPopup } from 'https://assets.kak.im/api/javascript/statsPopup.js'
 
-let gameTitle = PARAM_GAME_TITLE
+let gameTitle = location.hostname.split('.')[0]
 const validCountries = countryNames.filter(country => countryData[country].flag !== undefined)
 let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)
 let todaysSolution = countryData[todaysSolutionName]

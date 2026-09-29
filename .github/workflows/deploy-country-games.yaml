@@ -51,8 +51,6 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME_CAPITALE }}:${{ steps.version.outputs.VERSION }}
             ${{ env.IMAGE_NAME_CAPITALE }}:latest
-          build-args: |
-            FLAVOUR=capitale
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -69,8 +67,6 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME_COUNTRYLE }}:${{ steps.version.outputs.VERSION }}
             ${{ env.IMAGE_NAME_COUNTRYLE }}:latest
-          build-args: |
-            FLAVOUR=countryle
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
