@@ -1,3 +1,4 @@
+import { gameTitle, siteUrl } from '/shared/env.js'
 import { capitalize } from '/shared/stringUtils.js'
 import { getRandomSelectionForToday, getDirection, mathDistance } from '/shared/mathHelpers.js'
 import { format } from '/shared/stringUtils.js'
@@ -6,7 +7,6 @@ import { launchConfetti } from '/shared/animations.js'
 import { countryData, countryNames } from '/shared/countryData.js'
 import { createStatsPopup } from '/shared/statsPopup.js'
 
-let gameTitle = location.hostname.split('.')[0]
 const validCountries = countryNames.filter(country => countryData[country].flag !== undefined)
 let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)
 let todaysSolution = countryData[todaysSolutionName]
@@ -46,8 +46,8 @@ function displayRowsCallback(guessName, rowNumber, initial) {
 }
 
 const gameNavigation = {
-    'grayscale': { prev: { url: 'https://countryle.kak.im', label: 'Countryle' }, next: { url: 'https://invertedle.kak.im', label: 'Invertedle' } },
-    'invertedle': { prev: { url: 'https://grayscale.kak.im', label: 'Grayscale' }, next: null }
+    'grayscale': { prev: { url: siteUrl('countryle'), label: 'Countryle' }, next: { url: siteUrl('invertedle'), label: 'Invertedle' } },
+    'invertedle': { prev: { url: siteUrl('grayscale'), label: 'Grayscale' }, next: null }
 }
 
 function setupNavigation() {

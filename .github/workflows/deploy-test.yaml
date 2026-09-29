@@ -1,0 +1,21 @@
+name: Deploy test
+
+# Every branch except main deploys to test.<game>.kak.im. Branches share the one test
+# namespace, so the most recent push wins. Changes are detected against main.
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-test
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/build-deploy.yaml
+    with:
+      namespace: simple-daily-games-test
+      kustomize-dir: kube/test
+      tag-latest: false
+    secrets: inherit

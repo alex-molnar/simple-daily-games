@@ -51,3 +51,25 @@ test('invalid guess shows an inline message instead of an alert', async ({ page 
     await page.locator('#guess-input').fill('a')
     await expect(page.locator('#guess-error')).toBeEmpty()
 })
+
+test('test.* hosts pick the game after the prefix and only talk to the test API', async ({ page }) => {
+    const apiHosts = new Set()
+    page.on('request', r => { const { hostname } = new URL(r.url()); if (hostname.includes('api.games')) apiHosts.add(hostname) })
+    await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+
+    await page.goto('http://test.grayscale.localhost:8080/')
+    await expect(page.locator('#game-title')).toHaveText(/grayscale/i)
+    await expect(page.locator('#nav-next')).toHaveAttribute('href', 'https://test.invertedle.kak.im')
+    // Stats are only sent when the game ends, so play it out (a win or six misses).
+    for (let i = 0; i < 6 && await page.locator('#guess-input').isEnabled(); i++) {
+        await page.locator('#guess-input').fill('a')
+        await page.locator('.suggestion-item').first().click()
+        await page.locator('#submit-button').click()
+        await expect(page.locator('#feedback-overlay')).not.toHaveClass(/show/)
+    }
+    await expect.poll(() => [...apiHosts], { timeout: 15_000 }).toEqual(['test.api.games.kak.im'])
+
+    await page.goto('http://test.home.games.localhost:8080/')
+    await expect(page.locator('a.game-tile').first()).toHaveAttribute('href', /^https:\/\/test\.capitale\.kak\.im/)
+})
