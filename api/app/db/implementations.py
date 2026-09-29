@@ -24,7 +24,8 @@ def test_connection() -> dict:
     return {'application': 'up', 'db': 'up'}
 
 def _increment(day: date, game_id: str, field: str) -> dict:
-    assert field in STAT_COLUMNS
+    if field not in STAT_COLUMNS:
+        raise ValueError(f'Unknown stats column: {field}')
     row = _fetch_one(
         f"INSERT INTO results (gameId, date, {field}) VALUES (%s, %s, 1) "
         f"ON CONFLICT (gameId, date) DO UPDATE SET {field} = results.{field} + 1 RETURNING {field}",

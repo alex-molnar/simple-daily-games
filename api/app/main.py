@@ -1,4 +1,4 @@
-from datetime import date as Date
+from datetime import date as Date, datetime, timezone
 from fastapi import FastAPI, Path, Request # pyright: ignore[reportMissingImports]
 from fastapi.middleware.cors import CORSMiddleware # pyright: ignore[reportMissingImports]
 from fastapi.responses import JSONResponse # pyright: ignore[reportMissingImports]
@@ -40,7 +40,8 @@ def database_error(request: Request, exc: DatabaseError):
     return JSONResponse({"detail": "Database unavailable"}, status_code=503)
 
 def today() -> Date:
-    return Date.today()
+    # UTC, to match the client, which builds its date from toISOString()
+    return datetime.now(timezone.utc).date()
 
 
 @app.get("/health")
@@ -51,33 +52,17 @@ def health_check():
 def readiness_check():
     return test_connection()
 
-@app.post("/games/{game_id}/date/{date}/start_game")
-def start_game(game_id: GameId, date: Date):
-    return update_start(date, game_id)
-
 @app.post("/games/{game_id}/today/start_game")
 def start_game_today(game_id: GameId):
     return update_start(today(), game_id)
-
-@app.post("/games/{game_id}/date/{date}/failed_game")
-def failed_game(game_id: GameId, date: Date):
-    return update_failed(date, game_id)
 
 @app.post("/games/{game_id}/today/failed_game")
 def failed_game_today(game_id: GameId):
     return update_failed(today(), game_id)
 
-@app.post("/games/{game_id}/date/{date}/success_game/{attempts}")
-def success_game(game_id: GameId, date: Date, attempts: Attempts):
-    return update_success(date, game_id, attempts)
-
 @app.post("/games/{game_id}/today/success_game/{attempts}")
 def success_game_today(game_id: GameId, attempts: Attempts):
     return update_success(today(), game_id, attempts)
-
-@app.get("/games/{game_id}/date/{date}/stats")
-def get_user_stats_endpoint(game_id: GameId, date: Date):
-    return get_stats_by_game_and_date(game_id, date)
 
 @app.get("/games/{game_id}/today/stats")
 def get_today_game(game_id: GameId):
