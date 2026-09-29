@@ -1,10 +1,10 @@
-import { capitalize } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { getRandomSelectionForToday, getDirection, mathDistance } from 'https://assets.kak.im/api/javascript/mathHelpers.js'
-import { format } from 'https://assets.kak.im/api/javascript/stringUtils.js'
-import { loadGame, getStats, updateStats } from 'https://assets.kak.im/api/javascript/gameHandler.js'
-import { launchConfetti } from 'https://assets.kak.im/api/javascript/animations.js'
-import { countryData, countryNames } from 'https://assets.kak.im/api/javascript/countryData.js'
-import { createStatsPopup } from 'https://assets.kak.im/api/javascript/statsPopup.js'
+import { capitalize } from '/shared/stringUtils.js'
+import { getRandomSelectionForToday, getDirection, mathDistance } from '/shared/mathHelpers.js'
+import { format } from '/shared/stringUtils.js'
+import { loadGame, getStats, updateStats } from '/shared/gameHandler.js'
+import { launchConfetti } from '/shared/animations.js'
+import { countryData, countryNames } from '/shared/countryData.js'
+import { createStatsPopup } from '/shared/statsPopup.js'
 
 let gameTitle = location.hostname.split('.')[0]
 const validCountries = countryNames.filter(country => countryData[country].flag !== undefined)
