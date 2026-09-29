@@ -1,0 +1,109 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: simple-daily-games
+    app.kubernetes.io/name: simple-daily-games
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: simple-daily-games
+  namespace: simple-daily-games-test
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - test.countryle.kak.im
+      secretName: test-countryle-tls
+    - hosts:
+        - test.capitale.kak.im
+      secretName: test-capitale-tls
+    - hosts:
+        - test.grayscale.kak.im
+      secretName: test-grayscale-tls
+    - hosts:
+        - test.invertedle.kak.im
+      secretName: test-invertedle-tls
+    - hosts:
+        - test.home.games.kak.im
+      secretName: test-landing-page-games-tls
+  rules:
+    - host: test.countryle.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: test.capitale.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: test.grayscale.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: test.invertedle.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: test.home.games.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/instance: simple-daily-games
+    app.kubernetes.io/name: simple-daily-games
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: simple-daily-games-test-api-ratelimit@kubernetescrd
+  name: api
+  namespace: simple-daily-games-test
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - test.api.games.kak.im
+      secretName: test-api-games-tls
+  rules:
+    - host: test.api.games.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: api
+              port:
+                number: 80
+          path: /
+          pathType: Prefix

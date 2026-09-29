@@ -1,0 +1,20 @@
+name: Deploy production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Deploys must not overlap: each one applies the whole kustomization.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/build-deploy.yaml
+    with:
+      namespace: simple-daily-games
+      kustomize-dir: kube
+      tag-latest: true
+    secrets: inherit

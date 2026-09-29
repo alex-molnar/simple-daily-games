@@ -1,19 +1,25 @@
-name: Build and Deploy
+name: Build and Deploy (reusable)
 
+# Called by deploy.yaml (main -> production) and deploy-test.yaml (other branches -> test).
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-# Deploys must not overlap: each one applies the whole kube/ directory.
-concurrency:
-  group: deploy
-  cancel-in-progress: false
+  workflow_call:
+    inputs:
+      namespace:
+        required: true
+        type: string
+      kustomize-dir:
+        required: true
+        type: string
+      tag-latest:
+        description: Also push the images as `latest`. Only production does, since
+          `latest` is the fallback tag for anything not rebuilt in a run.
+        required: true
+        type: boolean
 
 env:
   STATIC_IMAGE: kingbrady/simple-daily-games-static
   API_IMAGE: kingbrady/simple-daily-games-api
-  NAMESPACE: simple-daily-games
+  NAMESPACE: ${{ inputs.namespace }}
 
 jobs:
   changes:
@@ -61,7 +67,7 @@ jobs:
           push: true
           tags: |
             ${{ env.STATIC_IMAGE }}:${{ github.sha }}
-            ${{ env.STATIC_IMAGE }}:latest
+            ${{ inputs.tag-latest && format('{0}:latest', env.STATIC_IMAGE) || '' }}
           cache-from: type=gha,scope=static
           cache-to: type=gha,mode=max,scope=static
 
@@ -84,7 +90,7 @@ jobs:
           push: true
           tags: |
             ${{ env.API_IMAGE }}:${{ github.sha }}
-            ${{ env.API_IMAGE }}:latest
+            ${{ inputs.tag-latest && format('{0}:latest', env.API_IMAGE) || '' }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
 
@@ -120,7 +126,7 @@ jobs:
           if [ "$STATIC_BUILT" = true ]; then STATIC_TAG=$GITHUB_SHA; else STATIC_TAG=$(running_tag static); fi
           if [ "$API_BUILT" = true ]; then API_TAG=$GITHUB_SHA; else API_TAG=$(running_tag api); fi
 
-          cd kube
+          cd "${{ inputs.kustomize-dir }}"
           kustomize edit set image \
             "$STATIC_IMAGE=$STATIC_IMAGE:${STATIC_TAG:-latest}" \
             "$API_IMAGE=$API_IMAGE:${API_TAG:-latest}"
