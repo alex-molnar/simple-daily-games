@@ -73,3 +73,39 @@ test('test.* hosts pick the game after the prefix and only talk to the test API'
     await page.goto('http://test.home.games.localhost:8080/')
     await expect(page.locator('a.game-tile').first()).toHaveAttribute('href', /^https:\/\/test\.capitale\.kak\.im/)
 })
+
+// A finished flag game (six guesses already stored for today) opens the stats popup on load.
+const finishedGame = game => {
+    const today = new Date().toISOString().split('T')[0]
+    localStorage.setItem(`${game}-${today}`, JSON.stringify(['France', 'Germany', 'Spain', 'Italy', 'Japan', 'Brazil']))
+}
+
+test('stats popup opens while the global stats request is still pending', async ({ page }) => {
+    let answer
+    const pending = new Promise(resolve => { answer = resolve })
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await page.route(/api\.games\.kak\.im\/.*\/stats$/, async route => { await pending; await route.fulfill({ json: { ...zeros, attempts2: 5 } }) })
+    await page.route(/api\.games\.kak\.im/, route => route.fallback())
+    await page.addInitScript(finishedGame, 'grayscale')
+
+    await page.goto('http://grayscale.localhost:8080/')
+    // A synchronous request would freeze the page here until the API answered.
+    await expect(page.locator('.stats-popup')).toBeVisible()
+    await page.getByRole('tab', { name: /global/i }).click()
+    await expect(page.locator('.stats-popup-summary')).toHaveText(/loading/i)
+
+    answer()
+    await expect(page.locator('.stats-popup-summary')).not.toHaveText(/loading/i)
+    await expect(page.locator('.stats-chart-row[data-key="games_with_attempts_2"] .stats-chart-value')).toHaveText('5')
+})
+
+test('stats popup still opens when the API is down', async ({ page }) => {
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await page.route(/api\.games\.kak\.im/, route => route.abort())
+    await page.addInitScript(finishedGame, 'grayscale')
+
+    await page.goto('http://grayscale.localhost:8080/')
+    await expect(page.locator('.stats-popup')).toBeVisible()
+    await page.getByRole('tab', { name: /global/i }).click()
+    await expect(page.locator('.stats-popup-summary')).toHaveText(/unavailable/i)
+})
