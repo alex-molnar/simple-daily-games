@@ -33,3 +33,21 @@ test('landing page lists the four games', async ({ page }) => {
     await page.goto('http://home.games.localhost:8080/')
     await expect(page.locator('a.game-tile')).toHaveCount(4)
 })
+
+test('invalid guess shows an inline message instead of an alert', async ({ page }) => {
+    let dialogs = 0
+    page.on('dialog', d => { dialogs++; d.dismiss() })
+    await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+
+    await page.goto('http://countryle.localhost:8080/')
+    await page.locator('#guess-input').fill('zzzz')
+    await page.locator('#submit-button').click()
+
+    await expect(page.locator('#guess-error')).toContainText('valid')
+    await expect(page.locator('#guess-input')).toHaveClass(/shake/)
+    expect(dialogs).toBe(0)
+
+    await page.locator('#guess-input').fill('a')
+    await expect(page.locator('#guess-error')).toBeEmpty()
+})

@@ -1,3 +1,7 @@
+:root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -205,6 +209,21 @@ body {
     font-size: 16px;
     font-weight: 600;
     color: #ffffff;
+    transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+
+@starting-style {
+    .answer-message.enter {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .answer-message { transition: opacity 300ms var(--ease-out); }
+    @starting-style {
+        .answer-message.enter { transform: none; }
+    }
 }
 
 /* Guess rows */
@@ -639,4 +658,49 @@ body {
 
 .stats-popup-kofi:hover img {
   opacity: 0.85;
+}
+/* Invalid guess feedback */
+.guess-error {
+    color: #e65c44;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.guess-error:empty {
+    display: none;
+}
+
+#guess-input.shake {
+    animation: guess-shake 280ms ease-in-out;
+}
+
+@keyframes guess-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    60% { transform: translateX(4px); }
+    80% { transform: translateX(-2px); }
+}
+
+/* Stats popup entrance (closing stays instant) */
+.stats-popup-overlay {
+    transition: opacity 200ms var(--ease-out);
+}
+
+.stats-popup {
+    transition: transform 250ms var(--ease-out), opacity 250ms var(--ease-out);
+}
+
+@starting-style {
+    .stats-popup-overlay { opacity: 0; }
+    .stats-popup { opacity: 0; transform: scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #guess-input.shake { animation: none; }
+    .stats-popup-overlay { transition-duration: 150ms; }
+    .stats-popup { transition: opacity 150ms var(--ease-out); }
+    @starting-style {
+        .stats-popup { transform: none; }
+    }
 }
