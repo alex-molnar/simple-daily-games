@@ -147,6 +147,7 @@ body {
 
 .guess-input {
     flex: 1;
+    min-width: 0;
     padding: 14px 18px;
     font-size: 16px;
     border: 2px solid #3d3d5c;
@@ -184,6 +185,11 @@ body {
 
 .guess-button:active {
     transform: scale(0.98);
+}
+
+/* Icon-only, so narrower than GUESS */
+.stats-button {
+    padding: 14px 16px;
 }
 
 .guess-button:disabled {

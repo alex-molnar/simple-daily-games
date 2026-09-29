@@ -11,6 +11,8 @@ const validCountries = countryNames.filter(country => countryData[country].flag 
 let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)
 let todaysSolution = countryData[todaysSolutionName]
 let stats = getStats(gameTitle)
+// One popup for the whole visit: it starts loading global stats now, so the stats button has something to show.
+const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle, kofiImageNumber: 6})
 
 const explanations = {
     "grayscale": "Guess the country which's flag is displayed in grayscale above. Wrong guesses give you additional hints.",
@@ -74,6 +76,7 @@ function setupNavigation() {
 
 function onLoadGame() {
     setupNavigation()
+    document.getElementById("stats-button").addEventListener("click", () => statsPopup.open())
     loadGame(gameTitle, todaysSolutionName, validCountries, displayRowsCallback)
     document.getElementById("game-description").textContent = explanations[gameTitle] || ""
     document.getElementById("flag-image").src = todaysSolution[gameTitle]
@@ -148,13 +151,15 @@ function displayWinningGuessRow(guessName, rowNumber, initial = false) {
 
     launchConfetti()
 
+    const category = `games_with_attempts_${rowNumber}`
+    let saved = Promise.resolve()
     if (!initial) {
-        stats[`games_with_attempts_${rowNumber}`] = stats[`games_with_attempts_${rowNumber}`] + 1
-        updateStats(gameTitle, stats, `games_with_attempts_${rowNumber}`)
+        stats[category] = stats[category] + 1
+        saved = updateStats(gameTitle, stats, category)
     }
 
-    const popup = createStatsPopup(stats, {playerCompletionKey: `games_with_attempts_${rowNumber}`, gameTitle: gameTitle, kofiImageNumber: 6})
-    setTimeout(() => popup.open(), 1500)
+    saved.then(() => statsPopup.update(stats, category))
+    setTimeout(() => statsPopup.open(), 1500)
 }
 
 function displayGameOverRow(initial = false) {
@@ -174,13 +179,14 @@ function displayGameOverRow(initial = false) {
     guessInput.value = ""
     submitButton.disabled = true
 
+    let saved = Promise.resolve()
     if (!initial) {
         stats.games_failed = stats.games_failed + 1
-        updateStats(gameTitle, stats, 'games_failed')
+        saved = updateStats(gameTitle, stats, 'games_failed')
     }
 
-    const popup = createStatsPopup(stats, {playerCompletionKey: 'games_failed', gameTitle: gameTitle, kofiImageNumber: 6})
-    setTimeout(() => popup.open(), 1500)
+    saved.then(() => statsPopup.update(stats, 'games_failed'))
+    setTimeout(() => statsPopup.open(), 1500)
 }
 
 document.title = gameTitle.capitalize()

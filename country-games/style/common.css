@@ -353,13 +353,20 @@ body {
     font-weight: bold;
 }
 
+#stats-button {
+    cursor: pointer;
+    font-size: 20px;
+}
+
 #submit-button,
-#hint-button {
+#hint-button,
+#stats-button {
     transition: transform 160ms var(--ease-out);
 }
 
 #submit-button:active,
-#hint-button:active {
+#hint-button:active,
+#stats-button:active {
     transform: scale(0.97);
 }
 

@@ -55,7 +55,8 @@
     font-size: 3.5vw;
 }
 
-#hint-button {
+#hint-button,
+#stats-button {
     height: 70%;
     width: calc(0.7 * 10vh);
     flex-shrink: 0;
