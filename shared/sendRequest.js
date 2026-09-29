@@ -1,24 +1,18 @@
 import { apiBase } from "./env.js"
 
-export function sendRequest(gameTitle) {
+export async function sendRequest(gameTitle) {
 	if (typeof gameTitle !== "string" || gameTitle.trim().length === 0) {
 		throw new Error("gameTitle must be a non-empty string")
 	}
 
     const url = `${apiBase}/games/${gameTitle}/today/stats`
-	const request = new XMLHttpRequest()
+	const response = await fetch(url, { headers: { Accept: "application/json" } })
 
-	// Synchronous request by passing false as the third argument.
-	request.open("GET", url, false)
-	request.setRequestHeader("Accept", "application/json")
-	request.send(null)
-
-	if (request.status < 200 || request.status >= 300) {
-		throw new Error(`Request failed with status ${request.status}`)
+	if (!response.ok) {
+		throw new Error(`Request failed with status ${response.status}`)
 	}
 
-
-    return JSON.parse(request.responseText)
+    return response.json()
 }
 
 export function postRequest(gameTitle, result, optionalPathPart) {

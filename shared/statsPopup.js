@@ -239,8 +239,8 @@ function renderStatsView({ stats, order, labels, summaryElement, chartElement, s
 
     return meta
 }
-function getGlobalStats(playerCompletionKey, gameTitle) { 
-    let stat = sendRequest(gameTitle) 
+async function getGlobalStats(playerCompletionKey, gameTitle) {
+    let stat = await sendRequest(gameTitle)
 
     let keyUpdatedStats = {
         games_failed: stat.failures || 0,
@@ -282,7 +282,21 @@ export function createStatsPopup(statsInput, options = {}) {
     const defaultStats = typeof emptyStats !== "undefined" ? emptyStats : fallbackStats
     const defaultLabels = typeof statsLabels !== "undefined" ? statsLabels : fallbackLabels
     const localStats = normalizeStats(statsInput || defaultStats)
-    const globalStats = normalizeStats(getGlobalStats(options.playerCompletionKey, options.gameTitle))
+    // Loaded in the background so the popup never waits on the API.
+    let globalStats = normalizeStats({})
+    let globalStatus = "loading"
+    getGlobalStats(options.playerCompletionKey, options.gameTitle)
+        .then(stats => {
+            globalStats = normalizeStats(stats)
+            globalStatus = "ready"
+        })
+        .catch(error => {
+            console.warn("Could not load global stats", error)
+            globalStatus = "failed"
+        })
+        .finally(() => {
+            if (activeTab === "global") setActiveTab("global")
+        })
     const labels = { ...defaultLabels, ...(options.labels || {}) }
     const title = options.title || "Your previous performance"
     const mountTarget = options.mountTarget || document.body
@@ -384,10 +398,14 @@ export function createStatsPopup(statsInput, options = {}) {
             labels,
             summaryElement: summary,
             chartElement: chart,
-            summaryOverride: isLocal
-                ? null
-                : getTopPercentageMessage(globalStats, playerCompletionKey, order, labels)
+            summaryOverride: isLocal ? null : getGlobalSummary()
         })
+    }
+
+    function getGlobalSummary() {
+        if (globalStatus === "loading") return "Loading global stats…"
+        if (globalStatus === "failed") return "Global stats are unavailable right now."
+        return getTopPercentageMessage(globalStats, playerCompletionKey, order, labels)
     }
 
     function getActiveTab() {
