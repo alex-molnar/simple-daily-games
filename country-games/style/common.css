@@ -66,6 +66,18 @@ body {
     pointer-events: none;
 }
 
+/* Phones: the title row cannot fit two labelled arrows beside the title, so keep
+   only the arrow icons (the links keep their aria-label). */
+@media (max-width: 480px) {
+    .nav-arrow {
+        min-width: 0;
+    }
+
+    .nav-label {
+        display: none;
+    }
+}
+
 #main-container {
     display: flex;
     flex-direction: column;

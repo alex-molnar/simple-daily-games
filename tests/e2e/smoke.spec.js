@@ -176,3 +176,21 @@ test('giving up records a failed game, survives a reload and opens the stats', a
     await expect(statValue(page, 'games_failed')).toHaveText('1') // not counted twice
     expect(calls.filter(c => c.startsWith('POST'))).toEqual(['POST failed_game'])
 })
+
+for (const width of [320, 390]) {
+    test(`every game fits a ${width}px wide phone screen`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 })
+        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+        await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
+        for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
+            await page.goto(`http://${game}.localhost:8080/`)
+            const overflow = await page.evaluate(() => ({
+                page: document.documentElement.scrollWidth - innerWidth,
+                // Clipped content does not widen the page, so check the arrows themselves too.
+                arrows: Math.max(...[...document.querySelectorAll('.nav-arrow')].map(a => a.getBoundingClientRect().right)) - innerWidth,
+            }))
+            expect(overflow.page, `${game} page`).toBeLessThanOrEqual(0)
+            expect(overflow.arrows, `${game} nav arrows`).toBeLessThanOrEqual(0)
+        }
+    })
+}
