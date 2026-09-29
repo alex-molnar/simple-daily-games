@@ -1,3 +1,7 @@
+:root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f0f0;
@@ -349,6 +353,16 @@ body {
     font-weight: bold;
 }
 
+#submit-button,
+#hint-button {
+    transition: transform 160ms var(--ease-out);
+}
+
+#submit-button:active,
+#hint-button:active {
+    transform: scale(0.97);
+}
+
 #guess-input {
     font-size: 20px;
 }
@@ -625,4 +639,49 @@ body {
 
 .stats-popup-kofi:hover img {
   opacity: 0.85;
+}
+/* Invalid guess feedback */
+.guess-error {
+    color: #e65c44;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.guess-error:empty {
+    display: none;
+}
+
+#guess-input.shake {
+    animation: guess-shake 280ms ease-in-out;
+}
+
+@keyframes guess-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    60% { transform: translateX(4px); }
+    80% { transform: translateX(-2px); }
+}
+
+/* Stats popup entrance (closing stays instant) */
+.stats-popup-overlay {
+    transition: opacity 200ms var(--ease-out);
+}
+
+.stats-popup {
+    transition: transform 250ms var(--ease-out), opacity 250ms var(--ease-out);
+}
+
+@starting-style {
+    .stats-popup-overlay { opacity: 0; }
+    .stats-popup { opacity: 0; transform: scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #guess-input.shake { animation: none; }
+    .stats-popup-overlay { transition-duration: 150ms; }
+    .stats-popup { transition: opacity 150ms var(--ease-out); }
+    @starting-style {
+        .stats-popup { transform: none; }
+    }
 }

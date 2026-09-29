@@ -63,6 +63,26 @@ export function updateStats(gameTitle, stats, result) {
     postRequest(gameTitle, path, amount)
 }
 
+function showGuessError(guessInput, message) {
+    let error = document.getElementById("guess-error")
+    if (!error) {
+        error = document.createElement("div")
+        error.id = "guess-error"
+        error.className = "guess-error"
+        error.setAttribute("role", "alert")
+        guessInput.parentNode.after(error)
+    }
+    error.textContent = message
+    guessInput.classList.remove("shake")
+    void guessInput.offsetWidth // restart the animation on repeat errors
+    guessInput.classList.add("shake")
+}
+
+function clearGuessError() {
+    const error = document.getElementById("guess-error")
+    if (error) error.textContent = ""
+}
+
 function submitGuess(e, gameTitle, solutions, displayRowsCallback) {
     let guessInput = document.getElementById("guess-input")
     let guess = guessInput.value
@@ -74,11 +94,12 @@ function submitGuess(e, gameTitle, solutions, displayRowsCallback) {
             guessInput.value = firstChoice.trim()
             submitGuess(e, gameTitle, solutions, displayRowsCallback)
         } else if (guess.toLowerCase().trim().length > 0) {
-            alert(`Please select a valid ${gameTitle.unLe()} from the suggestions.`)
+            showGuessError(guessInput, `Please select a valid ${gameTitle.unLe()} from the suggestions.`)
         }
     } else if (alreadyGuessed.includes(guess)) {
-        alert(`You have already guessed this ${gameTitle.unLe()}.`)
+        showGuessError(guessInput, `You have already guessed this ${gameTitle.unLe()}.`)
     } else {
+        clearGuessError()
         alreadyGuessed.push(guess)
         localStorage.setItem(`${gameTitle}-${currentDate}`, JSON.stringify(alreadyGuessed))
         guessInput.value = ""
@@ -89,6 +110,7 @@ function submitGuess(e, gameTitle, solutions, displayRowsCallback) {
 
 function searchForSolution(e, solutions) {
     let guess = e.target.value
+    clearGuessError()
     let suggestionsContainer = document.getElementById("suggestions-container")
     selectedSuggestionIndex = -1
     

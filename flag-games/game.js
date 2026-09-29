@@ -161,7 +161,7 @@ function displayGameOverRow(initial = false) {
     // Create message element above guess rows
     const guessesContainer = document.getElementById("guesses-container")
     const answerMessage = document.createElement("div")
-    answerMessage.className = "answer-message"
+    answerMessage.className = initial ? "answer-message" : "answer-message enter"
     answerMessage.textContent = `Today's answer was ${todaysSolutionName}`
     guessesContainer.parentNode.insertBefore(answerMessage, guessesContainer)
 
