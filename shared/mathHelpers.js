@@ -35,16 +35,12 @@ const DIRECTIONS = [
     { directionShort: "NW", direction: "northwest", directionIcon: "↖️" },
 ]
 
-// Compass direction of the initial great-circle course from point 1 to point 2.
-// Longitude differences wrap through sin/cos, so it handles the antimeridian like mathDistance does.
+// Compass direction from point 1 to point 2 on a flat map whose east-west edges join up:
+// longitude takes the shorter way round the world, latitude does not wrap (no going over a pole).
 export function getDirection(lat1, lon1, lat2, lon2) {
-    const φ1 = lat1 * Math.PI/180;
-    const φ2 = lat2 * Math.PI/180;
-    const Δλ = (lon2-lon1) * Math.PI/180;
-    const bearing = Math.atan2(
-        Math.sin(Δλ) * Math.cos(φ2),
-        Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ)
-    ) * 180/Math.PI; // -180..180, 0 = north, clockwise
+    const north = lat2 - lat1
+    const east = ((lon2 - lon1 + 540) % 360) - 180 // -180..180
+    const bearing = Math.atan2(east, north) * 180/Math.PI // 0 = north, clockwise
     return DIRECTIONS[Math.round(((bearing + 360) % 360) / 45) % 8]
 }
 

@@ -33,6 +33,12 @@ test('getDirection wraps across the antimeridian', () => {
     assert.equal(getDirection(0, 179, 0, -179).directionShort, 'E')
 })
 
+test('getDirection never wraps over a pole', () => {
+    assert.equal(getDirection(-17.7, 178, 17.6, 8.1).directionShort, 'W') // Fiji to Niger: north of Fiji, not south
+    assert.equal(getDirection(80, 0, 75, 10).directionShort, 'SE') // near the pole, still south of where we were
+    assert.equal(getDirection(-80, 0, -75, -10).directionShort, 'NW')
+})
+
 test('mathDistance is in whole kilometres', () => {
     assert.equal(mathDistance(48.8566, 2.3522, 51.5074, -0.1278), 344) // Paris to London
     assert.equal(mathDistance(1, 1, 1, 1), 0)
