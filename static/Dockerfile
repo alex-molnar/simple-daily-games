@@ -8,5 +8,6 @@ COPY static/common.conf /etc/nginx/common.conf
 COPY country-games /srv/country-games
 COPY flag-games /srv/flag-games
 COPY landing /srv/landing
+COPY landing/assets /srv/assets/landing
 COPY shared /srv/shared
 COPY assets /srv/assets

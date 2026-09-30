@@ -1,52 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Games</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234f46e5'/%3E%3Cpath d='M30 35h40v30H30z' fill='%23fff' rx='4'/%3E%3Ccircle cx='40' cy='50' r='6' fill='%234f46e5'/%3E%3Ccircle cx='60' cy='50' r='6' fill='%234f46e5'/%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f0e5">
+    <meta name="description" content="Pick a daily puzzle and see where it takes you.">
+    <title>Daily Games — A little curiosity. Every day.</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23103b3d'/%3E%3Cpath d='M32 8 39 29 56 32 39 35 32 56 25 35 8 32 25 29z' fill='%23f6c64d'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23d9573e'/%3E%3C/svg%3E">
+    <link rel="preload" href="/assets/landing/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Daily Games</h1>
-            <p class="subtitle">Test your geography knowledge every day</p>
-        </header>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="wordmark" href="/" aria-label="Daily Games home">Daily Games</a>
+            <nav aria-label="Main navigation">
+                <a class="nav-link" href="#games-title">Games</a>
+            </nav>
+        </div>
+    </header>
 
-        <main class="games-grid">
-            <a href="https://capitale.kak.im" class="game-tile">
-                <div class="tile-icon">🏛️</div>
-                <h2>Capitale</h2>
-                <p>Guess the capital city from geographic clues</p>
-            </a>
+    <main id="main-content" tabindex="-1">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow">A daily dose of discovery</p>
+                <h1 id="hero-title">A little curiosity.<br>Every day.</h1>
+                <p class="hero-description">Pick a puzzle and see where it takes you.</p>
+                <a class="primary-action" href="#games-title">Explore games <span aria-hidden="true">↘</span></a>
+            </div>
+            <div class="hero-art-wrap">
+                <img class="hero-art" src="/assets/landing/explorer-hero.webp" alt="" width="1536" height="1024" fetchpriority="high">
+                <span class="art-caption" aria-hidden="true">Take the scenic route</span>
+            </div>
+        </section>
 
-            <a href="https://countryle.kak.im" class="game-tile">
-                <div class="tile-icon">🌍</div>
-                <h2>Countryle</h2>
-                <p>Identify the country using hints</p>
-            </a>
+        <section class="catalogue" aria-labelledby="games-title">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Find your next favorite</p>
+                    <h2 id="games-title" tabindex="-1">Choose your next challenge</h2>
+                </div>
+            </div>
+            <div class="games-grid">
+                <a href="https://capitale.kak.im" class="game-tile">
+                    <img class="tile-art" src="/assets/landing/capitale.webp" alt="" width="627" height="627" loading="lazy">
+                    <span class="tile-content">
+                        <h3 class="tile-title">Capitale</h3>
+                        <span class="tile-description">Guess the capital city from geographic clues.</span>
+                        <span class="play-action">Play <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
 
-            <a href="https://grayscale.kak.im" class="game-tile">
-                <div class="tile-icon">🏴</div>
-                <h2>Grayscale</h2>
-                <p>Name the country from its grayscale flag</p>
-            </a>
+                <a href="https://countryle.kak.im" class="game-tile">
+                    <img class="tile-art" src="/assets/landing/countryle.webp" alt="" width="627" height="627" loading="lazy">
+                    <span class="tile-content">
+                        <h3 class="tile-title">Countryle</h3>
+                        <span class="tile-description">Identify the country using hints.</span>
+                        <span class="play-action">Play <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
 
-            <a href="https://invertedle.kak.im" class="game-tile">
-                <div class="tile-icon">🔄</div>
-                <h2>Invertedle</h2>
-                <p>Recognize the flag with inverted colors</p>
-            </a>
-        </main>
-    </div>
+                <a href="https://grayscale.kak.im" class="game-tile">
+                    <img class="tile-art" src="/assets/landing/grayscale.webp" alt="" width="627" height="627" loading="lazy">
+                    <span class="tile-content">
+                        <h3 class="tile-title">Grayscale</h3>
+                        <span class="tile-description">Name the country from its grayscale flag.</span>
+                        <span class="play-action">Play <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
+
+                <a href="https://invertedle.kak.im" class="game-tile">
+                    <img class="tile-art" src="/assets/landing/invertedle.webp" alt="" width="627" height="627" loading="lazy">
+                    <span class="tile-content">
+                        <h3 class="tile-title">Invertedle</h3>
+                        <span class="tile-description">Recognize the flag with inverted colors.</span>
+                        <span class="play-action">Play <span aria-hidden="true">↗</span></span>
+                    </span>
+                </a>
+            </div>
+        </section>
+    </main>
+
     <script type="module">
-        // On test.home.games.kak.im the tiles must point at the test games.
+        // Test-host landing pages must link only to test games.
         import { siteUrl } from "/shared/env.js"
-        for (const tile of document.querySelectorAll("a.game-tile")) tile.href = siteUrl(new URL(tile.href).hostname.split(".")[0])
+        for (const tile of document.querySelectorAll("a.game-tile")) {
+            tile.href = siteUrl(new URL(tile.href).hostname.split(".")[0])
+        }
     </script>
 </body>
 </html>

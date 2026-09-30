@@ -34,6 +34,102 @@ test('landing page lists the four games', async ({ page }) => {
     await expect(page.locator('a.game-tile')).toHaveCount(4)
 })
 
+test('landing page has the approved content, catalogue navigation and production links', async ({ page }) => {
+    await page.goto('http://home.games.localhost:8080/')
+
+    await expect(page.locator('header')).toBeVisible()
+    await expect(page.locator('main h1')).toHaveCount(1)
+    await expect(page.locator('main h1')).toHaveText(/A little curiosity\.\s*Every day\./)
+    await expect(page.locator('main h2')).toHaveCount(1)
+    await expect(page.locator('#games-title')).toHaveText('Choose your next challenge')
+    await expect(page.locator('a.game-tile h3')).toHaveCount(4)
+    await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Games' })).toHaveAttribute('href', '#games-title')
+    await expect(page.getByRole('link', { name: 'Explore games' })).toHaveAttribute('href', '#games-title')
+
+    const games = ['capitale', 'countryle', 'grayscale', 'invertedle']
+    for (const [index, game] of games.entries()) {
+        const tile = page.locator('a.game-tile').nth(index)
+        await expect(tile).toHaveAttribute('href', `https://${game}.kak.im`)
+        await expect(tile).toContainText('Play')
+        await expect(tile.locator('img')).toHaveAttribute('alt', '')
+    }
+    await expect.poll(() => page.locator('.tile-art').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true)
+    await expect.poll(() => page.evaluate(() => document.fonts.check('600 24px Fraunces') && document.fonts.check('400 16px "DM Sans"'))).toBe(true)
+
+    await page.getByRole('link', { name: 'Explore games' }).click()
+    await expect(page.locator('#games-title')).toBeInViewport()
+})
+
+test('landing page keyboard navigation starts with a working skip link', async ({ page }) => {
+    await page.goto('http://home.games.localhost:8080/')
+    await page.keyboard.press('Tab')
+    await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused()
+    await expect(page.getByRole('link', { name: 'Skip to content' })).toBeInViewport()
+    await page.keyboard.press('Enter')
+    await expect(page.locator('main')).toBeInViewport()
+    await expect(page.locator('main')).toBeFocused()
+
+    await page.keyboard.press('Tab')
+    await expect(page.getByRole('link', { name: 'Explore games' })).toBeFocused()
+    await page.keyboard.press('Shift+Tab')
+    await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Games' })).toBeFocused()
+})
+
+test('landing page reflows at 200% text size on a narrow viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 900 })
+    await page.goto('http://home.games.localhost:8080/')
+    await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
+
+    const layout = await page.evaluate(() => ({
+        overflow: document.documentElement.scrollWidth - innerWidth,
+        headingSize: parseFloat(getComputedStyle(document.querySelector('h1')).fontSize),
+        tileSizes: [...document.querySelectorAll('.game-tile')].map(tile => {
+            const art = tile.querySelector('img').getBoundingClientRect()
+            const content = tile.querySelector('.tile-content').getBoundingClientRect()
+            return { artBottom: art.bottom, contentTop: content.top, contentWidth: content.width, contentHeight: content.height }
+        }),
+    }))
+
+    expect(layout.overflow).toBeLessThanOrEqual(0)
+    expect(layout.headingSize).toBeGreaterThan(48)
+    for (const tile of layout.tileSizes) {
+        expect(tile.contentWidth).toBeGreaterThan(0)
+        expect(tile.contentHeight).toBeGreaterThan(0)
+        expect(tile.contentTop).toBeGreaterThanOrEqual(tile.artBottom)
+    }
+})
+
+test('catalogue reflows from one to twelve entries at the reviewed widths', async ({ page }) => {
+    await page.goto('http://home.games.localhost:8080/')
+
+    for (const count of [1, 4, 5, 12]) {
+        await page.locator('.games-grid').evaluate((grid, targetCount) => {
+            const original = [...grid.querySelectorAll('.game-tile')]
+            while (grid.children.length > targetCount) grid.lastElementChild.remove()
+            while (grid.children.length < targetCount) {
+                const index = grid.children.length
+                const tile = original[index % original.length].cloneNode(true)
+                tile.querySelector('.tile-title').textContent = index === 11 ? 'A Curious Traveller’s Challenge' : `Extra game ${index + 1}`
+                tile.querySelector('.tile-description').textContent = 'Find a new daily puzzle and follow the clues wherever they lead.'
+                grid.append(tile)
+            }
+        }, count)
+        await expect(page.locator('a.game-tile')).toHaveCount(count)
+
+        for (const width of [320, 390, 768, 1024, 1440]) {
+            await page.setViewportSize({ width, height: 900 })
+            const layout = await page.evaluate(() => ({
+                overflow: document.documentElement.scrollWidth - innerWidth,
+                columns: getComputedStyle(document.querySelector('.games-grid')).gridTemplateColumns.split(' ').length,
+                lastTile: document.querySelector('.game-tile:last-child').getBoundingClientRect().toJSON(),
+            }))
+            expect(layout.overflow, `${count} games at ${width}px`).toBeLessThanOrEqual(0)
+            expect(layout.columns, `${count} games at ${width}px`).toBe(width <= 620 ? 1 : width <= 900 ? 2 : 3)
+            expect(layout.lastTile.width, `${count} games at ${width}px`).toBeGreaterThan(0)
+        }
+    }
+})
+
 test('invalid guess shows an inline message instead of an alert', async ({ page }) => {
     let dialogs = 0
     page.on('dialog', d => { dialogs++; d.dismiss() })
@@ -72,6 +168,7 @@ test('test.* hosts pick the game after the prefix and only talk to the test API'
 
     await page.goto('http://test.home.games.localhost:8080/')
     await expect(page.locator('a.game-tile').first()).toHaveAttribute('href', /^https:\/\/test\.capitale\.kak\.im/)
+    await expect(page.locator('a.game-tile').nth(3)).toHaveAttribute('href', 'https://test.invertedle.kak.im')
 })
 
 // A finished flag game (six guesses already stored for today) opens the stats popup on load.
