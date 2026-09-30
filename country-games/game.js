@@ -182,7 +182,7 @@ function displayNewGuessRow(guess, no) {
     let guessedSolution = countryData[getKeyByGameTitle[gameTitle](guess)][gameTitleUnLe]
 
     let distance = mathDistance(guessedSolution.latitude, guessedSolution.longitude, todaysSolution.latitude, todaysSolution.longitude)
-    let direction = getDirection(Math.atan2(guessedSolution.longitude - todaysSolution.longitude, guessedSolution.latitude - todaysSolution.latitude) * 180 / Math.PI)
+    let direction = getDirection(guessedSolution.latitude, guessedSolution.longitude, todaysSolution.latitude, todaysSolution.longitude)
 
     let formattedDiff = formatDiff({
         hemisphereClass: guessedSolution.hemisphere === todaysSolution.hemisphere ? "good" : "bad",

@@ -24,56 +24,24 @@ export function mathDistance(lat1, lon1, lat2, lon2) {
     return Math.round(d / 1000)
 }
 
-export function getDirection(angle) {
-    if (angle <= 22.5 && angle >= -22.5) {
-        return {
-            directionShort: "S",
-            direction: "south",
-            directionIcon: "⬇️"
-        }
-    } else if(angle < -22.5 && angle > -67.5) {
-        return {
-            directionShort: "SE",
-            direction: "southeast",
-            directionIcon: "↘️"
-        }
-    } else if (angle <= -67.5 && angle >= -112.5) {
-        return {
-            directionShort: "E",
-            direction: "east",
-            directionIcon: "➡️"
-        }
-    } else if (angle < -112.5 && angle > -157.5) {
-        return {
-            directionShort: "NE",
-            direction: "northeast",
-            directionIcon: "↗️"
-        }
-    } else if (angle <= -157.5 || angle >= 157.5) {
-        return {
-            directionShort: "N",
-            direction: "north",
-            directionIcon: "⬆️"
-        }
-    } else if (angle < 157.5 && angle > 112.5) {
-        return {
-            directionShort: "NW",
-            direction: "northwest",
-            directionIcon: "↖️"
-        }
-    } else if (angle <= 112.5 && angle >= 67.5) {
-        return {
-            directionShort: "W",
-            direction: "west",
-            directionIcon: "⬅️"
-        }
-    } else if (angle < 67.5 && angle > 22.5) {
-        return {
-            directionShort: "SW",
-            direction: "southwest",
-            directionIcon: "↙️"
-        }
-    }
+const DIRECTIONS = [
+    { directionShort: "N", direction: "north", directionIcon: "⬆️" },
+    { directionShort: "NE", direction: "northeast", directionIcon: "↗️" },
+    { directionShort: "E", direction: "east", directionIcon: "➡️" },
+    { directionShort: "SE", direction: "southeast", directionIcon: "↘️" },
+    { directionShort: "S", direction: "south", directionIcon: "⬇️" },
+    { directionShort: "SW", direction: "southwest", directionIcon: "↙️" },
+    { directionShort: "W", direction: "west", directionIcon: "⬅️" },
+    { directionShort: "NW", direction: "northwest", directionIcon: "↖️" },
+]
+
+// Compass direction from point 1 to point 2 on a flat map whose east-west edges join up:
+// longitude takes the shorter way round the world, latitude does not wrap (no going over a pole).
+export function getDirection(lat1, lon1, lat2, lon2) {
+    const north = lat2 - lat1
+    const east = ((lon2 - lon1 + 540) % 360) - 180 // -180..180
+    const bearing = Math.atan2(east, north) * 180/Math.PI // 0 = north, clockwise
+    return DIRECTIONS[Math.round(((bearing + 360) % 360) / 45) % 8]
 }
 
 export function getRandomSelectionForToday(selections, salt) {
