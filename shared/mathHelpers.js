@@ -24,56 +24,28 @@ export function mathDistance(lat1, lon1, lat2, lon2) {
     return Math.round(d / 1000)
 }
 
-export function getDirection(angle) {
-    if (angle <= 22.5 && angle >= -22.5) {
-        return {
-            directionShort: "S",
-            direction: "south",
-            directionIcon: "⬇️"
-        }
-    } else if(angle < -22.5 && angle > -67.5) {
-        return {
-            directionShort: "SE",
-            direction: "southeast",
-            directionIcon: "↘️"
-        }
-    } else if (angle <= -67.5 && angle >= -112.5) {
-        return {
-            directionShort: "E",
-            direction: "east",
-            directionIcon: "➡️"
-        }
-    } else if (angle < -112.5 && angle > -157.5) {
-        return {
-            directionShort: "NE",
-            direction: "northeast",
-            directionIcon: "↗️"
-        }
-    } else if (angle <= -157.5 || angle >= 157.5) {
-        return {
-            directionShort: "N",
-            direction: "north",
-            directionIcon: "⬆️"
-        }
-    } else if (angle < 157.5 && angle > 112.5) {
-        return {
-            directionShort: "NW",
-            direction: "northwest",
-            directionIcon: "↖️"
-        }
-    } else if (angle <= 112.5 && angle >= 67.5) {
-        return {
-            directionShort: "W",
-            direction: "west",
-            directionIcon: "⬅️"
-        }
-    } else if (angle < 67.5 && angle > 22.5) {
-        return {
-            directionShort: "SW",
-            direction: "southwest",
-            directionIcon: "↙️"
-        }
-    }
+const DIRECTIONS = [
+    { directionShort: "N", direction: "north", directionIcon: "⬆️" },
+    { directionShort: "NE", direction: "northeast", directionIcon: "↗️" },
+    { directionShort: "E", direction: "east", directionIcon: "➡️" },
+    { directionShort: "SE", direction: "southeast", directionIcon: "↘️" },
+    { directionShort: "S", direction: "south", directionIcon: "⬇️" },
+    { directionShort: "SW", direction: "southwest", directionIcon: "↙️" },
+    { directionShort: "W", direction: "west", directionIcon: "⬅️" },
+    { directionShort: "NW", direction: "northwest", directionIcon: "↖️" },
+]
+
+// Compass direction of the initial great-circle course from point 1 to point 2.
+// Longitude differences wrap through sin/cos, so it handles the antimeridian like mathDistance does.
+export function getDirection(lat1, lon1, lat2, lon2) {
+    const φ1 = lat1 * Math.PI/180;
+    const φ2 = lat2 * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+    const bearing = Math.atan2(
+        Math.sin(Δλ) * Math.cos(φ2),
+        Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ)
+    ) * 180/Math.PI; // -180..180, 0 = north, clockwise
+    return DIRECTIONS[Math.round(((bearing + 360) % 360) / 45) % 8]
 }
 
 export function getRandomSelectionForToday(selections, salt) {

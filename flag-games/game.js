@@ -113,7 +113,7 @@ function displayNewGuessRow(guessName, rowNumber) {
         todaysData.latitude, todaysData.longitude
     )
 
-    const directionEmoji = getDirection(Math.atan2(guessData.longitude - todaysData.longitude, guessData.latitude - todaysData.latitude) * 180 / Math.PI).directionIcon
+    const directionEmoji = getDirection(guessData.latitude, guessData.longitude, todaysData.latitude, todaysData.longitude).directionIcon
 
     // Get current active row and fill it
     const currentRow = document.querySelector(`.guess-row[data-row="${rowNumber}"]`)

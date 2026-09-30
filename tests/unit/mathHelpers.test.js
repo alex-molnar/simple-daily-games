@@ -21,9 +21,16 @@ test('getRandomSelectionForToday is stable across calls and stays in range', () 
     }
 })
 
-test('getDirection covers every compass sector and both edges of north', () => {
-    const at = angle => getDirection(angle).directionShort
-    assert.deepEqual([0, -45, -90, -135, -180, 180, 135, 90, 45].map(at), ['S', 'SE', 'E', 'NE', 'N', 'N', 'NW', 'W', 'SW'])
+test('getDirection points along the compass from guess to target', () => {
+    const at = (lat, lon) => getDirection(0, 0, lat, lon).directionShort
+    assert.deepEqual([[10, 0], [10, 10], [0, 10], [-10, 10], [-10, 0], [-10, -10], [0, -10], [10, -10]].map(([a, b]) => at(a, b)),
+        ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'])
+})
+
+test('getDirection wraps across the antimeridian', () => {
+    assert.equal(getDirection(-17.7, 178, -17.5, -149.4).directionShort, 'E') // Fiji to French Polynesia
+    assert.equal(getDirection(-17.5, -149.4, -17.7, 178).directionShort, 'W')
+    assert.equal(getDirection(0, 179, 0, -179).directionShort, 'E')
 })
 
 test('mathDistance is in whole kilometres', () => {
