@@ -2,8 +2,8 @@ export const countryData = {
     "Nauru": {
         "capital": {
             "name": "Yaren",
-            "population": 11312,
-            "pretty_population": "11k",
+            "population": 747,
+            "pretty_population": "747",
             "latitude": -0.5308,
             "longitude": 166.9112,
             "hemisphere": "Southern",
@@ -692,11 +692,11 @@ export const countryData = {
     "Norfolk Island": {
         "capital": {
             "name": "Kingston",
-            "population": 589083,
-            "pretty_population": "589k",
-            "latitude": 17.997,
-            "longitude": -76.7936,
-            "hemisphere": "Northern",
+            "population": 2188,
+            "pretty_population": "2k",
+            "latitude": -29.0569,
+            "longitude": 167.9608,
+            "hemisphere": "Southern",
             "continent": "Australia"
         },
         "country": {
@@ -705,7 +705,7 @@ export const countryData = {
             "pretty_population": "2k",
             "latitude": -29.04,
             "longitude": 167.954,
-            "hemisphere": "Northern",
+            "hemisphere": "Southern",
             "continent": "Australia"
         },
         "flag": "/assets/original/norfolk-island.png",
@@ -715,8 +715,8 @@ export const countryData = {
     "American Samoa": {
         "capital": {
             "name": "Pago Pago",
-            "population": 48526,
-            "pretty_population": "49k",
+            "population": 3000,
+            "pretty_population": "3k",
             "latitude": -14.2781,
             "longitude": -170.7025,
             "hemisphere": "Southern",
@@ -1429,7 +1429,7 @@ export const countryData = {
         "capital": {
             "name": "Madrid",
             "population": 6497124,
-            "pretty_population": "6m",
+            "pretty_population": "6.5m",
             "latitude": 40.4165,
             "longitude": -3.7026,
             "hemisphere": "Northern",
@@ -2026,8 +2026,8 @@ export const countryData = {
     "North Korea": {
         "capital": {
             "name": "Pyongyang",
-            "population": 3,
-            "pretty_population": "3",
+            "population": 3255388,
+            "pretty_population": "3.3m",
             "latitude": 39.0166666666667,
             "longitude": 125.75,
             "hemisphere": "Northern",
@@ -2187,8 +2187,8 @@ export const countryData = {
     "Vatican City": {
         "capital": {
             "name": "Vatican City",
-            "population": 801,
-            "pretty_population": "801",
+            "population": 764,
+            "pretty_population": "764",
             "latitude": 41.9024,
             "longitude": 12.4533,
             "hemisphere": "Northern",
@@ -3866,8 +3866,8 @@ export const countryData = {
     "Tokelau": {
         "capital": {
             "name": "Atafu",
-            "population": 0,
-            "pretty_population": "0",
+            "population": 541,
+            "pretty_population": "541",
             "latitude": -9.38,
             "longitude": -171.25,
             "hemisphere": "Southern",
@@ -4097,7 +4097,7 @@ export const countryData = {
         "capital": {
             "name": "Khartoum",
             "population": 5534079,
-            "pretty_population": "6m",
+            "pretty_population": "5.5m",
             "latitude": 15.5518,
             "longitude": 32.5324,
             "hemisphere": "Northern",
@@ -4487,8 +4487,8 @@ export const countryData = {
     "Northern Mariana Islands": {
         "capital": {
             "name": "Saipan",
-            "population": 50568,
-            "pretty_population": "51k",
+            "population": 43000,
+            "pretty_population": "43k",
             "latitude": 15.2123,
             "longitude": 145.7545,
             "hemisphere": "Northern",
