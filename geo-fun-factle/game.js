@@ -9,7 +9,7 @@ import { applyAttempt, formatPopulation, hasCompleteClues } from './gameState.js
 
 const gameId = 'geo-fun-factle'
 const eligibleCountries = countryNames.filter(name => hasCompleteClues(countryData[name]))
-const clueLabels = ['National sport', 'Popular landmark category', 'Population', 'National animal', 'National dish', 'Most popular religion']
+const clueLabels = ['National sport', 'Most visited landmark category', 'Population', 'National animal', 'National dish', 'Most popular religion']
 const clueValues = record => [record.nationalSport, record.mostVisitedLandmarkCategory, formatPopulation(record.country.population), record.nationalAnimal, record.nationalDish, record.mostPopularReligion]
 const today = () => new Date().toISOString().slice(0, 10)
 const keyForDay = day => `${gameId}-${day}`
@@ -18,10 +18,11 @@ const statsOrder = [...Array(6)].map((_, index) => `games_with_attempts_${index 
 const statsLabels = Object.fromEntries(statsOrder.map((key, index) => [key, index === 6 ? 'Failed' : `${index + 1} attempts`]))
 
 byId('nav-prev').href = siteUrl('invertedle')
-byId('nav-next').href = siteUrl('home.games')
-byId('nav-next').textContent = 'Daily Games'
-byId('puzzle-date').dateTime = today()
-byId('puzzle-date').textContent = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${today()}T00:00:00Z`))
+function renderPuzzleDate(day) {
+    byId('puzzle-date').dateTime = day
+    byId('puzzle-date').textContent = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${day}T00:00:00Z`))
+}
+renderPuzzleDate(today())
 
 const statsPopup = createStatsPopup(getStats(gameId), {
     gameTitle: gameId,
@@ -74,17 +75,28 @@ function persistState() {
 
 function showScreen(screen) {
     for (const id of ['welcome-screen', 'game-screen', 'result-screen']) byId(id).hidden = id !== screen
+    byId('attempt-progress').hidden = screen !== 'game-screen'
 }
 
 function appendAttemptNote(row, attempt) {
     const note = document.createElement('span')
     note.className = 'attempt-note'
-    if (attempt.country === null) note.textContent = 'Skipped'
+    const caption = document.createElement('span')
+    caption.className = 'attempt-caption'
+    caption.textContent = 'Your guess:'
+    note.append(caption, document.createTextNode(' '))
+    if (attempt.country === null) {
+        note.classList.add('skipped')
+        note.append(document.createTextNode('Skipped'))
+    }
     else {
+        note.classList.add('guessed')
         const result = document.createElement('span')
         result.className = attempt.country === gameState.answer ? 'correct' : 'incorrect'
         result.textContent = attempt.country === gameState.answer ? 'Correct' : 'Incorrect'
-        note.append(document.createTextNode(`${attempt.country} · `), result)
+        const country = document.createElement('span')
+        country.textContent = attempt.country
+        note.append(country, document.createTextNode(' '), result)
     }
     row.appendChild(note)
 }
@@ -111,6 +123,19 @@ function renderClues(revealIndex = -1) {
     }
     if (revealIndex >= 0) byId('clue-announcement').textContent = `Clue ${revealIndex + 1}: ${clueLabels[revealIndex]}, ${values[revealIndex]}.`
     byId('attempt-count').textContent = `Attempt ${Math.min(gameState.attempts.length + 1, 6)} of 6`
+    byId('attempt-dots').replaceChildren(...Array.from({ length: 6 }, (_, index) => {
+        const dot = document.createElement('span')
+        dot.className = index <= gameState.attempts.length ? 'filled' : ''
+        return dot
+    }))
+    const nextClue = byId('next-clue')
+    nextClue.replaceChildren()
+    nextClue.hidden = visible === 6
+    if (visible < 6) {
+        const label = document.createElement('span')
+        label.textContent = 'Next clue: '
+        nextClue.append(label, document.createTextNode(clueLabels[visible]))
+    }
 }
 
 function renderSuggestions() {
@@ -162,8 +187,7 @@ function resetForUtcDay() {
     if (nextDay === currentDay) return false
     currentDay = nextDay
     gameState = loadState(currentDay)
-    byId('puzzle-date').dateTime = currentDay
-    byId('puzzle-date').textContent = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${currentDay}T00:00:00Z`))
+    renderPuzzleDate(currentDay)
     byId('saved-note').hidden = !gameState.started
     byId('storage-message').textContent = ''
     showScreen('welcome-screen')
@@ -301,6 +325,7 @@ byId('guess-form').addEventListener('submit', event => {
 })
 byId('skip-button').addEventListener('click', () => takeTurn(null))
 byId('stats-button').addEventListener('click', () => statsPopup.open())
+byId('header-stats-button').addEventListener('click', () => statsPopup.open())
 
 gameState = loadState(currentDay)
 if (gameState.status !== 'playing') {

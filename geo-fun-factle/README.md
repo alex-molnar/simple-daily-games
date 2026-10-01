@@ -22,6 +22,14 @@ The daily state uses `geo-fun-factle-YYYY-MM-DD`. Local aggregate stats use `geo
 
 ## Local validation and release
 
+The Passport presentation keeps the title, Daily Games link and Stats button above the notebook. Its globe artwork and dated postmark are decorative; neither identifies the answer. Playing shows six attempt dots, punched notebook edges, numbered clue rows, tinted guess/skip cards, an active clue wash, and the next clue's label. The latter disappears after the sixth clue. Welcome and results use the same paper treatment; progress appears only while playing. At narrow widths the navigation sits above the title and the notebook gutter shrinks so clues and controls retain usable space.
+
+Local artwork lives in `art/`. `globe.webp` was generated with the built-in imagegen tool and compressed to a 512px WebP. The grain and postmark waves are SVG decorations. All labels, clue values, dates and controls remain HTML. The browser suite captures welcome, a restored three-clue state at desktop/phone sizes, and results for visual inspection, alongside keyboard, storage and reflow checks.
+
+Globe generation prompt:
+
+> Use case: illustration-story. Asset type: small decorative globe illustration for a vintage passport notebook web game. Create ONLY a single isolated spherical globe, centered, nearly filling square canvas, with genuinely transparent background. Fine slightly irregular navy blue pen line art (#315c87), pale blue watercolor shading mostly transparent. Show recognizable North and South America on left/center, Europe and Africa toward right edge, delicate latitude and longitude curves. Flat hand-drawn vintage atlas style like a 1940s passport stamp, not emoji, not 3D glossy. Circular globe outline with no stand, no pedestal, no orbit, no shadow outside globe, no words, no labels, no lettering, no flags. Minimal subdued wash and textured ink strokes. This is decorative world geography and must not identify a specific country.
+
 The static image copies this directory to `/srv/geo-fun-factle`, and Nginx serves production and `test.*` hosts. Kubernetes owns their ingress and API CORS origins. Static-only game changes are included in the reusable build workflow's path filter. The fifth landing card follows the shared catalogue markup and reuses the globe at `landing/assets/geo-fun-factle.webp`, served through `/assets/landing/`.
 
 From the repository root, run `npm test`, `npm run test:e2e`, `kubectl kustomize kube`, and `kubectl kustomize kube/test`. The browser suite uses Docker and the existing Colima socket. API database-counter coverage requires an isolated Postgres with `api/db/setup-env.sql` applied; the remaining API tests can run without Postgres.

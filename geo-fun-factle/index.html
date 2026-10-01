@@ -3,25 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f2f6fb">
+  <meta name="theme-color" content="#eaf3f8">
   <title>Geo Funfactle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="game.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="home-link" href="#">Daily Games</a>
-    <nav aria-label="Game navigation"><a id="nav-prev" href="#">Invertedle</a><a id="nav-next" href="#">Daily Games</a></nav>
-  </header>
+  <a class="skip-link" href="#game-content">Skip to game</a>
   <main class="page-shell">
-    <div class="postmark" aria-hidden="true">◎<span>WORLD<br>WIDE</span></div>
-    <section id="welcome-screen" class="paper welcome" aria-labelledby="page-title">
-      <p class="eyebrow">DAILY PASSPORT · <time id="puzzle-date"></time></p>
+    <header class="site-header">
+      <a class="home-link" href="#"><span aria-hidden="true">‹</span> Daily Games</a>
       <h1 id="page-title">Geo Funfactle</h1>
-      <div class="globe" aria-hidden="true">🌐</div>
+      <button id="header-stats-button" class="header-stats" type="button">Stats</button>
+    </header>
+    <div class="passport-heading">
+      <img class="globe" src="art/globe.webp" width="220" height="220" alt="">
+      <div class="date-stamp"><span>Daily puzzle</span><time id="puzzle-date"></time></div>
+      <div id="attempt-progress" class="attempt-progress" hidden>
+        <p id="attempt-count" class="attempt-count" aria-live="polite"></p>
+        <div id="attempt-dots" class="attempt-dots" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div id="game-content" tabindex="-1">
+    <section id="welcome-screen" class="paper welcome" aria-labelledby="welcome-title">
+      <h2 id="welcome-title">Your daily passport</h2>
       <p class="welcome-copy">One country. Six facts. Guess with as few clues as possible.</p>
       <p class="instructions">A wrong guess or Skip reveals another fact and uses an attempt.</p>
       <p id="saved-note" class="saved-note" hidden>Your progress is saved.</p>
@@ -29,32 +37,33 @@
     </section>
 
     <section id="game-screen" class="paper game" aria-labelledby="game-title" hidden>
-      <div class="paper-heading"><p class="eyebrow">TODAY'S COUNTRY</p><h1 id="game-title">Geo Funfactle</h1></div>
-      <p id="attempt-count" class="attempt-count" aria-live="polite"></p>
+      <h2 id="game-title" class="visually-hidden">Country clues</h2>
       <p id="clue-announcement" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
       <ol id="clue-list" class="clue-list" aria-label="Country clues"></ol>
       <form id="guess-form" class="guess-form" novalidate>
-        <label for="guess-input">Choose a country</label>
+        <label for="guess-input">Your country</label>
         <div class="input-wrap">
-          <input id="guess-input" name="country" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions-container" aria-describedby="guess-error storage-message" autocomplete="off">
+          <input id="guess-input" name="country" type="text" placeholder="Search countries…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions-container" aria-describedby="guess-error storage-message" autocomplete="off">
           <ul id="suggestions-container" role="listbox" hidden></ul>
         </div>
         <p id="guess-error" class="message" role="alert"></p>
         <p id="storage-message" class="storage-message" role="status"></p>
         <div class="actions"><button id="submit-button" class="primary-button" type="submit">Guess</button><button id="skip-button" class="secondary-button" type="button">Skip</button></div>
       </form>
+      <p id="next-clue" class="next-clue"></p>
     </section>
 
     <section id="result-screen" class="paper result" aria-labelledby="result-heading" hidden>
       <p class="eyebrow">PASSPORT COMPLETE</p>
-      <h1 id="result-heading" tabindex="-1"></h1>
+      <h2 id="result-heading" tabindex="-1"></h2>
       <p id="result-message" class="result-message" role="status" aria-live="polite"></p>
       <ol id="result-attempts" class="result-attempts" aria-label="Your attempts"></ol>
       <div id="result-facts" class="result-facts"></div>
       <p id="sync-message" class="storage-message" role="status"></p>
       <button id="stats-button" class="secondary-button" type="button">Stats</button>
     </section>
-    <footer class="page-footer">A small daily journey around the world</footer>
+    </div>
+    <footer class="page-footer"><a id="nav-prev" href="#">‹ Invertedle</a><span>A small daily journey around the world</span></footer>
   </main>
 </body>
 </html>
