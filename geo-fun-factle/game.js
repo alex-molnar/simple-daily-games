@@ -17,7 +17,7 @@ const byId = id => document.getElementById(id)
 const statsOrder = [...Array(6)].map((_, index) => `games_with_attempts_${index + 1}`).concat('games_failed')
 const statsLabels = Object.fromEntries(statsOrder.map((key, index) => [key, index === 6 ? 'Failed' : `${index + 1} attempts`]))
 
-byId('nav-prev').href = siteUrl('invertedle')
+byId('nav-prev').href = siteUrl('home.games')
 function renderPuzzleDate(day) {
     byId('puzzle-date').dateTime = day
     byId('puzzle-date').textContent = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${day}T00:00:00Z`))
@@ -164,6 +164,17 @@ function renderSuggestions() {
         list.appendChild(option)
     })
     list.hidden = matches.length === 0
+    if (matches.length > 0) {
+        const inputBounds = input.getBoundingClientRect()
+        const gameBounds = byId('game-screen').getBoundingClientRect()
+        const spaceAbove = Math.max(0, inputBounds.top - gameBounds.top)
+        const spaceBelow = Math.max(0, gameBounds.bottom - inputBounds.bottom)
+        const opensAbove = spaceAbove >= spaceBelow
+        const availableSpace = Math.max(spaceAbove, spaceBelow) - 4
+        list.style.top = opensAbove ? 'auto' : 'calc(100% + 2px)'
+        list.style.bottom = opensAbove ? 'calc(100% + 2px)' : 'auto'
+        list.style.maxHeight = `${Math.max(0, Math.min(192, window.innerHeight * .4, availableSpace))}px`
+    }
     input.setAttribute('aria-expanded', String(matches.length > 0))
     input.removeAttribute('aria-activedescendant')
 }
@@ -180,6 +191,13 @@ function chooseSuggestion(index) {
     byId('suggestions-container').hidden = true
     byId('guess-input').setAttribute('aria-expanded', 'false')
     byId('guess-input').removeAttribute('aria-activedescendant')
+}
+
+function keepSuggestionVisible(list, option) {
+    const top = option.offsetTop
+    const bottom = top + option.offsetHeight
+    if (top < list.scrollTop) list.scrollTop = top
+    else if (bottom > list.scrollTop + list.clientHeight) list.scrollTop = bottom - list.clientHeight
 }
 
 function resetForUtcDay() {
@@ -294,7 +312,7 @@ function renderResult() {
     })
 }
 
-document.querySelector('.home-link').href = siteUrl('home.games')
+document.querySelector('.home-link').href = siteUrl('invertedle')
 byId('start-button').addEventListener('click', beginGame)
 byId('guess-input').addEventListener('input', () => { selectedCountry = null; setError(''); renderSuggestions() })
 byId('guess-input').addEventListener('keydown', event => {
@@ -305,14 +323,14 @@ byId('guess-input').addEventListener('keydown', event => {
         list.hidden = false
         byId('guess-input').setAttribute('aria-expanded', 'true')
         byId('guess-input').setAttribute('aria-activedescendant', list.children[selectedIndex].id)
-        list.children[selectedIndex].scrollIntoView({ block: 'nearest' })
+        keepSuggestionVisible(list, list.children[selectedIndex])
     } else if (event.key === 'ArrowUp' && !list.hidden) {
         event.preventDefault()
         chooseSuggestion(Math.max(selectedIndex - 1, 0))
         list.hidden = false
         byId('guess-input').setAttribute('aria-expanded', 'true')
         byId('guess-input').setAttribute('aria-activedescendant', list.children[selectedIndex].id)
-        list.children[selectedIndex].scrollIntoView({ block: 'nearest' })
+        keepSuggestionVisible(list, list.children[selectedIndex])
     } else if (event.key === 'Escape') {
         list.hidden = true
         byId('guess-input').setAttribute('aria-expanded', 'false')
