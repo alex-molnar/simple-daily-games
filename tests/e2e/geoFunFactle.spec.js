@@ -101,6 +101,23 @@ test('duplicate guesses are rejected and six skips record one failure', async ({
     await expect.poll(() => postedActions(calls)).toEqual(['start_game', 'failed_game'])
 })
 
+test('keyboard navigation exposes only one selected listbox option', async ({ page }) => {
+    await mockApi(page)
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    const input = page.getByRole('combobox', { name: 'Choose a country' })
+    await input.fill('a')
+    await input.press('ArrowDown')
+    await input.press('ArrowDown')
+    const selected = page.locator('#suggestions-container [aria-selected="true"]')
+    await expect(selected).toHaveCount(1)
+    await expect(input).toHaveValue(await selected.textContent())
+    await expect(input).toHaveAttribute('aria-activedescendant', await selected.getAttribute('id'))
+    await input.press('Escape')
+    await expect(input).toHaveAttribute('aria-expanded', 'false')
+})
+
 test('invalid input and unavailable storage do not consume or block attempts', async ({ page }) => {
     await mockApi(page)
     await setFixedClock(page)
@@ -141,6 +158,44 @@ test('a failed completion request keeps the result and never retries on restore'
     await page.reload()
     await expect(page.locator('#result-screen')).toBeVisible()
     expect(calls.filter(call => call.endsWith('/failed_game'))).toHaveLength(1)
+})
+
+test('local completion stats show while the completion POST is pending', async ({ page }) => {
+    const calls = []
+    let releasePost
+    const pendingPost = new Promise(resolve => { releasePost = resolve })
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await page.route(/api\.games\.kak\.im/, async route => {
+        const request = route.request()
+        const path = new URL(request.url()).pathname
+        calls.push(`${request.method()} ${path}`)
+        if (path.endsWith('/failed_game')) {
+            await pendingPost
+            return route.fulfill({ json: zeros })
+        }
+        return route.fulfill({ json: zeros })
+    })
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('.stats-popup')).toBeVisible()
+    await expect(page.locator('.stats-chart-row[data-key="games_failed"] .stats-chart-value')).toHaveText('1')
+    expect(calls.filter(call => call.endsWith('/stats'))).toHaveLength(1)
+    releasePost()
+    await expect.poll(() => calls.filter(call => call.endsWith('/stats'))).toHaveLength(2)
+})
+
+test('a malformed local stats value cannot block game completion', async ({ page }) => {
+    const calls = await mockApi(page)
+    await setFixedClock(page)
+    await page.addInitScript(() => localStorage.setItem('geo-fun-factle-stats', JSON.stringify('corrupt')))
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#result-screen')).toBeVisible()
+    await expect.poll(() => postedActions(calls)).toContain('failed_game')
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('geo-fun-factle-stats')).games_failed)).toBe(1)
 })
 
 test('an action after UTC midnight resets to the new welcome screen', async ({ page }) => {

@@ -144,8 +144,11 @@ function renderSuggestions() {
 }
 
 function chooseSuggestion(index) {
-    const option = byId('suggestions-container').children[index]
+    const list = byId('suggestions-container')
+    const option = list.children[index]
     if (!option) return
+    for (const suggestion of list.children) suggestion.setAttribute('aria-selected', 'false')
+    option.setAttribute('aria-selected', 'true')
     selectedIndex = index
     selectedCountry = option.textContent
     byId('guess-input').value = selectedCountry
@@ -196,6 +199,7 @@ async function finishGame() {
         const category = gameState.status === 'won' ? `games_with_attempts_${gameState.attempts.length}` : 'games_failed'
         const stats = getStats(gameId)
         stats[category] = (stats[category] || 0) + 1
+        statsPopup.updateLocal(stats, category)
         updateStats(gameId, stats, category).then(saved => {
             if (!saved) byId('sync-message').textContent = 'Your result is saved here, but could not sync globally.'
             return statsPopup.update(stats, category)
@@ -275,16 +279,16 @@ byId('guess-input').addEventListener('keydown', event => {
         event.preventDefault()
         chooseSuggestion(Math.min(selectedIndex + 1, list.children.length - 1))
         list.hidden = false
-        list.children[selectedIndex].setAttribute('aria-selected', 'true')
         byId('guess-input').setAttribute('aria-expanded', 'true')
         byId('guess-input').setAttribute('aria-activedescendant', list.children[selectedIndex].id)
+        list.children[selectedIndex].scrollIntoView({ block: 'nearest' })
     } else if (event.key === 'ArrowUp' && !list.hidden) {
         event.preventDefault()
         chooseSuggestion(Math.max(selectedIndex - 1, 0))
         list.hidden = false
-        list.children[selectedIndex].setAttribute('aria-selected', 'true')
         byId('guess-input').setAttribute('aria-expanded', 'true')
         byId('guess-input').setAttribute('aria-activedescendant', list.children[selectedIndex].id)
+        list.children[selectedIndex].scrollIntoView({ block: 'nearest' })
     } else if (event.key === 'Escape') {
         list.hidden = true
         byId('guess-input').setAttribute('aria-expanded', 'false')

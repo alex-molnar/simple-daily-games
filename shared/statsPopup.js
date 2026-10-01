@@ -420,9 +420,14 @@ export function createStatsPopup(statsInput, options = {}) {
 
     // Called when the game ends: show the new local stats and fetch the global ones again,
     // after the caller has posted the result, so this player's game is part of them.
-    function update(statsInput, completionKey) {
+    function updateLocal(statsInput, completionKey) {
         localStats = normalizeStats(statsInput)
         playerCompletionKey = completionKey
+        setActiveTab(activeTab)
+    }
+
+    function update(statsInput, completionKey) {
+        updateLocal(statsInput, completionKey)
         return loadGlobalStats()
     }
 
@@ -526,6 +531,7 @@ export function createStatsPopup(statsInput, options = {}) {
     return {
         open,
         close,
+        updateLocal,
         update,
         destroy,
         overlay,

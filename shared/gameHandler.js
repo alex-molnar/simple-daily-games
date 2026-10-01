@@ -47,7 +47,12 @@ export function loadGame(gameTitle, todaysSolutionName, solutions, displayRowsCa
 
 export function getStats(gameTitle) {
     try {
-        return JSON.parse(localStorage.getItem(`${gameTitle}-stats`)) || emptyStats
+        const saved = JSON.parse(localStorage.getItem(`${gameTitle}-stats`))
+        if (!saved || typeof saved !== "object" || Array.isArray(saved)) return { ...emptyStats }
+        return Object.fromEntries(Object.keys(emptyStats).map(key => [
+            key,
+            Number.isSafeInteger(saved[key]) && saved[key] >= 0 ? saved[key] : 0
+        ]))
     } catch {
         return { ...emptyStats }
     }
