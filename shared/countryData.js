@@ -840,7 +840,8 @@ export const countryData = {
         },
         "flag": "/assets/original/norfolk-island.png",
         "grayscale": "/assets/grayscale/norfolk-island.png",
-        "invertedle": "/assets/invertedle/norfolk-island.png"
+        "invertedle": "/assets/invertedle/norfolk-island.png",
+        "mostPopularReligion": "Christianity"
     },
     "American Samoa": {
         "capital": {
@@ -2420,7 +2421,7 @@ export const countryData = {
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Cold Noodles",
         "nationalAnimal": "Horse",
-        "mostPopularReligion": null
+        "mostPopularReligion": "No religion"
     },
     "Kosovo": {
         "capital": {
@@ -2552,7 +2553,7 @@ export const countryData = {
         "flag": "/assets/original/south-korea.png",
         "grayscale": "/assets/grayscale/south-korea.png",
         "invertedle": "/assets/invertedle/south-korea.png",
-        "mostPopularReligion": null
+        "mostPopularReligion": "No religion"
     },
     "Nigeria": {
         "capital": {
@@ -3419,7 +3420,8 @@ export const countryData = {
         },
         "flag": "/assets/original/sint-maarten.png",
         "grayscale": "/assets/grayscale/sint-maarten.png",
-        "invertedle": "/assets/invertedle/sint-maarten.png"
+        "invertedle": "/assets/invertedle/sint-maarten.png",
+        "mostPopularReligion": "Christianity"
     },
     "Philippines": {
         "capital": {
@@ -3747,7 +3749,7 @@ export const countryData = {
         "flag": "/assets/original/hong-kong.png",
         "grayscale": "/assets/grayscale/hong-kong.png",
         "invertedle": "/assets/invertedle/hong-kong.png",
-        "mostPopularReligion": null
+        "mostPopularReligion": "No religion"
     },
     "Estonia": {
         "capital": {
@@ -3775,7 +3777,7 @@ export const countryData = {
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Verivorst",
         "nationalAnimal": "Barn Swallow",
-        "mostPopularReligion": null
+        "mostPopularReligion": "Christianity"
     },
     "Botswana": {
         "capital": {
@@ -5167,7 +5169,7 @@ export const countryData = {
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Sushi",
         "nationalAnimal": "Green Pheasant",
-        "mostPopularReligion": null
+        "mostPopularReligion": "Buddhism"
     },
     "Tuvalu": {
         "capital": {
@@ -5223,7 +5225,7 @@ export const countryData = {
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Roasted Duck",
         "nationalAnimal": "Giant Panda",
-        "mostPopularReligion": null
+        "mostPopularReligion": "Buddhism"
     },
     "Ghana": {
         "capital": {
@@ -5907,7 +5909,7 @@ export const countryData = {
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Roast pork with dumplings and cabbage",
         "nationalAnimal": "Lion",
-        "mostPopularReligion": null
+        "mostPopularReligion": "No religion"
     },
     "Afghanistan": {
         "capital": {
@@ -6203,7 +6205,8 @@ export const countryData = {
             "longitude": 1.521,
             "hemisphere": "Northern",
             "continent": "Europe"
-        }
+        },
+        "mostPopularReligion": "Christianity"
     },
     "Northern Ireland": {
         "capital": {
@@ -6223,7 +6226,8 @@ export const countryData = {
             "longitude": -7.302,
             "hemisphere": "Northern",
             "continent": "Europe"
-        }
+        },
+        "mostPopularReligion": "Christianity"
     },
     "The Kingdom of the Two Sicilies": {
         "capital": {
@@ -6243,7 +6247,8 @@ export const countryData = {
             "longitude": 14.2681,
             "hemisphere": "Northern",
             "continent": "Europe"
-        }
+        },
+        "mostPopularReligion": "Christianity"
     }
 };
 
