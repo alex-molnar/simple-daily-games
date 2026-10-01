@@ -24,7 +24,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Coconut Fish",
-        "nationalAnimal": "Great Frigatebird"
+        "nationalAnimal": "Great Frigatebird",
+        "mostPopularReligion": "Christianity"
     },
     "Ecuador": {
         "capital": {
@@ -51,7 +52,8 @@ export const countryData = {
         "nationalSport": "Chaza",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ceviche",
-        "nationalAnimal": "Andean Condor"
+        "nationalAnimal": "Andean Condor",
+        "mostPopularReligion": "Christianity"
     },
     "Turks and Caicos Islands": {
         "capital": {
@@ -74,7 +76,8 @@ export const countryData = {
         },
         "flag": "/assets/original/turks-and-caicos-islands.png",
         "grayscale": "/assets/grayscale/turks-and-caicos-islands.png",
-        "invertedle": "/assets/invertedle/turks-and-caicos-islands.png"
+        "invertedle": "/assets/invertedle/turks-and-caicos-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Rwanda": {
         "capital": {
@@ -101,7 +104,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ugali",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Christianity"
     },
     "Gabon": {
         "capital": {
@@ -128,7 +132,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poulet Nyembwe",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Christianity"
     },
     "Curaçao": {
         "capital": {
@@ -151,7 +156,8 @@ export const countryData = {
         },
         "flag": "/assets/original/curaçao.png",
         "grayscale": "/assets/grayscale/curaçao.png",
-        "invertedle": "/assets/invertedle/curaçao.png"
+        "invertedle": "/assets/invertedle/curaçao.png",
+        "mostPopularReligion": "Christianity"
     },
     "South Sudan": {
         "capital": {
@@ -178,7 +184,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Kisra",
-        "nationalAnimal": "Cattle"
+        "nationalAnimal": "Cattle",
+        "mostPopularReligion": "Christianity"
     },
     "Suriname": {
         "capital": {
@@ -205,7 +212,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Pom",
-        "nationalAnimal": "Jaguar"
+        "nationalAnimal": "Jaguar",
+        "mostPopularReligion": "Christianity"
     },
     "Mauritius": {
         "capital": {
@@ -232,7 +240,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Dholl Puri",
-        "nationalAnimal": "Dodo"
+        "nationalAnimal": "Dodo",
+        "mostPopularReligion": "Hinduism"
     },
     "Saint Pierre and Miquelon": {
         "capital": {
@@ -255,7 +264,8 @@ export const countryData = {
         },
         "flag": "/assets/original/saint-pierre-and-miquelon.png",
         "grayscale": "/assets/grayscale/saint-pierre-and-miquelon.png",
-        "invertedle": "/assets/invertedle/saint-pierre-and-miquelon.png"
+        "invertedle": "/assets/invertedle/saint-pierre-and-miquelon.png",
+        "mostPopularReligion": "Christianity"
     },
     "Anguilla": {
         "capital": {
@@ -278,7 +288,8 @@ export const countryData = {
         },
         "flag": "/assets/original/anguilla.png",
         "grayscale": "/assets/grayscale/anguilla.png",
-        "invertedle": "/assets/invertedle/anguilla.png"
+        "invertedle": "/assets/invertedle/anguilla.png",
+        "mostPopularReligion": "Christianity"
     },
     "Argentina": {
         "capital": {
@@ -305,7 +316,8 @@ export const countryData = {
         "nationalSport": "Pato",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Asado",
-        "nationalAnimal": "Rufous Hornero"
+        "nationalAnimal": "Rufous Hornero",
+        "mostPopularReligion": "Christianity"
     },
     "Colombia": {
         "capital": {
@@ -332,7 +344,8 @@ export const countryData = {
         "nationalSport": "Tejo",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Beans, rice, meat, and egg",
-        "nationalAnimal": "Andean Condor"
+        "nationalAnimal": "Andean Condor",
+        "mostPopularReligion": "Christianity"
     },
     "Tunisia": {
         "capital": {
@@ -359,7 +372,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Couscous",
-        "nationalAnimal": "Dromedary Camel"
+        "nationalAnimal": "Dromedary Camel",
+        "mostPopularReligion": "Islam"
     },
     "Guyana": {
         "capital": {
@@ -386,7 +400,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Pepperpot",
-        "nationalAnimal": "Jaguar"
+        "nationalAnimal": "Jaguar",
+        "mostPopularReligion": "Christianity"
     },
     "Malawi": {
         "capital": {
@@ -413,7 +428,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Chambo with Nshima",
-        "nationalAnimal": "Thomson's Gazelle"
+        "nationalAnimal": "Thomson's Gazelle",
+        "mostPopularReligion": "Christianity"
     },
     "Austria": {
         "capital": {
@@ -440,7 +456,8 @@ export const countryData = {
         "nationalSport": "Alpine Skiing",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Wiener Schnitzel",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Fiji": {
         "capital": {
@@ -467,7 +484,8 @@ export const countryData = {
         "nationalSport": "Rugby Sevens",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Kokoda",
-        "nationalAnimal": "Lory"
+        "nationalAnimal": "Lory",
+        "mostPopularReligion": "Christianity"
     },
     "Belize": {
         "capital": {
@@ -494,7 +512,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Rice and Beans",
-        "nationalAnimal": "Baird's Tapir"
+        "nationalAnimal": "Baird's Tapir",
+        "mostPopularReligion": "Christianity"
     },
     "Greenland": {
         "capital": {
@@ -517,7 +536,8 @@ export const countryData = {
         },
         "flag": "/assets/original/greenland.png",
         "grayscale": "/assets/grayscale/greenland.png",
-        "invertedle": "/assets/invertedle/greenland.png"
+        "invertedle": "/assets/invertedle/greenland.png",
+        "mostPopularReligion": "Christianity"
     },
     "Singapore": {
         "capital": {
@@ -544,7 +564,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Chilli Crab",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Buddhism"
     },
     "Saint Kitts and Nevis": {
         "capital": {
@@ -571,7 +592,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Goat Water",
-        "nationalAnimal": "Vervet Monkey"
+        "nationalAnimal": "Vervet Monkey",
+        "mostPopularReligion": "Christianity"
     },
     "Romania": {
         "capital": {
@@ -598,7 +620,8 @@ export const countryData = {
         "nationalSport": "Oina",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Mămăligă",
-        "nationalAnimal": "Lynx"
+        "nationalAnimal": "Lynx",
+        "mostPopularReligion": "Christianity"
     },
     "Uzbekistan": {
         "capital": {
@@ -625,7 +648,8 @@ export const countryData = {
         "nationalSport": "Kurash",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Plov",
-        "nationalAnimal": "Snow Leopard"
+        "nationalAnimal": "Snow Leopard",
+        "mostPopularReligion": "Islam"
     },
     "Namibia": {
         "capital": {
@@ -652,7 +676,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Kapana",
-        "nationalAnimal": "Oryx Gazelle"
+        "nationalAnimal": "Oryx Gazelle",
+        "mostPopularReligion": "Christianity"
     },
     "Chile": {
         "capital": {
@@ -679,7 +704,8 @@ export const countryData = {
         "nationalSport": "Rodeo",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Empanada",
-        "nationalAnimal": "South Andean Huemul"
+        "nationalAnimal": "South Andean Huemul",
+        "mostPopularReligion": "Christianity"
     },
     "Bulgaria": {
         "capital": {
@@ -706,7 +732,8 @@ export const countryData = {
         "nationalSport": "Weightlifting",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Shopska Salad",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Cambodia": {
         "capital": {
@@ -733,7 +760,8 @@ export const countryData = {
         "nationalSport": "Pradal Serey",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Fish Amok",
-        "nationalAnimal": "Kouprey"
+        "nationalAnimal": "Kouprey",
+        "mostPopularReligion": "Buddhism"
     },
     "The Gambia": {
         "capital": {
@@ -760,7 +788,8 @@ export const countryData = {
         "nationalSport": "Traditional Wrestling",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Domoda",
-        "nationalAnimal": "Spur-winged Goose"
+        "nationalAnimal": "Spur-winged Goose",
+        "mostPopularReligion": "Islam"
     },
     "Uruguay": {
         "capital": {
@@ -787,7 +816,8 @@ export const countryData = {
         "nationalSport": "Destrezas Criollas",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Chivito",
-        "nationalAnimal": "Southern Lapwing"
+        "nationalAnimal": "Southern Lapwing",
+        "mostPopularReligion": "Christianity"
     },
     "Norfolk Island": {
         "capital": {
@@ -833,7 +863,8 @@ export const countryData = {
         },
         "flag": "/assets/original/american-samoa.png",
         "grayscale": "/assets/grayscale/american-samoa.png",
-        "invertedle": "/assets/invertedle/american-samoa.png"
+        "invertedle": "/assets/invertedle/american-samoa.png",
+        "mostPopularReligion": "Christianity"
     },
     "Thailand": {
         "capital": {
@@ -860,7 +891,8 @@ export const countryData = {
         "nationalSport": "Kickboxing",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Stir-fried rice noodles",
-        "nationalAnimal": "Elephant"
+        "nationalAnimal": "Elephant",
+        "mostPopularReligion": "Buddhism"
     },
     "Cuba": {
         "capital": {
@@ -887,7 +919,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Ropa Vieja",
-        "nationalAnimal": "Bird"
+        "nationalAnimal": "Bird",
+        "mostPopularReligion": "Christianity"
     },
     "Honduras": {
         "capital": {
@@ -914,7 +947,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Plato Típico",
-        "nationalAnimal": "White-tailed Deer"
+        "nationalAnimal": "White-tailed Deer",
+        "mostPopularReligion": "Christianity"
     },
     "Samoa": {
         "capital": {
@@ -941,7 +975,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Palusami",
-        "nationalAnimal": "Manumea"
+        "nationalAnimal": "Manumea",
+        "mostPopularReligion": "Christianity"
     },
     "Denmark": {
         "capital": {
@@ -968,7 +1003,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Smørrebrød",
-        "nationalAnimal": "Mute Swan"
+        "nationalAnimal": "Mute Swan",
+        "mostPopularReligion": "Christianity"
     },
     "Chad": {
         "capital": {
@@ -995,7 +1031,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Daraba",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Islam"
     },
     "Luxembourg": {
         "capital": {
@@ -1022,7 +1059,8 @@ export const countryData = {
         "nationalSport": "Cycling",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Judd mat Gaardebounen",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Egypt": {
         "capital": {
@@ -1049,7 +1087,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Koshary",
-        "nationalAnimal": "Steppe Eagle"
+        "nationalAnimal": "Steppe Eagle",
+        "mostPopularReligion": "Islam"
     },
     "Vietnam": {
         "capital": {
@@ -1076,7 +1115,8 @@ export const countryData = {
         "nationalSport": "Vovinam",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Pho",
-        "nationalAnimal": "Water Buffalo"
+        "nationalAnimal": "Water Buffalo",
+        "mostPopularReligion": "Folk Religions"
     },
     "Slovakia": {
         "capital": {
@@ -1103,7 +1143,8 @@ export const countryData = {
         "nationalSport": "Ice Hockey",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Bryndzové Halušky",
-        "nationalAnimal": "Chamois"
+        "nationalAnimal": "Chamois",
+        "mostPopularReligion": "Christianity"
     },
     "Bolivia": {
         "capital": {
@@ -1130,7 +1171,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Salteñas",
-        "nationalAnimal": "Andean Condor"
+        "nationalAnimal": "Andean Condor",
+        "mostPopularReligion": "Christianity"
     },
     "Kyrgyzstan": {
         "capital": {
@@ -1157,7 +1199,8 @@ export const countryData = {
         "nationalSport": "Kok Boru",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Beshbarmak",
-        "nationalAnimal": "Markhor"
+        "nationalAnimal": "Markhor",
+        "mostPopularReligion": "Islam"
     },
     "Ukraine": {
         "capital": {
@@ -1184,7 +1227,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Borsch",
-        "nationalAnimal": "Common Nightingale"
+        "nationalAnimal": "Common Nightingale",
+        "mostPopularReligion": "Christianity"
     },
     "Caribbean Netherlands": {
         "capital": {
@@ -1207,7 +1251,8 @@ export const countryData = {
         },
         "flag": "/assets/original/caribbean-netherlands.png",
         "grayscale": "/assets/grayscale/caribbean-netherlands.png",
-        "invertedle": "/assets/invertedle/caribbean-netherlands.png"
+        "invertedle": "/assets/invertedle/caribbean-netherlands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Dominican Republic": {
         "capital": {
@@ -1234,7 +1279,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "La Bandera",
-        "nationalAnimal": "Palmchat"
+        "nationalAnimal": "Palmchat",
+        "mostPopularReligion": "Christianity"
     },
     "Aruba": {
         "capital": {
@@ -1257,7 +1303,8 @@ export const countryData = {
         },
         "flag": "/assets/original/aruba.png",
         "grayscale": "/assets/grayscale/aruba.png",
-        "invertedle": "/assets/invertedle/aruba.png"
+        "invertedle": "/assets/invertedle/aruba.png",
+        "mostPopularReligion": "Christianity"
     },
     "Brazil": {
         "capital": {
@@ -1284,7 +1331,8 @@ export const countryData = {
         "nationalSport": "Capoeira",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Feijoada",
-        "nationalAnimal": "Rufous-bellied Thrush"
+        "nationalAnimal": "Rufous-bellied Thrush",
+        "mostPopularReligion": "Christianity"
     },
     "Sierra Leone": {
         "capital": {
@@ -1311,7 +1359,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Cassava Leaves Stew",
-        "nationalAnimal": "Chimpanzee"
+        "nationalAnimal": "Chimpanzee",
+        "mostPopularReligion": "Islam"
     },
     "US Virgin Islands": {
         "capital": {
@@ -1334,7 +1383,8 @@ export const countryData = {
         },
         "flag": "/assets/original/us-virgin-islands.png",
         "grayscale": "/assets/grayscale/us-virgin-islands.png",
-        "invertedle": "/assets/invertedle/us-virgin-islands.png"
+        "invertedle": "/assets/invertedle/us-virgin-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Angola": {
         "capital": {
@@ -1361,7 +1411,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Muamba de Galinha",
-        "nationalAnimal": "Giant Sable Antelope"
+        "nationalAnimal": "Giant Sable Antelope",
+        "mostPopularReligion": "Christianity"
     },
     "Mozambique": {
         "capital": {
@@ -1388,7 +1439,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Piri-piri chicken",
-        "nationalAnimal": "African Elephant"
+        "nationalAnimal": "African Elephant",
+        "mostPopularReligion": "Christianity"
     },
     "Australia": {
         "capital": {
@@ -1415,7 +1467,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Roast Lamb",
-        "nationalAnimal": "Red Kangaroo"
+        "nationalAnimal": "Red Kangaroo",
+        "mostPopularReligion": "Christianity"
     },
     "Belgium": {
         "capital": {
@@ -1442,7 +1495,8 @@ export const countryData = {
         "nationalSport": "Cycling",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Mussels and fries",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Palau": {
         "capital": {
@@ -1469,7 +1523,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Fruit Bat Soup",
-        "nationalAnimal": "Fruit dove"
+        "nationalAnimal": "Fruit dove",
+        "mostPopularReligion": "Christianity"
     },
     "Antigua and Barbuda": {
         "capital": {
@@ -1496,7 +1551,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Fungi and Pepperpot",
-        "nationalAnimal": "Fallow Deer"
+        "nationalAnimal": "Fallow Deer",
+        "mostPopularReligion": "Christianity"
     },
     "Senegal": {
         "capital": {
@@ -1523,7 +1579,8 @@ export const countryData = {
         "nationalSport": "Laamb Wrestling",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Thieboudienne",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Islam"
     },
     "Qatar": {
         "capital": {
@@ -1550,7 +1607,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Machboos",
-        "nationalAnimal": "Arabian Oryx"
+        "nationalAnimal": "Arabian Oryx",
+        "mostPopularReligion": "Islam"
     },
     "Kenya": {
         "capital": {
@@ -1577,7 +1635,8 @@ export const countryData = {
         "nationalSport": "Athletics",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ugali",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Uganda": {
         "capital": {
@@ -1604,7 +1663,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Matooke",
-        "nationalAnimal": "Grey Crowned Crane"
+        "nationalAnimal": "Grey Crowned Crane",
+        "mostPopularReligion": "Christianity"
     },
     "Cape Verde": {
         "capital": {
@@ -1631,7 +1691,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Corn and bean stew",
-        "nationalAnimal": "Grey-headed Kingfisher"
+        "nationalAnimal": "Grey-headed Kingfisher",
+        "mostPopularReligion": "Christianity"
     },
     "Spain": {
         "capital": {
@@ -1658,7 +1719,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Paella",
-        "nationalAnimal": "Bull"
+        "nationalAnimal": "Bull",
+        "mostPopularReligion": "Christianity"
     },
     "Lebanon": {
         "capital": {
@@ -1685,7 +1747,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Kibbeh",
-        "nationalAnimal": "Striped Hyena"
+        "nationalAnimal": "Striped Hyena",
+        "mostPopularReligion": "Islam"
     },
     "Iran": {
         "capital": {
@@ -1712,7 +1775,8 @@ export const countryData = {
         "nationalSport": "Wrestling",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Ghormeh Sabzi",
-        "nationalAnimal": "Persian Leopard"
+        "nationalAnimal": "Persian Leopard",
+        "mostPopularReligion": "Islam"
     },
     "Benin": {
         "capital": {
@@ -1739,7 +1803,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Koki",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Christianity"
     },
     "San Marino": {
         "capital": {
@@ -1766,7 +1831,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Torta Tre Monti",
-        "nationalAnimal": "Unofficial Stag"
+        "nationalAnimal": "Unofficial Stag",
+        "mostPopularReligion": "Christianity"
     },
     "Nicaragua": {
         "capital": {
@@ -1793,7 +1859,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Gallo Pinto",
-        "nationalAnimal": "Turquoise-browed Motmot"
+        "nationalAnimal": "Turquoise-browed Motmot",
+        "mostPopularReligion": "Christianity"
     },
     "Netherlands": {
         "capital": {
@@ -1820,7 +1887,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Stamppot",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Democratic Republic of the Congo": {
         "capital": {
@@ -1847,7 +1915,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poulet à la Moambé",
-        "nationalAnimal": "Okapi"
+        "nationalAnimal": "Okapi",
+        "mostPopularReligion": "Christianity"
     },
     "Cook Islands": {
         "capital": {
@@ -1870,7 +1939,8 @@ export const countryData = {
         },
         "flag": "/assets/original/cook-islands.png",
         "grayscale": "/assets/grayscale/cook-islands.png",
-        "invertedle": "/assets/invertedle/cook-islands.png"
+        "invertedle": "/assets/invertedle/cook-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Zimbabwe": {
         "capital": {
@@ -1897,7 +1967,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Sadza",
-        "nationalAnimal": "Sable Antelope"
+        "nationalAnimal": "Sable Antelope",
+        "mostPopularReligion": "Christianity"
     },
     "British Virgin Islands": {
         "capital": {
@@ -1920,7 +1991,8 @@ export const countryData = {
         },
         "flag": "/assets/original/british-virgin-islands.png",
         "grayscale": "/assets/grayscale/british-virgin-islands.png",
-        "invertedle": "/assets/invertedle/british-virgin-islands.png"
+        "invertedle": "/assets/invertedle/british-virgin-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Montserrat": {
         "capital": {
@@ -1943,7 +2015,8 @@ export const countryData = {
         },
         "flag": "/assets/original/montserrat.png",
         "grayscale": "/assets/grayscale/montserrat.png",
-        "invertedle": "/assets/invertedle/montserrat.png"
+        "invertedle": "/assets/invertedle/montserrat.png",
+        "mostPopularReligion": "Christianity"
     },
     "Ethiopia": {
         "capital": {
@@ -1970,7 +2043,8 @@ export const countryData = {
         "nationalSport": "Athletics",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Doro Wat",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Republic of Congo": {
         "capital": {
@@ -1997,7 +2071,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poulet Moambé",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Western Sahara": {
         "capital": {
@@ -2020,7 +2095,8 @@ export const countryData = {
         },
         "flag": "/assets/original/western-sahara.png",
         "grayscale": "/assets/grayscale/western-sahara.png",
-        "invertedle": "/assets/invertedle/western-sahara.png"
+        "invertedle": "/assets/invertedle/western-sahara.png",
+        "mostPopularReligion": "Islam"
     },
     "Isle of Man": {
         "capital": {
@@ -2043,7 +2119,8 @@ export const countryData = {
         },
         "flag": "/assets/original/isle-of-man.png",
         "grayscale": "/assets/grayscale/isle-of-man.png",
-        "invertedle": "/assets/invertedle/isle-of-man.png"
+        "invertedle": "/assets/invertedle/isle-of-man.png",
+        "mostPopularReligion": "Christianity"
     },
     "Puerto Rico": {
         "capital": {
@@ -2066,7 +2143,8 @@ export const countryData = {
         },
         "flag": "/assets/original/puerto-rico.png",
         "grayscale": "/assets/grayscale/puerto-rico.png",
-        "invertedle": "/assets/invertedle/puerto-rico.png"
+        "invertedle": "/assets/invertedle/puerto-rico.png",
+        "mostPopularReligion": "Christianity"
     },
     "Somalia": {
         "capital": {
@@ -2093,7 +2171,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Bariis Iskukaris",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Islam"
     },
     "France": {
         "capital": {
@@ -2120,7 +2199,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Pot-au-Feu",
-        "nationalAnimal": "Rooster"
+        "nationalAnimal": "Rooster",
+        "mostPopularReligion": "Christianity"
     },
     "Saint Helena": {
         "capital": {
@@ -2143,7 +2223,8 @@ export const countryData = {
         },
         "flag": "/assets/original/saint-helena.png",
         "grayscale": "/assets/grayscale/saint-helena.png",
-        "invertedle": "/assets/invertedle/saint-helena.png"
+        "invertedle": "/assets/invertedle/saint-helena.png",
+        "mostPopularReligion": "Christianity"
     },
     "Maldives": {
         "capital": {
@@ -2170,7 +2251,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Garudhiya",
-        "nationalAnimal": "White Tern"
+        "nationalAnimal": "White Tern",
+        "mostPopularReligion": "Islam"
     },
     "Nepal": {
         "capital": {
@@ -2197,7 +2279,8 @@ export const countryData = {
         "nationalSport": "Volleyball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Dal Bhat",
-        "nationalAnimal": "Cow"
+        "nationalAnimal": "Cow",
+        "mostPopularReligion": "Hinduism"
     },
     "Kuwait": {
         "capital": {
@@ -2224,7 +2307,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Machboos",
-        "nationalAnimal": "Falcon"
+        "nationalAnimal": "Falcon",
+        "mostPopularReligion": "Islam"
     },
     "Mongolia": {
         "capital": {
@@ -2251,7 +2335,8 @@ export const countryData = {
         "nationalSport": "Wrestling",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Buuz",
-        "nationalAnimal": "Przewalski's Horse"
+        "nationalAnimal": "Przewalski's Horse",
+        "mostPopularReligion": "Buddhism"
     },
     "Iceland": {
         "capital": {
@@ -2278,7 +2363,8 @@ export const countryData = {
         "nationalSport": "Glima",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Fermented shark",
-        "nationalAnimal": "Gyrfalcon"
+        "nationalAnimal": "Gyrfalcon",
+        "mostPopularReligion": "Christianity"
     },
     "Ireland": {
         "capital": {
@@ -2305,7 +2391,8 @@ export const countryData = {
         "nationalSport": "Field sports",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Irish Stew",
-        "nationalAnimal": "Wolfhound"
+        "nationalAnimal": "Wolfhound",
+        "mostPopularReligion": "Christianity"
     },
     "North Korea": {
         "capital": {
@@ -2332,7 +2419,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Cold Noodles",
-        "nationalAnimal": "Horse"
+        "nationalAnimal": "Horse",
+        "mostPopularReligion": null
     },
     "Kosovo": {
         "capital": {
@@ -2355,7 +2443,8 @@ export const countryData = {
         },
         "flag": "/assets/original/kosovo.png",
         "grayscale": "/assets/grayscale/kosovo.png",
-        "invertedle": "/assets/invertedle/kosovo.png"
+        "invertedle": "/assets/invertedle/kosovo.png",
+        "mostPopularReligion": "Islam"
     },
     "United Kingdom": {
         "capital": {
@@ -2382,7 +2471,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Chicken Tikka Masala",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Syria": {
         "capital": {
@@ -2409,7 +2499,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Shawarma",
-        "nationalAnimal": "Hawk"
+        "nationalAnimal": "Hawk",
+        "mostPopularReligion": "Islam"
     },
     "Bahamas": {
         "capital": {
@@ -2436,7 +2527,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Conch Salad",
-        "nationalAnimal": "Flamingo"
+        "nationalAnimal": "Flamingo",
+        "mostPopularReligion": "Christianity"
     },
     "South Korea": {
         "capital": {
@@ -2459,7 +2551,8 @@ export const countryData = {
         },
         "flag": "/assets/original/south-korea.png",
         "grayscale": "/assets/grayscale/south-korea.png",
-        "invertedle": "/assets/invertedle/south-korea.png"
+        "invertedle": "/assets/invertedle/south-korea.png",
+        "mostPopularReligion": null
     },
     "Nigeria": {
         "capital": {
@@ -2486,7 +2579,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Jollof Rice",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Vatican City": {
         "capital": {
@@ -2513,7 +2607,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Spaghetti alla Carbonara",
-        "nationalAnimal": "Dove"
+        "nationalAnimal": "Dove",
+        "mostPopularReligion": "Christianity"
     },
     "Vanuatu": {
         "capital": {
@@ -2540,7 +2635,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Laplap",
-        "nationalAnimal": "Pacific Imperial Pigeon"
+        "nationalAnimal": "Pacific Imperial Pigeon",
+        "mostPopularReligion": "Christianity"
     },
     "Haiti": {
         "capital": {
@@ -2567,7 +2663,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Griot",
-        "nationalAnimal": "Hispaniolan Trogon"
+        "nationalAnimal": "Hispaniolan Trogon",
+        "mostPopularReligion": "Christianity"
     },
     "New Caledonia": {
         "capital": {
@@ -2590,7 +2687,8 @@ export const countryData = {
         },
         "flag": "/assets/original/new-caledonia.png",
         "grayscale": "/assets/grayscale/new-caledonia.png",
-        "invertedle": "/assets/invertedle/new-caledonia.png"
+        "invertedle": "/assets/invertedle/new-caledonia.png",
+        "mostPopularReligion": "Christianity"
     },
     "Tonga": {
         "capital": {
@@ -2617,7 +2715,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Lu Pulu",
-        "nationalAnimal": "Humpback Whale"
+        "nationalAnimal": "Humpback Whale",
+        "mostPopularReligion": "Christianity"
     },
     "New Zealand": {
         "capital": {
@@ -2644,7 +2743,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Earth-oven cooked meat and vegetables",
-        "nationalAnimal": "Kiwi"
+        "nationalAnimal": "Kiwi",
+        "mostPopularReligion": "Christianity"
     },
     "Comoros": {
         "capital": {
@@ -2671,7 +2771,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Langouste à la Vanille",
-        "nationalAnimal": "Mongoose Lemur"
+        "nationalAnimal": "Mongoose Lemur",
+        "mostPopularReligion": "Islam"
     },
     "Mauritania": {
         "capital": {
@@ -2698,7 +2799,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Thieboudienne",
-        "nationalAnimal": "Moorish Crocodile"
+        "nationalAnimal": "Moorish Crocodile",
+        "mostPopularReligion": "Islam"
     },
     "Venezuela": {
         "capital": {
@@ -2725,7 +2827,8 @@ export const countryData = {
         "nationalSport": "Coleo",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Arepa",
-        "nationalAnimal": "Bird"
+        "nationalAnimal": "Bird",
+        "mostPopularReligion": "Christianity"
     },
     "Taiwan": {
         "capital": {
@@ -2748,7 +2851,8 @@ export const countryData = {
         },
         "flag": "/assets/original/taiwan.png",
         "grayscale": "/assets/grayscale/taiwan.png",
-        "invertedle": "/assets/invertedle/taiwan.png"
+        "invertedle": "/assets/invertedle/taiwan.png",
+        "mostPopularReligion": "Folk Religions"
     },
     "Paraguay": {
         "capital": {
@@ -2775,7 +2879,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Sopa Paraguaya",
-        "nationalAnimal": "Pampas Fox"
+        "nationalAnimal": "Pampas Fox",
+        "mostPopularReligion": "Christianity"
     },
     "Zambia": {
         "capital": {
@@ -2802,7 +2907,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Nshima",
-        "nationalAnimal": "African Fish Eagle"
+        "nationalAnimal": "African Fish Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Palestine": {
         "capital": {
@@ -2825,7 +2931,8 @@ export const countryData = {
         },
         "flag": "/assets/original/palestine.png",
         "grayscale": "/assets/grayscale/palestine.png",
-        "invertedle": "/assets/invertedle/palestine.png"
+        "invertedle": "/assets/invertedle/palestine.png",
+        "mostPopularReligion": "Islam"
     },
     "Saudi Arabia": {
         "capital": {
@@ -2852,7 +2959,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Kabsa",
-        "nationalAnimal": "Horse"
+        "nationalAnimal": "Horse",
+        "mostPopularReligion": "Islam"
     },
     "French Guiana": {
         "capital": {
@@ -2875,7 +2983,8 @@ export const countryData = {
         },
         "flag": "/assets/original/french-guiana.png",
         "grayscale": "/assets/grayscale/french-guiana.png",
-        "invertedle": "/assets/invertedle/french-guiana.png"
+        "invertedle": "/assets/invertedle/french-guiana.png",
+        "mostPopularReligion": "Christianity"
     },
     "Jordan": {
         "capital": {
@@ -2902,7 +3011,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Mansaf",
-        "nationalAnimal": "Arabian Oryx"
+        "nationalAnimal": "Arabian Oryx",
+        "mostPopularReligion": "Islam"
     },
     "Dominica": {
         "capital": {
@@ -2929,7 +3039,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Mountain Chicken",
-        "nationalAnimal": "Sisserou Parrot"
+        "nationalAnimal": "Sisserou Parrot",
+        "mostPopularReligion": "Christianity"
     },
     "Mexico": {
         "capital": {
@@ -2956,7 +3067,8 @@ export const countryData = {
         "nationalSport": "Charreria",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Tacos",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Armenia": {
         "capital": {
@@ -2983,7 +3095,8 @@ export const countryData = {
         "nationalSport": "Chess",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Harissa",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Burundi": {
         "capital": {
@@ -3010,7 +3123,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Boko Boko",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Germany": {
         "capital": {
@@ -3037,7 +3151,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Sauerbraten",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Grenada": {
         "capital": {
@@ -3064,7 +3179,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Oil Down",
-        "nationalAnimal": "Dove"
+        "nationalAnimal": "Dove",
+        "mostPopularReligion": "Christianity"
     },
     "Cameroon": {
         "capital": {
@@ -3091,7 +3207,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ndolé",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Guam": {
         "capital": {
@@ -3114,7 +3231,8 @@ export const countryData = {
         },
         "flag": "/assets/original/guam.png",
         "grayscale": "/assets/grayscale/guam.png",
-        "invertedle": "/assets/invertedle/guam.png"
+        "invertedle": "/assets/invertedle/guam.png",
+        "mostPopularReligion": "Christianity"
     },
     "Federated States of Micronesia": {
         "capital": {
@@ -3141,7 +3259,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Uwt",
-        "nationalAnimal": "Fruit Bat"
+        "nationalAnimal": "Fruit Bat",
+        "mostPopularReligion": "Christianity"
     },
     "Algeria": {
         "capital": {
@@ -3168,7 +3287,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Couscous",
-        "nationalAnimal": "Fennec Fox"
+        "nationalAnimal": "Fennec Fox",
+        "mostPopularReligion": "Islam"
     },
     "Saint Lucia": {
         "capital": {
@@ -3195,7 +3315,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Green Fig and Saltfish",
-        "nationalAnimal": "Parrot"
+        "nationalAnimal": "Parrot",
+        "mostPopularReligion": "Christianity"
     },
     "Cayman Islands": {
         "capital": {
@@ -3218,7 +3339,8 @@ export const countryData = {
         },
         "flag": "/assets/original/cayman-islands.png",
         "grayscale": "/assets/grayscale/cayman-islands.png",
-        "invertedle": "/assets/invertedle/cayman-islands.png"
+        "invertedle": "/assets/invertedle/cayman-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Solomon Islands": {
         "capital": {
@@ -3245,7 +3367,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poi",
-        "nationalAnimal": "Sea Eagle"
+        "nationalAnimal": "Sea Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Laos": {
         "capital": {
@@ -3272,7 +3395,8 @@ export const countryData = {
         "nationalSport": "Muay Lao",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Larb",
-        "nationalAnimal": "Elephant"
+        "nationalAnimal": "Elephant",
+        "mostPopularReligion": "Buddhism"
     },
     "Sint Maarten": {
         "capital": {
@@ -3322,7 +3446,8 @@ export const countryData = {
         "nationalSport": "Arnis",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Adobo",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Monaco": {
         "capital": {
@@ -3349,7 +3474,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Barbagiuan",
-        "nationalAnimal": "Hedgehog"
+        "nationalAnimal": "Hedgehog",
+        "mostPopularReligion": "Christianity"
     },
     "Liberia": {
         "capital": {
@@ -3376,7 +3502,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Dumboy",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Cyprus": {
         "capital": {
@@ -3403,7 +3530,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Souvla",
-        "nationalAnimal": "Cypriot Mouflon"
+        "nationalAnimal": "Cypriot Mouflon",
+        "mostPopularReligion": "Christianity"
     },
     "Hungary": {
         "capital": {
@@ -3430,7 +3558,8 @@ export const countryData = {
         "nationalSport": "Water Polo",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Goulash",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Lesotho": {
         "capital": {
@@ -3457,7 +3586,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Pap-pap",
-        "nationalAnimal": "Basuto Pony"
+        "nationalAnimal": "Basuto Pony",
+        "mostPopularReligion": "Christianity"
     },
     "Pakistan": {
         "capital": {
@@ -3484,7 +3614,8 @@ export const countryData = {
         "nationalSport": "Field Hockey",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Spiced rice and meat",
-        "nationalAnimal": "Markhor"
+        "nationalAnimal": "Markhor",
+        "mostPopularReligion": "Islam"
     },
     "Costa Rica": {
         "capital": {
@@ -3511,7 +3642,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Gallo Pinto",
-        "nationalAnimal": "White-tailed Deer"
+        "nationalAnimal": "White-tailed Deer",
+        "mostPopularReligion": "Christianity"
     },
     "Gibraltar": {
         "capital": {
@@ -3534,7 +3666,8 @@ export const countryData = {
         },
         "flag": "/assets/original/gibraltar.png",
         "grayscale": "/assets/grayscale/gibraltar.png",
-        "invertedle": "/assets/invertedle/gibraltar.png"
+        "invertedle": "/assets/invertedle/gibraltar.png",
+        "mostPopularReligion": "Christianity"
     },
     "Bhutan": {
         "capital": {
@@ -3561,7 +3694,8 @@ export const countryData = {
         "nationalSport": "Archery",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Ema Datshi",
-        "nationalAnimal": "Takin"
+        "nationalAnimal": "Takin",
+        "mostPopularReligion": "Buddhism"
     },
     "El Salvador": {
         "capital": {
@@ -3588,7 +3722,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Pupusa",
-        "nationalAnimal": "Bird"
+        "nationalAnimal": "Bird",
+        "mostPopularReligion": "Christianity"
     },
     "Hong Kong": {
         "capital": {
@@ -3611,7 +3746,8 @@ export const countryData = {
         },
         "flag": "/assets/original/hong-kong.png",
         "grayscale": "/assets/grayscale/hong-kong.png",
-        "invertedle": "/assets/invertedle/hong-kong.png"
+        "invertedle": "/assets/invertedle/hong-kong.png",
+        "mostPopularReligion": null
     },
     "Estonia": {
         "capital": {
@@ -3638,7 +3774,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Verivorst",
-        "nationalAnimal": "Barn Swallow"
+        "nationalAnimal": "Barn Swallow",
+        "mostPopularReligion": null
     },
     "Botswana": {
         "capital": {
@@ -3665,7 +3802,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Seswaa",
-        "nationalAnimal": "Plain Zebra"
+        "nationalAnimal": "Plain Zebra",
+        "mostPopularReligion": "Christianity"
     },
     "Saint Vincent and the Grenadines": {
         "capital": {
@@ -3692,7 +3830,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Roasted Breadfruit and Fried Jackfish",
-        "nationalAnimal": "Parrot"
+        "nationalAnimal": "Parrot",
+        "mostPopularReligion": "Christianity"
     },
     "Burkina Faso": {
         "capital": {
@@ -3719,7 +3858,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Riz Gras",
-        "nationalAnimal": "White Stallion"
+        "nationalAnimal": "White Stallion",
+        "mostPopularReligion": "Islam"
     },
     "Serbia": {
         "capital": {
@@ -3746,7 +3886,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Ćevapi",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Latvia": {
         "capital": {
@@ -3773,7 +3914,8 @@ export const countryData = {
         "nationalSport": "Ice Hockey",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Grey Peas with Bacon",
-        "nationalAnimal": "White Wagtail"
+        "nationalAnimal": "White Wagtail",
+        "mostPopularReligion": "Christianity"
     },
     "Barbados": {
         "capital": {
@@ -3800,7 +3942,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Cou-Cou and Flying Fish",
-        "nationalAnimal": "Dolphin Fish"
+        "nationalAnimal": "Dolphin Fish",
+        "mostPopularReligion": "Christianity"
     },
     "Guatemala": {
         "capital": {
@@ -3827,7 +3970,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Pepián",
-        "nationalAnimal": "Resplendent Quetzal"
+        "nationalAnimal": "Resplendent Quetzal",
+        "mostPopularReligion": "Christianity"
     },
     "Guinea-Bissau": {
         "capital": {
@@ -3854,7 +3998,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Jajangmyeon style stews",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Islam"
     },
     "Marshall Islands": {
         "capital": {
@@ -3881,7 +4026,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Barramundi Cod dishes",
-        "nationalAnimal": "Shark"
+        "nationalAnimal": "Shark",
+        "mostPopularReligion": "Christianity"
     },
     "Sweden": {
         "capital": {
@@ -3908,7 +4054,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Köttbullar",
-        "nationalAnimal": "Moose"
+        "nationalAnimal": "Moose",
+        "mostPopularReligion": "Christianity"
     },
     "Canada": {
         "capital": {
@@ -3935,7 +4082,8 @@ export const countryData = {
         "nationalSport": "Ice Hockey & Lacrosse",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poutine",
-        "nationalAnimal": "North American Beaver"
+        "nationalAnimal": "North American Beaver",
+        "mostPopularReligion": "Christianity"
     },
     "Libya": {
         "capital": {
@@ -3962,7 +4110,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Couscous",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Islam"
     },
     "Malta": {
         "capital": {
@@ -3989,7 +4138,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Stuffat tal-Fenek",
-        "nationalAnimal": "Pharaoh Hound"
+        "nationalAnimal": "Pharaoh Hound",
+        "mostPopularReligion": "Christianity"
     },
     "Indonesia": {
         "capital": {
@@ -4016,7 +4166,8 @@ export const countryData = {
         "nationalSport": "Pencak Silat",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Nasi Goreng",
-        "nationalAnimal": "Komodo Dragon"
+        "nationalAnimal": "Komodo Dragon",
+        "mostPopularReligion": "Islam"
     },
     "Russia": {
         "capital": {
@@ -4043,7 +4194,8 @@ export const countryData = {
         "nationalSport": "Bandy",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Borsch",
-        "nationalAnimal": "Eurasian Brown Bear"
+        "nationalAnimal": "Eurasian Brown Bear",
+        "mostPopularReligion": "Christianity"
     },
     "Cote d'Ivoire": {
         "capital": {
@@ -4070,7 +4222,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Garba",
-        "nationalAnimal": "African Elephant"
+        "nationalAnimal": "African Elephant",
+        "mostPopularReligion": "Christianity"
     },
     "Moldova": {
         "capital": {
@@ -4097,7 +4250,8 @@ export const countryData = {
         "nationalSport": "Tranta",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Mămăligă",
-        "nationalAnimal": "Aurochs"
+        "nationalAnimal": "Aurochs",
+        "mostPopularReligion": "Christianity"
     },
     "Malaysia": {
         "capital": {
@@ -4124,7 +4278,8 @@ export const countryData = {
         "nationalSport": "Sepak Takraw",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Coconut rice with sides",
-        "nationalAnimal": "Tiger"
+        "nationalAnimal": "Tiger",
+        "mostPopularReligion": "Islam"
     },
     "Kazakhstan": {
         "capital": {
@@ -4151,7 +4306,8 @@ export const countryData = {
         "nationalSport": "Kyz Kuu",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Beshbarmak",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Islam"
     },
     "Andorra": {
         "capital": {
@@ -4178,7 +4334,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Escudella",
-        "nationalAnimal": "Black Isard"
+        "nationalAnimal": "Black Isard",
+        "mostPopularReligion": "Christianity"
     },
     "Togo": {
         "capital": {
@@ -4205,7 +4362,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Fufu",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "French Polynesia": {
         "capital": {
@@ -4228,7 +4386,8 @@ export const countryData = {
         },
         "flag": "/assets/original/french-polynesia.png",
         "grayscale": "/assets/grayscale/french-polynesia.png",
-        "invertedle": "/assets/invertedle/french-polynesia.png"
+        "invertedle": "/assets/invertedle/french-polynesia.png",
+        "mostPopularReligion": "Christianity"
     },
     "Finland": {
         "capital": {
@@ -4255,7 +4414,8 @@ export const countryData = {
         "nationalSport": "Pesäpallo",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Karjalanpiirakka",
-        "nationalAnimal": "Brown Bear"
+        "nationalAnimal": "Brown Bear",
+        "mostPopularReligion": "Christianity"
     },
     "Turkey": {
         "capital": {
@@ -4282,7 +4442,8 @@ export const countryData = {
         "nationalSport": "Oil Wrestling",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Kebab",
-        "nationalAnimal": "Grey Wolf"
+        "nationalAnimal": "Grey Wolf",
+        "mostPopularReligion": "Islam"
     },
     "Tanzania": {
         "capital": {
@@ -4309,7 +4470,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ugali",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Christianity"
     },
     "Guinea": {
         "capital": {
@@ -4336,7 +4498,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Poulet Yassa",
-        "nationalAnimal": "Elephant"
+        "nationalAnimal": "Elephant",
+        "mostPopularReligion": "Islam"
     },
     "United States": {
         "capital": {
@@ -4363,7 +4526,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Hamburger",
-        "nationalAnimal": "Bald Eagle"
+        "nationalAnimal": "Bald Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Brunei Darussalam": {
         "capital": {
@@ -4390,7 +4554,8 @@ export const countryData = {
         "nationalSport": "Sepak Takraw",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Sago starch with dipping sauce",
-        "nationalAnimal": "White-bellied Sea Eagle"
+        "nationalAnimal": "White-bellied Sea Eagle",
+        "mostPopularReligion": "Islam"
     },
     "Myanmar": {
         "capital": {
@@ -4417,7 +4582,8 @@ export const countryData = {
         "nationalSport": "Chinlone",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Mohinga",
-        "nationalAnimal": "Indochinese Tiger"
+        "nationalAnimal": "Indochinese Tiger",
+        "mostPopularReligion": "Buddhism"
     },
     "Tokelau": {
         "capital": {
@@ -4440,7 +4606,8 @@ export const countryData = {
         },
         "flag": "/assets/original/tokelau.png",
         "grayscale": "/assets/grayscale/tokelau.png",
-        "invertedle": "/assets/invertedle/tokelau.png"
+        "invertedle": "/assets/invertedle/tokelau.png",
+        "mostPopularReligion": "Christianity"
     },
     "Belarus": {
         "capital": {
@@ -4467,7 +4634,8 @@ export const countryData = {
         "nationalSport": "Ice Hockey",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Draniki",
-        "nationalAnimal": "European Bison"
+        "nationalAnimal": "European Bison",
+        "mostPopularReligion": "Christianity"
     },
     "Tajikistan": {
         "capital": {
@@ -4494,7 +4662,8 @@ export const countryData = {
         "nationalSport": "Gushtigiri",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Plov",
-        "nationalAnimal": "Markhor"
+        "nationalAnimal": "Markhor",
+        "mostPopularReligion": "Islam"
     },
     "Peru": {
         "capital": {
@@ -4521,7 +4690,8 @@ export const countryData = {
         "nationalSport": "Paleta Fronton",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Ceviche",
-        "nationalAnimal": "Vicuña"
+        "nationalAnimal": "Vicuña",
+        "mostPopularReligion": "Christianity"
     },
     "Sri Lanka": {
         "capital": {
@@ -4548,7 +4718,8 @@ export const countryData = {
         "nationalSport": "Volleyball",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Rice and Curry",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Buddhism"
     },
     "Equatorial Guinea": {
         "capital": {
@@ -4575,7 +4746,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Succotash",
-        "nationalAnimal": "Western Gorilla"
+        "nationalAnimal": "Western Gorilla",
+        "mostPopularReligion": "Christianity"
     },
     "Israel": {
         "capital": {
@@ -4602,7 +4774,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Falafel",
-        "nationalAnimal": "Hoopoe"
+        "nationalAnimal": "Hoopoe",
+        "mostPopularReligion": "Judaism"
     },
     "Panama": {
         "capital": {
@@ -4629,7 +4802,8 @@ export const countryData = {
         "nationalSport": "Baseball",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Sancocho",
-        "nationalAnimal": "Harpy Eagle"
+        "nationalAnimal": "Harpy Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Italy": {
         "capital": {
@@ -4656,7 +4830,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Ragù alla Bolognese",
-        "nationalAnimal": "Italian Wolf"
+        "nationalAnimal": "Italian Wolf",
+        "mostPopularReligion": "Christianity"
     },
     "Croatia": {
         "capital": {
@@ -4683,7 +4858,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Zagorski Štrukli",
-        "nationalAnimal": "Pine Marten"
+        "nationalAnimal": "Pine Marten",
+        "mostPopularReligion": "Christianity"
     },
     "Sudan": {
         "capital": {
@@ -4710,7 +4886,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Ful Medames",
-        "nationalAnimal": "Secretary Bird"
+        "nationalAnimal": "Secretary Bird",
+        "mostPopularReligion": "Islam"
     },
     "Morocco": {
         "capital": {
@@ -4737,7 +4914,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Couscous",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": "Islam"
     },
     "Djibouti": {
         "capital": {
@@ -4764,7 +4942,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Skoudehkaris",
-        "nationalAnimal": "Somali Ostrich"
+        "nationalAnimal": "Somali Ostrich",
+        "mostPopularReligion": "Islam"
     },
     "Albania": {
         "capital": {
@@ -4791,7 +4970,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Baked lamb and yogurt",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Islam"
     },
     "Bahrain": {
         "capital": {
@@ -4818,7 +4998,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Machboos",
-        "nationalAnimal": "Arabian Oryx"
+        "nationalAnimal": "Arabian Oryx",
+        "mostPopularReligion": "Islam"
     },
     "Niger": {
         "capital": {
@@ -4845,7 +5026,8 @@ export const countryData = {
         "nationalSport": "Traditional Wrestling",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Djerma Stew",
-        "nationalAnimal": "Dama Gazelle"
+        "nationalAnimal": "Dama Gazelle",
+        "mostPopularReligion": "Islam"
     },
     "Georgia": {
         "capital": {
@@ -4872,7 +5054,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Cheese bread",
-        "nationalAnimal": "White-tailed Eagle"
+        "nationalAnimal": "White-tailed Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Greece": {
         "capital": {
@@ -4899,7 +5082,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Moussaka",
-        "nationalAnimal": "Dolphin"
+        "nationalAnimal": "Dolphin",
+        "mostPopularReligion": "Christianity"
     },
     "Portugal": {
         "capital": {
@@ -4926,7 +5110,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Bacalhau",
-        "nationalAnimal": "Iberian Wolf"
+        "nationalAnimal": "Iberian Wolf",
+        "mostPopularReligion": "Christianity"
     },
     "Turkmenistan": {
         "capital": {
@@ -4953,7 +5138,8 @@ export const countryData = {
         "nationalSport": "Goresh",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Plov",
-        "nationalAnimal": "Akhal-Teke Horse"
+        "nationalAnimal": "Akhal-Teke Horse",
+        "mostPopularReligion": "Islam"
     },
     "Japan": {
         "capital": {
@@ -4980,7 +5166,8 @@ export const countryData = {
         "nationalSport": "Sumo Wrestling",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Sushi",
-        "nationalAnimal": "Green Pheasant"
+        "nationalAnimal": "Green Pheasant",
+        "mostPopularReligion": null
     },
     "Tuvalu": {
         "capital": {
@@ -5007,7 +5194,8 @@ export const countryData = {
         "nationalSport": "Kilikiti",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Pulaka",
-        "nationalAnimal": "Whale"
+        "nationalAnimal": "Whale",
+        "mostPopularReligion": "Christianity"
     },
     "China": {
         "capital": {
@@ -5034,7 +5222,8 @@ export const countryData = {
         "nationalSport": "Table Tennis",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Roasted Duck",
-        "nationalAnimal": "Giant Panda"
+        "nationalAnimal": "Giant Panda",
+        "mostPopularReligion": null
     },
     "Ghana": {
         "capital": {
@@ -5061,7 +5250,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Jollof Rice",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Madagascar": {
         "capital": {
@@ -5088,7 +5278,8 @@ export const countryData = {
         "nationalSport": "Rugby Union",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Romazava",
-        "nationalAnimal": "Ring-tailed Lemur"
+        "nationalAnimal": "Ring-tailed Lemur",
+        "mostPopularReligion": "Christianity"
     },
     "Swaziland": {
         "capital": {
@@ -5115,7 +5306,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Umncweba",
-        "nationalAnimal": "Thomson's Gazelle"
+        "nationalAnimal": "Thomson's Gazelle",
+        "mostPopularReligion": "Christianity"
     },
     "Bosnia and Herzegovina": {
         "capital": {
@@ -5142,7 +5334,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Ćevapi",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Northern Mariana Islands": {
         "capital": {
@@ -5165,7 +5358,8 @@ export const countryData = {
         },
         "flag": "/assets/original/northern-mariana-islands.png",
         "grayscale": "/assets/grayscale/northern-mariana-islands.png",
-        "invertedle": "/assets/invertedle/northern-mariana-islands.png"
+        "invertedle": "/assets/invertedle/northern-mariana-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Mali": {
         "capital": {
@@ -5192,7 +5386,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Tiguadege Na",
-        "nationalAnimal": "Leopard"
+        "nationalAnimal": "Leopard",
+        "mostPopularReligion": "Islam"
     },
     "Niue": {
         "capital": {
@@ -5215,7 +5410,8 @@ export const countryData = {
         },
         "flag": "/assets/original/niue.png",
         "grayscale": "/assets/grayscale/niue.png",
-        "invertedle": "/assets/invertedle/niue.png"
+        "invertedle": "/assets/invertedle/niue.png",
+        "mostPopularReligion": "Christianity"
     },
     "Seychelles": {
         "capital": {
@@ -5242,7 +5438,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Fish Curry",
-        "nationalAnimal": "Aldabra Giant Tortoise"
+        "nationalAnimal": "Aldabra Giant Tortoise",
+        "mostPopularReligion": "Christianity"
     },
     "Switzerland": {
         "capital": {
@@ -5269,7 +5466,8 @@ export const countryData = {
         "nationalSport": "Schwingen",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Fondue",
-        "nationalAnimal": "Dog"
+        "nationalAnimal": "Dog",
+        "mostPopularReligion": "Christianity"
     },
     "Slovenia": {
         "capital": {
@@ -5296,7 +5494,8 @@ export const countryData = {
         "nationalSport": "Alpine Skiing",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Potica",
-        "nationalAnimal": "Lipizzan Horse"
+        "nationalAnimal": "Lipizzan Horse",
+        "mostPopularReligion": "Christianity"
     },
     "Oman": {
         "capital": {
@@ -5323,7 +5522,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Shuwa",
-        "nationalAnimal": "Arabian Oryx"
+        "nationalAnimal": "Arabian Oryx",
+        "mostPopularReligion": "Islam"
     },
     "Liechtenstein": {
         "capital": {
@@ -5350,7 +5550,8 @@ export const countryData = {
         "nationalSport": "Alpine Skiing",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Käsknöpfle",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "United Arab Emirates": {
         "capital": {
@@ -5377,7 +5578,8 @@ export const countryData = {
         "nationalSport": "Camel Racing",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Khuzi",
-        "nationalAnimal": "Arabian Oryx"
+        "nationalAnimal": "Arabian Oryx",
+        "mostPopularReligion": "Islam"
     },
     "Iraq": {
         "capital": {
@@ -5404,7 +5606,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Masgouf",
-        "nationalAnimal": "Chukar Partridge"
+        "nationalAnimal": "Chukar Partridge",
+        "mostPopularReligion": "Islam"
     },
     "Kiribati": {
         "capital": {
@@ -5431,7 +5634,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Palusami",
-        "nationalAnimal": "Frigatebird"
+        "nationalAnimal": "Frigatebird",
+        "mostPopularReligion": "Christianity"
     },
     "Poland": {
         "capital": {
@@ -5458,7 +5662,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Bigos",
-        "nationalAnimal": "Eagle"
+        "nationalAnimal": "Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Bermuda": {
         "capital": {
@@ -5481,7 +5686,8 @@ export const countryData = {
         },
         "flag": "/assets/original/bermuda.png",
         "grayscale": "/assets/grayscale/bermuda.png",
-        "invertedle": "/assets/invertedle/bermuda.png"
+        "invertedle": "/assets/invertedle/bermuda.png",
+        "mostPopularReligion": "Christianity"
     },
     "South Africa": {
         "capital": {
@@ -5508,7 +5714,8 @@ export const countryData = {
         "nationalSport": "Rugby Union & Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Bobotie",
-        "nationalAnimal": "Springbok"
+        "nationalAnimal": "Springbok",
+        "mostPopularReligion": "Christianity"
     },
     "Papua New Guinea": {
         "capital": {
@@ -5535,7 +5742,8 @@ export const countryData = {
         "nationalSport": "Rugby League",
         "mostVisitedLandmarkCategory": "Historical & Memorial",
         "nationalDish": "Mumu",
-        "nationalAnimal": "Raggiana Bird-of-Paradise"
+        "nationalAnimal": "Raggiana Bird-of-Paradise",
+        "mostPopularReligion": "Christianity"
     },
     "Norway": {
         "capital": {
@@ -5562,7 +5770,8 @@ export const countryData = {
         "nationalSport": "Cross-Country Skiing",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Fårikål",
-        "nationalAnimal": "Moose"
+        "nationalAnimal": "Moose",
+        "mostPopularReligion": "Christianity"
     },
     "Wallis and Futuna": {
         "capital": {
@@ -5585,7 +5794,8 @@ export const countryData = {
         },
         "flag": "/assets/original/wallis-and-futuna.png",
         "grayscale": "/assets/grayscale/wallis-and-futuna.png",
-        "invertedle": "/assets/invertedle/wallis-and-futuna.png"
+        "invertedle": "/assets/invertedle/wallis-and-futuna.png",
+        "mostPopularReligion": "Christianity"
     },
     "Trinidad and Tobago": {
         "capital": {
@@ -5612,7 +5822,8 @@ export const countryData = {
         "nationalSport": "Cricket",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Crab and Dumpling",
-        "nationalAnimal": "Scarlet Ibis"
+        "nationalAnimal": "Scarlet Ibis",
+        "mostPopularReligion": "Christianity"
     },
     "Central African Republic": {
         "capital": {
@@ -5639,7 +5850,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Cassava and Fish",
-        "nationalAnimal": "Elephant"
+        "nationalAnimal": "Elephant",
+        "mostPopularReligion": "Christianity"
     },
     "Lithuania": {
         "capital": {
@@ -5666,7 +5878,8 @@ export const countryData = {
         "nationalSport": "Basketball",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Cepelinai",
-        "nationalAnimal": "White Stork"
+        "nationalAnimal": "White Stork",
+        "mostPopularReligion": "Christianity"
     },
     "Czechia": {
         "capital": {
@@ -5693,7 +5906,8 @@ export const countryData = {
         "nationalSport": "Ice Hockey",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Roast pork with dumplings and cabbage",
-        "nationalAnimal": "Lion"
+        "nationalAnimal": "Lion",
+        "mostPopularReligion": null
     },
     "Afghanistan": {
         "capital": {
@@ -5720,7 +5934,8 @@ export const countryData = {
         "nationalSport": "Goat pulling",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Rice with meat and carrots",
-        "nationalAnimal": "Snow Leopard"
+        "nationalAnimal": "Snow Leopard",
+        "mostPopularReligion": "Islam"
     },
     "Azerbaijan": {
         "capital": {
@@ -5747,7 +5962,8 @@ export const countryData = {
         "nationalSport": "Wrestling",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Plov",
-        "nationalAnimal": "Karabakh Horse"
+        "nationalAnimal": "Karabakh Horse",
+        "mostPopularReligion": "Islam"
     },
     "Montenegro": {
         "capital": {
@@ -5774,7 +5990,8 @@ export const countryData = {
         "nationalSport": "Water Polo",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Njegški Pršut",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Christianity"
     },
     "Falkland Islands": {
         "capital": {
@@ -5797,7 +6014,8 @@ export const countryData = {
         },
         "flag": "/assets/original/falkland-islands.png",
         "grayscale": "/assets/grayscale/falkland-islands.png",
-        "invertedle": "/assets/invertedle/falkland-islands.png"
+        "invertedle": "/assets/invertedle/falkland-islands.png",
+        "mostPopularReligion": "Christianity"
     },
     "Timor-Leste": {
         "capital": {
@@ -5824,7 +6042,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Religious Site",
         "nationalDish": "Ikan Sabuko",
-        "nationalAnimal": "Crocodile"
+        "nationalAnimal": "Crocodile",
+        "mostPopularReligion": "Christianity"
     },
     "Yemen": {
         "capital": {
@@ -5851,7 +6070,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Saltah",
-        "nationalAnimal": "Golden Eagle"
+        "nationalAnimal": "Golden Eagle",
+        "mostPopularReligion": "Islam"
     },
     "India": {
         "capital": {
@@ -5878,7 +6098,8 @@ export const countryData = {
         "nationalSport": "Field Hockey",
         "mostVisitedLandmarkCategory": "Palace & Ancient Site",
         "nationalDish": "Khichdi",
-        "nationalAnimal": "Tiger"
+        "nationalAnimal": "Tiger",
+        "mostPopularReligion": "Hinduism"
     },
     "Bangladesh": {
         "capital": {
@@ -5905,7 +6126,8 @@ export const countryData = {
         "nationalSport": "Kabaddi",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Ilish Curry",
-        "nationalAnimal": "Tiger"
+        "nationalAnimal": "Tiger",
+        "mostPopularReligion": "Islam"
     },
     "Eritrea": {
         "capital": {
@@ -5932,7 +6154,8 @@ export const countryData = {
         "nationalSport": "Cycling",
         "mostVisitedLandmarkCategory": "Modern Architectural",
         "nationalDish": "Zigini",
-        "nationalAnimal": "Dromedary Camel"
+        "nationalAnimal": "Dromedary Camel",
+        "mostPopularReligion": "Christianity"
     },
     "Macedonia": {
         "capital": {
@@ -5959,7 +6182,8 @@ export const countryData = {
         "nationalSport": "Football",
         "mostVisitedLandmarkCategory": "Natural Wonder",
         "nationalDish": "Tavče Gravče",
-        "nationalAnimal": "Lynx"
+        "nationalAnimal": "Lynx",
+        "mostPopularReligion": "Christianity"
     },
     "Catalunya": {
         "capital": {
