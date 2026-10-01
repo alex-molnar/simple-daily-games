@@ -110,6 +110,17 @@ h1, h2 { margin: 0; line-height: 1.16; }
 .stats-chart-fill { height: 100%; border-radius: inherit; background: var(--blue); }
 .stats-chart-value { text-align: right; }
 .stats-popup-kofi { display: block; margin-top: 1rem; text-align: center; }
+#confetti-container { position: fixed; inset: 0; z-index: 9; overflow: hidden; pointer-events: none; }
+.confetti { position: absolute; top: -20px; opacity: 0; animation: confettiFall ease-out forwards; }
+.confetti.square, .confetti.circle { width: 10px; height: 10px; }
+.confetti.square { border-radius: 2px; }
+.confetti.circle { border-radius: 50%; }
+.confetti.ribbon { width: 4px; height: 16px; border-radius: 2px; }
+@keyframes confettiFall {
+  0% { top: -20px; opacity: 1; transform: translateX(0) rotate(0deg) scale(1); }
+  25% { opacity: 1; }
+  100% { top: 100vh; opacity: 0; transform: translateX(calc(-50px + 100px * var(--random, .5))) rotate(720deg) scale(.5); }
+}
 @media (max-width: 600px) {
   body { padding: .5rem 0; }
   .page-shell { width: calc(100% - 1rem); padding: .5rem .65rem .25rem; border-radius: 14px; }

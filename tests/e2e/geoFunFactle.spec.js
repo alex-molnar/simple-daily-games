@@ -24,6 +24,7 @@ async function mockApi(page, calls = []) {
 test('welcome, skip, restored progress, keyboard selection, completion, and completed restore', async ({ page }) => {
     const calls = await mockApi(page)
     await setFixedClock(page)
+    await page.setViewportSize({ width: 872, height: 1000 })
     await page.goto('http://geo-fun-factle.localhost:8080/')
     await expect(page).toHaveTitle('Geo Funfactle')
     await expect(page.locator('#welcome-screen')).toBeVisible()
@@ -44,8 +45,21 @@ test('welcome, skip, restored progress, keyboard selection, completion, and comp
 
     const input = page.getByRole('combobox', { name: 'Your country' })
     await input.fill(answerForToday)
+    const shellTopBeforeWin = (await page.locator('.page-shell').boundingBox()).y
     await input.press('Enter')
     await expect(page.locator('#result-screen')).toBeVisible()
+    expect((await page.locator('.page-shell').boundingBox()).y).toBe(shellTopBeforeWin)
+    const confetti = page.locator('#confetti-container .confetti').first()
+    await expect(confetti).toBeAttached()
+    await expect(confetti).toHaveCSS('animation-name', 'confettiFall')
+    await page.locator('#stats-button').click()
+    await expect(page.locator('.stats-popup')).toBeVisible()
+    const [confettiZIndex, statsZIndex] = await Promise.all([
+        page.locator('#confetti-container').evaluate(element => Number(getComputedStyle(element).zIndex)),
+        page.locator('.stats-popup-overlay').evaluate(element => Number(getComputedStyle(element).zIndex))
+    ])
+    expect(confettiZIndex).toBeLessThan(statsZIndex)
+    await page.keyboard.press('Escape')
     await expect(page.locator('#result-heading')).toContainText(answerForToday)
     await expect(page.locator('#result-facts .result-fact')).toHaveCount(6)
     await expect(page.locator('#result-message')).toHaveText('Solved in 2 attempts')
