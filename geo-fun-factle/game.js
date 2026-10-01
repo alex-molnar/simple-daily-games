@@ -9,7 +9,7 @@ import { applyAttempt, formatPopulation, hasCompleteClues } from './gameState.js
 
 const gameId = 'geo-fun-factle'
 const eligibleCountries = countryNames.filter(name => hasCompleteClues(countryData[name]))
-const clueLabels = ['National sport', 'Most visited landmark category', 'Population', 'National animal', 'National dish', 'Most popular religion']
+const clueLabels = ['National sport', 'Most visited landmark is:', 'Population', 'National animal', 'National dish', 'Most popular religion']
 const clueValues = record => [record.nationalSport, record.mostVisitedLandmarkCategory, formatPopulation(record.country.population), record.nationalAnimal, record.nationalDish, record.mostPopularReligion]
 const today = () => new Date().toISOString().slice(0, 10)
 const keyForDay = day => `${gameId}-${day}`
