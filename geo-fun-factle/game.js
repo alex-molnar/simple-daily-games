@@ -136,6 +136,7 @@ function renderClues(revealIndex = -1) {
         label.textContent = 'Next clue: '
         nextClue.append(label, document.createTextNode(clueLabels[visible]))
     }
+    list.scrollTop = list.scrollHeight
 }
 
 function renderSuggestions() {

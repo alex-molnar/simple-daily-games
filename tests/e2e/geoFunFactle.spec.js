@@ -148,6 +148,34 @@ test('input and clue list do not show false controls or horizontal scrolling', a
     await expect(page.locator('#clue-list')).toHaveJSProperty('scrollWidth', await page.locator('#clue-list').evaluate(element => element.clientWidth))
 })
 
+test('clue list scrolls to the latest guess and desktop page margins are reduced', async ({ page }) => {
+    await mockApi(page)
+    await setFixedClock(page)
+    await page.setViewportSize({ width: 872, height: 500 })
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    const list = page.locator('#clue-list')
+    for (let index = 0; index < 4; index++) await page.getByRole('button', { name: 'Skip' }).click()
+    const scroll = await list.evaluate(element => ({ top: element.scrollTop, max: element.scrollHeight - element.clientHeight }))
+    expect(scroll.top).toBeGreaterThan(0)
+    expect(scroll.top).toBe(scroll.max)
+    const shell = page.locator('.page-shell')
+    await expect(shell).toHaveCSS('width', '720px')
+    expect((await shell.boundingBox()).x).toBe(76)
+
+    await page.setViewportSize({ width: 320, height: 800 })
+    await page.evaluate(() => localStorage.clear())
+    await page.reload()
+    await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
+    await page.getByRole('button', { name: 'Start game' }).click()
+    const narrowList = page.locator('#clue-list')
+    for (let index = 0; index < 4; index++) {
+        await page.getByRole('button', { name: 'Skip' }).click()
+        const position = await narrowList.evaluate(element => ({ top: element.scrollTop, max: element.scrollHeight - element.clientHeight }))
+        expect(position.top, `latest clue after ${index + 1} skips`).toBe(position.max)
+    }
+})
+
 test('invalid input and unavailable storage do not consume or block attempts', async ({ page }) => {
     await mockApi(page)
     await setFixedClock(page)
