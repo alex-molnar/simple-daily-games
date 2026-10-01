@@ -25,6 +25,9 @@ spec:
         - invertedle.kak.im
       secretName: invertedle-tls
     - hosts:
+        - geo-fun-factle.kak.im
+      secretName: geo-fun-factle-tls
+    - hosts:
         - home.games.kak.im
       secretName: landing-page-games-tls
   rules:
@@ -59,6 +62,16 @@ spec:
           path: /
           pathType: Prefix
     - host: invertedle.kak.im
+      http:
+        paths:
+        - backend:
+            service:
+              name: static
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+    - host: geo-fun-factle.kak.im
       http:
         paths:
         - backend:

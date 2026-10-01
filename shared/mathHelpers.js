@@ -1,5 +1,3 @@
-const currentDate = new Date().toISOString().split("T")[0];
-
 function toNum(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -45,6 +43,7 @@ export function getDirection(lat1, lon1, lat2, lon2) {
 }
 
 export function getRandomSelectionForToday(selections, salt) {
+  const currentDate = new Date().toISOString().split("T")[0];
   const seed = parseInt(currentDate.replaceAll("-", "")) + toNum(salt);
   // LCG using GCC's constants
   const m = 0x80000000; // 2**31;

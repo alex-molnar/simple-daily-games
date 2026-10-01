@@ -49,7 +49,7 @@ function displayRowsCallback(guessName, rowNumber, initial) {
 
 const gameNavigation = {
     'grayscale': { prev: { url: siteUrl('countryle'), label: 'Countryle' }, next: { url: siteUrl('invertedle'), label: 'Invertedle' } },
-    'invertedle': { prev: { url: siteUrl('grayscale'), label: 'Grayscale' }, next: null }
+    'invertedle': { prev: { url: siteUrl('grayscale'), label: 'Grayscale' }, next: { url: siteUrl('geo-fun-factle'), label: 'Geo Funfactle' } }
 }
 
 function setupNavigation() {

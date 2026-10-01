@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eaf3f8">
+  <title>Geo Funfactle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#game-content">Skip to game</a>
+  <main class="page-shell">
+    <header class="site-header">
+      <a class="home-link" href="#"><span aria-hidden="true">‹</span> Invertedle</a>
+      <h1 id="page-title">Geo Funfactle</h1>
+      <button id="header-stats-button" class="header-stats" type="button">Stats</button>
+    </header>
+    <div class="passport-heading">
+      <img class="globe" src="art/globe.webp" width="220" height="220" alt="">
+      <div class="date-stamp"><span>Daily puzzle</span><time id="puzzle-date"></time></div>
+      <div id="attempt-progress" class="attempt-progress" hidden>
+        <p id="attempt-count" class="attempt-count" aria-live="polite"></p>
+        <div id="attempt-dots" class="attempt-dots" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div id="game-content" class="game-content" tabindex="-1">
+    <section id="welcome-screen" class="paper welcome" aria-labelledby="welcome-title" tabindex="0">
+      <h2 id="welcome-title">Your daily passport</h2>
+      <p class="welcome-copy">One country. Six facts. Guess with as few clues as possible.</p>
+      <p class="instructions">A wrong guess or Skip reveals another fact and uses an attempt.</p>
+      <p id="saved-note" class="saved-note" hidden>Your progress is saved.</p>
+      <button id="start-button" class="primary-button" type="button">Start game</button>
+    </section>
+
+    <section id="game-screen" class="paper game" aria-labelledby="game-title" hidden>
+      <h2 id="game-title" class="visually-hidden">Country clues</h2>
+      <p id="clue-announcement" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+      <ol id="clue-list" class="clue-list" aria-label="Country clues" tabindex="0"></ol>
+      <form id="guess-form" class="guess-form" novalidate>
+        <label class="visually-hidden" for="guess-input">Your country</label>
+        <div class="guess-controls">
+          <div class="input-wrap">
+            <input id="guess-input" name="country" type="text" placeholder="Search countries…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions-container" aria-describedby="guess-error storage-message" autocomplete="off">
+            <ul id="suggestions-container" role="listbox" hidden></ul>
+          </div>
+          <button id="submit-button" class="primary-button" type="submit">Guess</button>
+          <button id="skip-button" class="secondary-button" type="button">Skip</button>
+        </div>
+        <p id="guess-error" class="message" role="alert"></p>
+        <p id="storage-message" class="storage-message" role="status"></p>
+      </form>
+      <p id="next-clue" class="next-clue"></p>
+    </section>
+
+    <section id="result-screen" class="paper result" aria-labelledby="result-heading" tabindex="0" hidden>
+      <p class="eyebrow">PASSPORT COMPLETE</p>
+      <h2 id="result-heading" tabindex="-1"></h2>
+      <p id="result-message" class="result-message" role="status" aria-live="polite"></p>
+      <ol id="result-attempts" class="result-attempts" aria-label="Your attempts"></ol>
+      <div id="result-facts" class="result-facts"></div>
+      <p id="sync-message" class="storage-message" role="status"></p>
+      <button id="stats-button" class="secondary-button" type="button">Stats</button>
+    </section>
+    </div>
+    <footer class="page-footer"><span>For more simple daily games go to the</span><a id="nav-prev" href="#">Daily Games homepage.</a></footer>
+  </main>
+</body>
+</html>

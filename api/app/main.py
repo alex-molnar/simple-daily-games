@@ -30,7 +30,7 @@ basicConfig(
 )
 
 # Rows are created on first write, so this is what stops anyone from creating rows for any name.
-GameId = Literal["capitale", "countryle", "grayscale", "invertedle"]
+GameId = Literal["capitale", "countryle", "grayscale", "invertedle", "geo-fun-factle"]
 Attempts = Annotated[int, Path(ge=1)]
 
 

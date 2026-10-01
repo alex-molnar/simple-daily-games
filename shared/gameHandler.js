@@ -46,11 +46,24 @@ export function loadGame(gameTitle, todaysSolutionName, solutions, displayRowsCa
 }
 
 export function getStats(gameTitle) {
-    return JSON.parse(localStorage.getItem(`${gameTitle}-stats`)) || emptyStats
+    try {
+        const saved = JSON.parse(localStorage.getItem(`${gameTitle}-stats`))
+        if (!saved || typeof saved !== "object" || Array.isArray(saved)) return { ...emptyStats }
+        return Object.fromEntries(Object.keys(emptyStats).map(key => [
+            key,
+            Number.isSafeInteger(saved[key]) && saved[key] >= 0 ? saved[key] : 0
+        ]))
+    } catch {
+        return { ...emptyStats }
+    }
 }
 
 export function updateStats(gameTitle, stats, result) {
-    localStorage.setItem(`${gameTitle}-stats`, JSON.stringify(stats))
+    try {
+        localStorage.setItem(`${gameTitle}-stats`, JSON.stringify(stats))
+    } catch (error) {
+        console.warn("Could not save local stats", error)
+    }
     let path
     let amount
     if (result === 'games_failed') {
@@ -61,7 +74,12 @@ export function updateStats(gameTitle, stats, result) {
         amount = result.includes('plus') ? '67' : result.replace('games_with_attempts_', '')
     }
     // Resolves once the result is saved (or failed to save), so the caller can refresh global stats.
-    return postRequest(gameTitle, path, amount).catch(error => console.warn("Could not save the result", error))
+    return postRequest(gameTitle, path, amount)
+        .then(() => true)
+        .catch(error => {
+            console.warn("Could not save the result", error)
+            return false
+        })
 }
 
 // Giving up is not a guess, so it is stored next to today's guesses to survive a reload.
