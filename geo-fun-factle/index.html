@@ -27,8 +27,8 @@
         <div id="attempt-dots" class="attempt-dots" aria-hidden="true"></div>
       </div>
     </div>
-    <div id="game-content" tabindex="-1">
-    <section id="welcome-screen" class="paper welcome" aria-labelledby="welcome-title">
+    <div id="game-content" class="game-content" tabindex="-1">
+    <section id="welcome-screen" class="paper welcome" aria-labelledby="welcome-title" tabindex="0">
       <h2 id="welcome-title">Your daily passport</h2>
       <p class="welcome-copy">One country. Six facts. Guess with as few clues as possible.</p>
       <p class="instructions">A wrong guess or Skip reveals another fact and uses an attempt.</p>
@@ -36,7 +36,7 @@
       <button id="start-button" class="primary-button" type="button">Start game</button>
     </section>
 
-    <section id="game-screen" class="paper game" aria-labelledby="game-title" hidden>
+    <section id="game-screen" class="paper game" aria-labelledby="game-title" tabindex="0" hidden>
       <h2 id="game-title" class="visually-hidden">Country clues</h2>
       <p id="clue-announcement" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
       <ol id="clue-list" class="clue-list" aria-label="Country clues"></ol>
@@ -53,7 +53,7 @@
       <p id="next-clue" class="next-clue"></p>
     </section>
 
-    <section id="result-screen" class="paper result" aria-labelledby="result-heading" hidden>
+    <section id="result-screen" class="paper result" aria-labelledby="result-heading" tabindex="0" hidden>
       <p class="eyebrow">PASSPORT COMPLETE</p>
       <h2 id="result-heading" tabindex="-1"></h2>
       <p id="result-message" class="result-message" role="status" aria-live="polite"></p>
