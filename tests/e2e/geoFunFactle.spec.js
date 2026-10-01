@@ -231,7 +231,7 @@ test('results and the stats dialog reflow with 200% text at 320px', async ({ pag
     await expect(page.locator('.stats-popup')).toBeVisible()
 })
 
-test('test host uses the test API and landing destination', async ({ page }) => {
+test('test host uses the test API and navigation destinations', async ({ page }) => {
     const apiHosts = new Set()
     await page.route(/api\.games\.kak\.im/, route => {
         apiHosts.add(new URL(route.request().url()).hostname)
@@ -240,8 +240,8 @@ test('test host uses the test API and landing destination', async ({ page }) => 
     await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await setFixedClock(page)
     await page.goto('http://test.geo-fun-factle.localhost:8080/')
-    await expect(page.locator('#nav-prev')).toHaveAttribute('href', 'https://test.invertedle.kak.im')
-    await expect(page.locator('.home-link')).toHaveAttribute('href', 'https://test.home.games.kak.im')
+    await expect(page.locator('#nav-prev')).toHaveAttribute('href', 'https://test.home.games.kak.im')
+    await expect(page.locator('.home-link')).toHaveAttribute('href', 'https://test.invertedle.kak.im')
     await expect.poll(() => [...apiHosts]).toEqual(['test.api.games.kak.im'])
 })
 
