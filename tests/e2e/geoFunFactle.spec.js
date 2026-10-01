@@ -1,0 +1,203 @@
+import { test, expect } from '@playwright/test'
+import { countryData, countryNames } from '../../shared/countryData.js'
+import { getRandomSelectionForToday } from '../../shared/mathHelpers.js'
+import { hasCompleteClues } from '../../geo-fun-factle/gameState.js'
+
+const zeros = { started: 0, attempts1: 0, attempts2: 0, attempts3: 0, attempts4: 0, attempts5: 0, attempts6: 0, attempts_plus: 0, failures: 0 }
+const eligible = countryNames.filter(name => hasCompleteClues(countryData[name]))
+const fixedTime = new Date()
+fixedTime.setUTCHours(12, 0, 0, 0)
+const answerForToday = getRandomSelectionForToday(eligible, 'geo-fun-factle')
+const postedActions = calls => calls.filter(call => call.startsWith('POST ')).map(call => call.slice(call.indexOf('/today/') + '/today/'.length))
+const setFixedClock = page => page.clock.install({ time: fixedTime })
+
+async function mockApi(page, calls = []) {
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await page.route(/api\.games\.kak\.im/, route => {
+        const url = new URL(route.request().url())
+        calls.push(`${route.request().method()} ${url.pathname}`)
+        return route.fulfill({ json: zeros })
+    })
+    return calls
+}
+
+test('welcome, skip, restored progress, keyboard selection, completion, and completed restore', async ({ page }) => {
+    const calls = await mockApi(page)
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await expect(page).toHaveTitle('Geo Funfactle')
+    await expect(page.locator('#welcome-screen')).toBeVisible()
+    await expect(page.locator('#clue-list')).toBeEmpty()
+
+    await page.getByRole('button', { name: 'Start game' }).click()
+    await expect(page.locator('#clue-list .clue-value')).toHaveText(countryData[answerForToday].nationalSport)
+    await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#clue-list .attempt-note')).toHaveText('Skipped')
+    await expect(page.locator('#clue-list .clue-value')).toHaveCount(2)
+
+    await page.reload()
+    await expect(page.locator('#welcome-screen')).toBeVisible()
+    await expect(page.locator('#saved-note')).toBeVisible()
+    await page.getByRole('button', { name: 'Start game' }).click()
+    await expect(page.locator('#clue-list .attempt-note')).toHaveText('Skipped')
+    await expect(page.locator('#clue-list .clue-value')).toHaveCount(2)
+
+    const input = page.getByRole('combobox', { name: 'Choose a country' })
+    await input.fill(answerForToday)
+    await input.press('ArrowDown')
+    await expect(input).toHaveAttribute('aria-activedescendant', /^country-option-/)
+    await input.press('Enter')
+    await expect(page.locator('#result-screen')).toBeVisible()
+    await expect(page.locator('#result-heading')).toContainText(answerForToday)
+    await expect(page.locator('#result-facts .result-fact')).toHaveCount(6)
+    await expect(page.locator('#result-message')).toHaveText('Solved in 2 attempts')
+    await expect.poll(() => postedActions(calls)).toEqual([
+        'start_game', 'success_game/2'
+    ])
+
+    await page.reload()
+    await expect(page.locator('#result-screen')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Start game' })).toBeHidden()
+    expect(postedActions(calls)).toEqual(['start_game', 'success_game/2'])
+    await page.getByRole('button', { name: 'Stats' }).click()
+    const closeStats = page.getByRole('button', { name: 'Close stats popup' })
+    await expect(closeStats).toBeFocused()
+    const localTab = page.getByRole('tab', { name: 'My stats' })
+    const globalTab = page.getByRole('tab', { name: 'Global stats' })
+    await localTab.focus()
+    await page.keyboard.press('ArrowRight')
+    await expect(globalTab).toBeFocused()
+    await expect(globalTab).toHaveAttribute('aria-selected', 'true')
+    await page.keyboard.press('ArrowRight')
+    await expect(localTab).toBeFocused()
+    await page.keyboard.press('ArrowLeft')
+    await expect(globalTab).toBeFocused()
+    await closeStats.focus()
+    await page.keyboard.press('Shift+Tab')
+    await expect(page.locator('.stats-popup').getByRole('link')).toBeFocused()
+    await page.keyboard.press('Tab')
+    await expect(closeStats).toBeFocused()
+    await page.keyboard.press('Escape')
+    await expect(page.getByRole('button', { name: 'Stats' })).toBeFocused()
+})
+
+test('duplicate guesses are rejected and six skips record one failure', async ({ page }) => {
+    const calls = await mockApi(page)
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    const input = page.getByRole('combobox', { name: 'Choose a country' })
+    await input.fill('Brazil')
+    await input.press('ArrowDown')
+    await input.press('Enter')
+    await input.fill('Brazil')
+    await input.press('ArrowDown')
+    await input.press('Enter')
+    await expect(page.locator('#guess-error')).toHaveText('You already guessed this country')
+    await expect(page.locator('#attempt-count')).toHaveText('Attempt 2 of 6')
+
+    for (let i = 0; i < 5; i++) await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#result-message')).toContainText("Today's country was")
+    await expect.poll(() => postedActions(calls)).toEqual(['start_game', 'failed_game'])
+})
+
+test('invalid input and unavailable storage do not consume or block attempts', async ({ page }) => {
+    await mockApi(page)
+    await setFixedClock(page)
+    await page.addInitScript(() => {
+        const setItem = Storage.prototype.setItem
+        Storage.prototype.setItem = function (key, value) {
+            if (key.startsWith('geo-fun-factle-')) throw new Error('Storage unavailable')
+            return setItem.call(this, key, value)
+        }
+    })
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    await expect(page.locator('#storage-message')).toHaveText('Progress cannot be saved in this browser.')
+    await page.getByRole('combobox', { name: 'Choose a country' }).fill('not a country')
+    await page.getByRole('button', { name: 'Guess' }).click()
+    await expect(page.locator('#guess-error')).toHaveText('Please select a country from the suggestions.')
+    await expect(page.locator('#attempt-count')).toHaveText('Attempt 1 of 6')
+    await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#clue-list .attempt-note')).toHaveText('Skipped')
+    await expect(page.locator('#clue-list .clue-value')).toHaveCount(2)
+})
+
+test('a failed completion request keeps the result and never retries on restore', async ({ page }) => {
+    const calls = []
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await page.route(/api\.games\.kak\.im/, route => {
+        const path = new URL(route.request().url()).pathname
+        calls.push(`${route.request().method()} ${path}`)
+        if (path.endsWith('/failed_game')) return route.fulfill({ status: 503, json: { detail: 'unavailable' } })
+        return route.fulfill({ json: zeros })
+    })
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#result-screen')).toBeVisible()
+    await expect(page.locator('#sync-message')).toHaveText('Your result is saved here, but could not sync globally.')
+    await page.reload()
+    await expect(page.locator('#result-screen')).toBeVisible()
+    expect(calls.filter(call => call.endsWith('/failed_game'))).toHaveLength(1)
+})
+
+test('an action after UTC midnight resets to the new welcome screen', async ({ page }) => {
+    const beforeMidnight = new Date(fixedTime)
+    beforeMidnight.setUTCHours(23, 59, 30, 0)
+    const nextDay = new Date(beforeMidnight.getTime() + 60_000).toISOString().slice(0, 10)
+    await page.clock.install({ time: beforeMidnight })
+    await mockApi(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.getByRole('button', { name: 'Start game' }).click()
+    await page.clock.fastForward('00:01:00')
+    await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#welcome-screen')).toBeVisible()
+    await expect(page.locator('#puzzle-date')).toHaveAttribute('datetime', nextDay)
+    expect(await page.evaluate(day => Object.keys(localStorage).some(key => key === `geo-fun-factle-${day}`), nextDay)).toBe(false)
+})
+
+test('results and the stats dialog reflow with 200% text at 320px', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 })
+    await mockApi(page)
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
+    await page.getByRole('button', { name: 'Start game' }).click()
+    for (let i = 0; i < 6; i++) await page.getByRole('button', { name: 'Skip' }).click()
+    await expect(page.locator('#result-screen')).toBeVisible()
+    await page.waitForTimeout(1600)
+    const overflow = await page.evaluate(() => ({
+        pixels: document.documentElement.scrollWidth - innerWidth,
+        elements: [...document.querySelectorAll('body *')].map(element => ({ name: `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}.${element.className}`, text: element.textContent?.slice(0, 80), parent: element.parentElement?.className, right: Math.round(element.getBoundingClientRect().right) })).filter(element => element.right > innerWidth + 1)
+    }))
+    expect(overflow.pixels, JSON.stringify(overflow.elements)).toBeLessThanOrEqual(0)
+    await expect(page.locator('.stats-popup')).toBeVisible()
+})
+
+test('test host uses the test API and landing destination', async ({ page }) => {
+    const apiHosts = new Set()
+    await page.route(/api\.games\.kak\.im/, route => {
+        apiHosts.add(new URL(route.request().url()).hostname)
+        return route.fulfill({ json: zeros })
+    })
+    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+    await setFixedClock(page)
+    await page.goto('http://test.geo-fun-factle.localhost:8080/')
+    await expect(page.locator('#nav-prev')).toHaveAttribute('href', 'https://test.invertedle.kak.im')
+    await expect(page.locator('.home-link')).toHaveAttribute('href', 'https://test.home.games.kak.im')
+    await expect.poll(() => [...apiHosts]).toEqual(['test.api.games.kak.im'])
+})
+
+for (const width of [320, 390, 768, 1280]) {
+    test(`Geo Funfactle reflows at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 850 })
+        await mockApi(page)
+        await setFixedClock(page)
+        await page.goto('http://geo-fun-factle.localhost:8080/')
+        await page.getByRole('button', { name: 'Start game' }).click()
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+        expect(overflow).toBeLessThanOrEqual(0)
+    })
+}

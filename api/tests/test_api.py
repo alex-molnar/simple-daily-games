@@ -21,6 +21,15 @@ def test_invalid_input_is_rejected(method, path):
     assert getattr(client, method)(path).status_code == 422
 
 
+def test_geo_funfactle_is_an_accepted_game_id(monkeypatch):
+    monkeypatch.setattr(main, "update_start", lambda day, game: {"started": 1})
+    monkeypatch.setattr(main, "get_stats_by_game_and_date", lambda game, day: {"started": 1})
+    assert client.post("/games/geo-fun-factle/today/start_game").json() == {"started": 1}
+    assert client.get("/games/geo-fun-factle/today/stats").json() == {"started": 1}
+    enum = main.app.openapi()["paths"]["/games/{game_id}/today/start_game"]["post"]["parameters"][0]["schema"]["enum"]
+    assert "geo-fun-factle" in enum
+
+
 def test_database_errors_are_not_sent_to_clients(monkeypatch):
     def boom(*args):
         raise OperationalError('FATAL: password authentication failed for user "secret-user"')
@@ -82,3 +91,11 @@ def test_counters_do_not_overflow_a_smallint():
 def test_http_writes_count_up_for_today():
     before = client.get("/games/grayscale/today/stats").json()["started"]
     assert client.post("/games/grayscale/today/start_game").json()["started"] == before + 1
+
+
+@needs_db
+def test_geo_funfactle_counters_increment_over_http():
+    before = client.get("/games/geo-fun-factle/today/stats").json()
+    assert client.post("/games/geo-fun-factle/today/start_game").json()["started"] == before["started"] + 1
+    assert client.post("/games/geo-fun-factle/today/success_game/3").json()["attempts3"] == before["attempts3"] + 1
+    assert client.post("/games/geo-fun-factle/today/failed_game").json()["failures"] == before["failures"] + 1

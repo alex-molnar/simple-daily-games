@@ -29,9 +29,9 @@ for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
     })
 }
 
-test('landing page lists the four games', async ({ page }) => {
+test('landing page lists the five games', async ({ page }) => {
     await page.goto('http://home.games.localhost:8080/')
-    await expect(page.locator('a.game-tile')).toHaveCount(4)
+    await expect(page.locator('a.game-tile')).toHaveCount(5)
 })
 
 test('landing page has the approved content, catalogue navigation and production links', async ({ page }) => {
@@ -42,11 +42,11 @@ test('landing page has the approved content, catalogue navigation and production
     await expect(page.locator('main h1')).toHaveText(/A little curiosity\.\s*Every day\./)
     await expect(page.locator('main h2')).toHaveCount(1)
     await expect(page.locator('#games-title')).toHaveText('Choose your next challenge')
-    await expect(page.locator('a.game-tile h3')).toHaveCount(4)
+    await expect(page.locator('a.game-tile h3')).toHaveCount(5)
     await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Games' })).toHaveAttribute('href', '#games-title')
     await expect(page.getByRole('link', { name: 'Explore games' })).toHaveAttribute('href', '#games-title')
 
-    const games = ['capitale', 'countryle', 'grayscale', 'invertedle']
+    const games = ['capitale', 'countryle', 'grayscale', 'invertedle', 'geo-fun-factle']
     for (const [index, game] of games.entries()) {
         const tile = page.locator('a.game-tile').nth(index)
         await expect(tile).toHaveAttribute('href', `https://${game}.kak.im`)
@@ -169,6 +169,9 @@ test('test.* hosts pick the game after the prefix and only talk to the test API'
     await page.goto('http://test.home.games.localhost:8080/')
     await expect(page.locator('a.game-tile').first()).toHaveAttribute('href', /^https:\/\/test\.capitale\.kak\.im/)
     await expect(page.locator('a.game-tile').nth(3)).toHaveAttribute('href', 'https://test.invertedle.kak.im')
+    await expect(page.getByRole('link', { name: /geo funfactle/i })).toHaveAttribute('href', 'https://test.geo-fun-factle.kak.im')
+    await page.goto('http://invertedle.localhost:8080/')
+    await expect(page.locator('#nav-next')).toHaveAttribute('href', 'https://geo-fun-factle.kak.im')
 })
 
 // A finished flag game (six guesses already stored for today) opens the stats popup on load.

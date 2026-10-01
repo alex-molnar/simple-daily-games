@@ -45,7 +45,7 @@ spec:
             - name: POSTGRES_HOSTNAME
               value: postgres.postgres.svc.cluster.local
             - name: CORS_ALLOW_ORIGINS
-              value: "https://capitale.kak.im,https://countryle.kak.im,https://grayscale.kak.im,https://invertedle.kak.im"
+              value: "https://capitale.kak.im,https://countryle.kak.im,https://grayscale.kak.im,https://invertedle.kak.im,https://geo-fun-factle.kak.im"
             - name: CORS_ALLOW_CREDENTIALS
               value: "true"
             - name: CORS_ALLOW_METHODS

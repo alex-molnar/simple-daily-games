@@ -298,7 +298,9 @@ export function createStatsPopup(statsInput, options = {}) {
     const title = options.title || "Your previous performance"
     const mountTarget = options.mountTarget || document.body
     const kofiImageNumber = options.kofiImageNumber ?? 5
-    const order = typeof statsBarOrder !== "undefined" && Array.isArray(statsBarOrder) && statsBarOrder.length > 0
+    const order = Array.isArray(options.order) && options.order.length > 0
+        ? options.order
+        : typeof statsBarOrder !== "undefined" && Array.isArray(statsBarOrder) && statsBarOrder.length > 0
         ? statsBarOrder
         : Object.keys(localStats)
     const inferredCompletionKey = inferSingleGameCompletionKey(localStats, order)
@@ -337,6 +339,20 @@ export function createStatsPopup(statsInput, options = {}) {
     globalTabButton.setAttribute("role", "tab")
     globalTabButton.dataset.tab = "global"
 
+    localTabButton.id ||= "stats-local-tab"
+    globalTabButton.id ||= "stats-global-tab"
+    localTabButton.setAttribute("aria-controls", "stats-panel")
+    globalTabButton.setAttribute("aria-controls", "stats-panel")
+    localTabButton.tabIndex = 0
+    globalTabButton.tabIndex = -1
+
+    const panel = buildStatsElement("div", "stats-popup-panel")
+    panel.id = "stats-panel"
+    panel.setAttribute("role", "tabpanel")
+    panel.setAttribute("tabindex", "0")
+    panel.setAttribute("aria-labelledby", localTabButton.id)
+    panel.append(summary, chart)
+
     const kofiButton = options.kofiButton || (() => {
         const anchor = document.createElement("a")
         anchor.href = "https://ko-fi.com/R5H524XXQ8"
@@ -364,14 +380,14 @@ export function createStatsPopup(statsInput, options = {}) {
     if (!hasProvidedElements) {
         const header = buildStatsElement("div", "stats-popup-header")
         header.append(heading, closeButton)
-        popup.append(header, tabs, summary, chart, kofiButton)
+        popup.append(header, tabs, panel, kofiButton)
         overlay.appendChild(popup)
     } else if (!tabs.isConnected) {
-        const insertionPoint = popup.querySelector(".stats-popup-summary") || summary
-        popup.insertBefore(tabs, insertionPoint)
+        popup.insertBefore(tabs, panel)
     }
 
     let activeTab = "local"
+    let returnFocus = null
     let currentMeta = renderStatsView({
         stats: localStats,
         order,
@@ -388,6 +404,9 @@ export function createStatsPopup(statsInput, options = {}) {
         globalTabButton.classList.toggle("is-active", !isLocal)
         localTabButton.setAttribute("aria-selected", isLocal ? "true" : "false")
         globalTabButton.setAttribute("aria-selected", !isLocal ? "true" : "false")
+        localTabButton.tabIndex = isLocal ? 0 : -1
+        globalTabButton.tabIndex = isLocal ? -1 : 0
+        panel.setAttribute("aria-labelledby", isLocal ? localTabButton.id : globalTabButton.id)
 
         currentMeta = renderStatsView({
             stats: isLocal ? localStats : globalStats,
@@ -429,19 +448,23 @@ export function createStatsPopup(statsInput, options = {}) {
     loadGlobalStats()
 
     function close() {
+        const restore = returnFocus
         overlay.hidden = true
         if (!hasProvidedElements) {
             overlay.remove()
         }
         document.removeEventListener("keydown", onEscape)
+        if (restore?.isConnected) restore.focus()
     }
 
     function open() {
+        returnFocus = document.activeElement
         if (!overlay.isConnected) {
             mountTarget.appendChild(overlay)
         }
         overlay.hidden = false
         document.addEventListener("keydown", onEscape)
+        closeButton.focus()
     }
 
     function destroy() {
@@ -450,13 +473,44 @@ export function createStatsPopup(statsInput, options = {}) {
 
     function onEscape(event) {
         if (event.key === "Escape") {
+            event.preventDefault()
             close()
+        } else if (event.key === "Tab") {
+            const focusable = [...popup.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+                .filter(element => !element.hidden && element.getClientRects().length)
+            if (!focusable.length) {
+                event.preventDefault()
+                popup.focus()
+                return
+            }
+            const first = focusable[0]
+            const last = focusable[focusable.length - 1]
+            if (event.shiftKey && (document.activeElement === first || !popup.contains(document.activeElement))) {
+                event.preventDefault()
+                last.focus()
+            } else if (!event.shiftKey && (document.activeElement === last || !popup.contains(document.activeElement))) {
+                event.preventDefault()
+                first.focus()
+            }
         }
     }
 
     closeButton.addEventListener("click", close)
     localTabButton.addEventListener("click", () => setActiveTab("local"))
     globalTabButton.addEventListener("click", () => setActiveTab("global"))
+    tabs.addEventListener("keydown", event => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return
+        event.preventDefault()
+        const target = event.key === "Home"
+            ? localTabButton
+            : event.key === "End"
+            ? globalTabButton
+            : event.target === localTabButton
+            ? globalTabButton
+            : localTabButton
+        target.focus()
+        setActiveTab(target === localTabButton ? "local" : "global")
+    })
     overlay.addEventListener("click", (event) => {
         if (event.target === overlay) {
             close()
