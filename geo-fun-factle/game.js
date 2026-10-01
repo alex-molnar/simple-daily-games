@@ -151,7 +151,8 @@ function renderSuggestions() {
         input.removeAttribute('aria-activedescendant')
         return
     }
-    const matches = countryNames.filter(name => name.toLocaleLowerCase().includes(query)).slice(0, 8)
+    const guessedCountries = new Set(gameState.attempts.map(attempt => attempt.country).filter(Boolean))
+    const matches = countryNames.filter(name => !guessedCountries.has(name) && name.toLocaleLowerCase().includes(query)).slice(0, 8)
     matches.forEach((name, index) => {
         const option = document.createElement('li')
         option.id = `country-option-${index}`
@@ -334,11 +335,17 @@ byId('guess-input').addEventListener('keydown', event => {
     } else if (event.key === 'Escape') {
         list.hidden = true
         byId('guess-input').setAttribute('aria-expanded', 'false')
+        byId('guess-input').removeAttribute('aria-activedescendant')
     }
 })
 byId('guess-form').addEventListener('submit', event => {
     event.preventDefault()
-    if (!selectedCountry) return setError(byId('guess-input').value.trim() ? 'Please select a country from the suggestions.' : 'Choose a country first.')
+    if (!selectedCountry && byId('guess-input').value.trim() && byId('suggestions-container').children.length > 0) chooseSuggestion(0)
+    if (!selectedCountry) {
+        const input = byId('guess-input').value.trim()
+        if (gameState.attempts.some(attempt => attempt.country?.toLocaleLowerCase() === input.toLocaleLowerCase())) return setError('You already guessed this country')
+        return setError(input ? 'Please select a country from the suggestions.' : 'Choose a country first.')
+    }
     takeTurn(selectedCountry)
 })
 byId('skip-button').addEventListener('click', () => takeTurn(null))
