@@ -1,7 +1,8 @@
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
+import { countryData, countryNames } from '../../shared/countryData.js'
 
-// mathHelpers reads the date once at import, so freeze the clock before importing it.
+// Pin the daily schedule so these checks do not depend on the test run's date.
 mock.timers.enable({ apis: ['Date'], now: new Date('2026-01-15T12:00:00Z') })
 const { getRandomSelectionForToday, getDirection, mathDistance } = await import('../../shared/mathHelpers.js')
 
@@ -10,7 +11,7 @@ const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 // Everyone must get the same answer on the same day, so these values must not change silently.
 test('getRandomSelectionForToday picks the same answer for a given day and game', () => {
     const picks = ['capitale', 'countryle', 'grayscale', 'invertedle'].map(game => getRandomSelectionForToday(list, game))
-    assert.deepEqual(picks, ['b', 'a', 'a', 'd'])
+    assert.deepEqual(picks, ['i', 'c', 'g', 'b'])
 })
 
 test('getRandomSelectionForToday is stable across calls and stays in range', () => {
@@ -18,6 +19,37 @@ test('getRandomSelectionForToday is stable across calls and stays in range', () 
         const pick = getRandomSelectionForToday(list, salt)
         assert.ok(list.includes(pick))
         assert.equal(getRandomSelectionForToday(list, salt), pick)
+    }
+})
+
+test('daily flag answers do not repeat the September 30 / October 2 pair', () => {
+    const countries = countryNames.filter(name => countryData[name].flag !== undefined)
+    try {
+        for (const game of ['grayscale', 'invertedle']) {
+            mock.timers.setTime(Date.parse('2026-09-30T12:00:00Z'))
+            const previous = getRandomSelectionForToday(countries, game)
+            mock.timers.setTime(Date.parse('2026-10-02T12:00:00Z'))
+            assert.notEqual(getRandomSelectionForToday(countries, game), previous)
+        }
+    } finally {
+        mock.timers.setTime(Date.parse('2026-01-15T12:00:00Z'))
+    }
+})
+
+test('daily selection uses the full game name and changes at UTC calendar boundaries', () => {
+    const choices = Array.from({ length: 65536 }, (_, index) => index)
+    try {
+        assert.notEqual(getRandomSelectionForToday(choices, 'abc'), getRandomSelectionForToday(choices, 'cba'))
+        for (const day of ['2026-09-30', '2026-12-31', '2028-02-29']) {
+            mock.timers.setTime(Date.parse(`${day}T00:00:00Z`))
+            const first = getRandomSelectionForToday(choices, 'grayscale')
+            mock.timers.setTime(Date.parse(`${day}T23:59:59.999Z`))
+            assert.equal(getRandomSelectionForToday(choices, 'grayscale'), first)
+            mock.timers.tick(1)
+            assert.notEqual(getRandomSelectionForToday(choices, 'grayscale'), first)
+        }
+    } finally {
+        mock.timers.setTime(Date.parse('2026-01-15T12:00:00Z'))
     }
 })
 
