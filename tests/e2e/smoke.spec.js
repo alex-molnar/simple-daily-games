@@ -2,6 +2,24 @@ import { test, expect } from '@playwright/test'
 
 const zeros = { started: 0, attempts1: 0, attempts2: 0, attempts3: 0, attempts4: 0, attempts5: 0, attempts6: 0, attempts_plus: 0, failures: 0 }
 
+for (const game of ['grayscale', 'invertedle']) {
+    test(`${game} keeps its daily flag on reload without repeating the reported date pair`, async ({ page }) => {
+        await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
+        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+        await page.clock.setFixedTime(new Date('2026-09-30T12:00:00Z'))
+        await page.goto(`http://${game}.localhost:8080/`)
+        const flag = page.locator('#flag-image')
+        await expect(flag).toHaveAttribute('src', /\.png$/)
+        const previous = await flag.getAttribute('src')
+        await page.reload()
+        await expect(flag).toHaveAttribute('src', previous)
+        await page.clock.setFixedTime(new Date('2026-10-02T12:00:00Z'))
+        await page.reload()
+        await expect(flag).not.toHaveAttribute('src', previous)
+        await expect.poll(() => flag.evaluate(image => image.naturalWidth)).toBeGreaterThan(0)
+    })
+}
+
 for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
     test(`${game} loads on its own hostname and accepts a guess`, async ({ page }) => {
         const errors = []

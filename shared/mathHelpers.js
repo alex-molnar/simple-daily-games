@@ -1,11 +1,3 @@
-function toNum(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        hash = hash + str.charCodeAt(i);
-    }
-    return parseInt((hash / str.length).toFixed(2).replace('.', ''));
-}
-
 export function mathDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3; // metres
     const φ1 = lat1 * Math.PI/180; // φ, λ in radians
@@ -43,12 +35,15 @@ export function getDirection(lat1, lon1, lat2, lon2) {
 }
 
 export function getRandomSelectionForToday(selections, salt) {
-  const currentDate = new Date().toISOString().split("T")[0];
-  const seed = parseInt(currentDate.replaceAll("-", "")) + toNum(salt);
-  // LCG using GCC's constants
-  const m = 0x80000000; // 2**31;
-  const a = 1103515245;
-  const c = 12345;
-
-  return selections[Math.floor((((a * seed + c) % m) / m) * selections.length)]
+    // Shared daily answers: hash the full UTC date and game name, preserving character order.
+    const seed = `${new Date().toISOString().slice(0, 10)}:${salt}`
+    let hash = 2166136261
+    for (let i = 0; i < seed.length; i++) {
+        hash = Math.imul(hash ^ seed.charCodeAt(i), 16777619) // FNV-1a
+    }
+    // MurmurHash3 finalizer spreads small date changes across all 32 bits.
+    hash = Math.imul(hash ^ (hash >>> 16), 0x85ebca6b)
+    hash = Math.imul(hash ^ (hash >>> 13), 0xc2b2ae35)
+    hash = (hash ^ (hash >>> 16)) >>> 0
+    return selections[Math.floor(hash / 0x100000000 * selections.length)]
 }
