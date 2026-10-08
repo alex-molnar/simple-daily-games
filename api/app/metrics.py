@@ -55,6 +55,15 @@ def attempts_label(attempts: int) -> str:
     return str(attempts) if attempts <= 6 else "7+"
 
 
+def init_game_series(games) -> None:
+    """Create the known series at 0, or increase() misses each series' first event and dashboards show no data."""
+    for game in games:
+        GAME_STARTED.labels(game)
+        GAME_FAILED.labels(game)
+        for attempts in (*range(1, 7), 7):
+            GAME_WON.labels(game, attempts_label(attempts))
+
+
 async def metrics_middleware(request, call_next):
     start = perf_counter()
     status = 500  # call_next raises on an unhandled error, which the server turns into a 500

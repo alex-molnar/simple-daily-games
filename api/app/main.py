@@ -4,12 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware # pyright: ignore[reportMissi
 from fastapi.responses import JSONResponse, Response # pyright: ignore[reportMissingImports]
 from logging import basicConfig, getLogger, INFO
 from os import getenv
-from typing import Annotated, Literal
+from typing import Annotated, Literal, get_args
 
 from psycopg2 import Error as DatabaseError # pyright: ignore[reportMissingModuleSource, reportMissingImports]
 
 from .db.implementations import test_connection, update_start, update_failed, update_success, get_stats_by_game_and_date
-from .metrics import DB_UP, GAME_FAILED, GAME_STARTED, GAME_WON, PAGE_VIEWS, attempts_label, classify_user_agent, lifespan, metrics_middleware
+from .metrics import DB_UP, GAME_FAILED, GAME_STARTED, GAME_WON, PAGE_VIEWS, attempts_label, classify_user_agent, init_game_series, lifespan, metrics_middleware
 
 
 app = FastAPI(lifespan=lifespan)
@@ -36,6 +36,7 @@ GameId = Literal["capitale", "countryle", "grayscale", "invertedle", "geo-fun-fa
 Attempts = Annotated[int, Path(ge=1)]
 # Page views also come from the landing page, which is not a game, so it is not a GameId and cannot get result rows.
 PageId = Literal[GameId, "landing"]
+init_game_series(get_args(GameId))
 
 
 @app.exception_handler(DatabaseError)

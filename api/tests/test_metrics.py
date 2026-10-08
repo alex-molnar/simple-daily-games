@@ -41,6 +41,12 @@ def test_user_agent_is_classified_into_coarse_classes(ua, expected):
     assert classify_user_agent(ua) == expected
 
 
+def test_known_game_series_exist_before_any_event():
+    for game in main.get_args(main.GameId):
+        for name, labels in [("started", {}), ("failed", {}), *[("won", {"attempts": a}) for a in ("1", "6", "7+")]]:
+            assert REGISTRY.get_sample_value(f"simple_daily_games_game_{name}_total", {"game": game, **labels}) is not None
+
+
 def test_attempts_are_bucketed():
     assert [attempts_label(n) for n in (1, 6, 7, 67)] == ["1", "6", "7+", "7+"]
 

@@ -54,6 +54,7 @@
         },
         "refresh": 2,
         "includeAll": true,
+        "allValue": ".*",
         "multi": true,
         "current": {
           "text": "All",
@@ -70,11 +71,12 @@
           "uid": "${ds}"
         },
         "query": {
-          "query": "label_values(simple_daily_games_game_started_total{namespace=~\"$namespace\"}, game)",
+          "query": "label_values(simple_daily_games_page_views_total{namespace=~\"$namespace\"}, game)",
           "refId": "game"
         },
         "refresh": 2,
         "includeAll": true,
+        "allValue": ".*",
         "multi": true,
         "current": {
           "text": "All",
@@ -187,7 +189,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum(increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[$__range]))",
           "legendFormat": "",
           "instant": true
         }
@@ -564,7 +566,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[1d]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -638,7 +640,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (browser) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum by (browser) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[$__range]))",
           "legendFormat": "{{browser}}",
           "instant": true
         }
@@ -684,7 +686,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (os) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum by (os) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[$__range]))",
           "legendFormat": "{{os}}",
           "instant": true
         }
@@ -730,7 +732,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (device) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\"}[$__range]))",
+          "expr": "sum by (device) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "{{device}}",
           "instant": true
         }
