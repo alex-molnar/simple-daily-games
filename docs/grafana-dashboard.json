@@ -41,6 +41,27 @@
         "regex": ""
       },
       {
+        "name": "namespace",
+        "label": "Namespace",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds}"
+        },
+        "query": {
+          "query": "label_values(simple_daily_games_http_requests_total, namespace)",
+          "refId": "namespace"
+        },
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "sort": 1
+      },
+      {
         "name": "game",
         "label": "Game",
         "type": "query",
@@ -49,7 +70,7 @@
           "uid": "${ds}"
         },
         "query": {
-          "query": "label_values(game_started_total, game)",
+          "query": "label_values(simple_daily_games_game_started_total{namespace=~\"$namespace\"}, game)",
           "refId": "game"
         },
         "refresh": 2,
@@ -98,7 +119,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(game_started_total{game=~\"$game\"}[$__range]))",
+          "expr": "sum(increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "",
           "instant": true
         }
@@ -130,7 +151,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(game_won_total{game=~\"$game\"}[$__range])) / sum(increase(game_started_total{game=~\"$game\"}[$__range]))",
+          "expr": "sum(increase(simple_daily_games_game_won_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range])) / sum(increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "",
           "instant": true
         }
@@ -166,7 +187,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum(increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
           "legendFormat": "",
           "instant": true
         }
@@ -198,7 +219,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(http_requests_total{status=~\"5..\"}[$__range])) / sum(increase(http_requests_total[$__range]))",
+          "expr": "sum(increase(simple_daily_games_http_requests_total{namespace=~\"$namespace\",status=~\"5..\"}[$__range])) / sum(increase(simple_daily_games_http_requests_total{namespace=~\"$namespace\"}[$__range]))",
           "legendFormat": "",
           "instant": true
         }
@@ -249,7 +270,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "min(app_db_up)",
+          "expr": "min(simple_daily_games_db_up{namespace=~\"$namespace\"})",
           "legendFormat": "",
           "instant": true
         }
@@ -297,7 +318,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "min(up{job=~\".*api.*\"})",
+          "expr": "min(up{namespace=~\"$namespace\",job=~\".*api.*\"})",
           "legendFormat": "",
           "instant": true
         }
@@ -358,7 +379,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(game_started_total{game=~\"$game\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[1d]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -398,7 +419,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(game_won_total{game=~\"$game\"}[1d])) / sum by (game) (increase(game_started_total{game=~\"$game\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_game_won_total{namespace=~\"$namespace\",game=~\"$game\"}[1d])) / sum by (game) (increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[1d]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -433,7 +454,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (attempts) (increase(game_won_total{game=~\"$game\"}[$__range]))",
+          "expr": "sum by (attempts) (increase(simple_daily_games_game_won_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "{{attempts}}"
         }
       ],
@@ -480,7 +501,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(game_won_total{game=~\"$game\"}[$__range]))",
+          "expr": "sum by (game) (increase(simple_daily_games_game_won_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "{{game}} won",
           "instant": true
         },
@@ -490,7 +511,7 @@
             "uid": "${ds}"
           },
           "refId": "B",
-          "expr": "sum by (game) (increase(game_failed_total{game=~\"$game\"}[$__range]))",
+          "expr": "sum by (game) (increase(simple_daily_games_game_failed_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
           "legendFormat": "{{game}} failed",
           "instant": true
         }
@@ -543,7 +564,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[1d]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -582,7 +603,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum(increase(page_views_total{device=\"bot\"}[1d])) / sum(increase(page_views_total[1d]))",
+          "expr": "sum(increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",device=\"bot\"}[1d])) / sum(increase(simple_daily_games_page_views_total{namespace=~\"$namespace\"}[1d]))",
           "legendFormat": "bots"
         }
       ],
@@ -617,7 +638,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (browser) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum by (browser) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
           "legendFormat": "{{browser}}",
           "instant": true
         }
@@ -663,7 +684,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (os) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
+          "expr": "sum by (os) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
           "legendFormat": "{{os}}",
           "instant": true
         }
@@ -709,7 +730,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (device) (increase(page_views_total{game=~\"$game|landing\"}[$__range]))",
+          "expr": "sum by (device) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game|landing\"}[$__range]))",
           "legendFormat": "{{device}}",
           "instant": true
         }
@@ -768,7 +789,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (status) (rate(http_requests_total[5m]))",
+          "expr": "sum by (status) (rate(simple_daily_games_http_requests_total{namespace=~\"$namespace\"}[5m]))",
           "legendFormat": "{{status}}"
         }
       ],
@@ -801,7 +822,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le, route) (rate(http_request_duration_seconds_bucket[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le, route) (rate(simple_daily_games_http_request_duration_seconds_bucket{namespace=~\"$namespace\"}[5m])))",
           "legendFormat": "{{route}}"
         }
       ],
@@ -834,7 +855,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "rate(process_cpu_seconds_total[5m])",
+          "expr": "rate(process_cpu_seconds_total{namespace=~\"$namespace\",job=\"api\"}[5m])",
           "legendFormat": "cpu cores"
         },
         {
@@ -843,7 +864,7 @@
             "uid": "${ds}"
           },
           "refId": "B",
-          "expr": "process_resident_memory_bytes",
+          "expr": "process_resident_memory_bytes{namespace=~\"$namespace\",job=\"api\"}",
           "legendFormat": "memory"
         }
       ],
@@ -875,7 +896,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "app_db_up",
+          "expr": "simple_daily_games_db_up{namespace=~\"$namespace\"}",
           "legendFormat": "db"
         }
       ],

@@ -47,10 +47,10 @@ def test_attempts_are_bucketed():
 
 def test_visit_counts_a_page_view_without_storing_the_agent():
     labels = dict(game="capitale", browser="safari", os="macos", device="desktop")
-    before = sample("page_views_total", **labels)
+    before = sample("simple_daily_games_page_views_total", **labels)
     response = client.post("/games/capitale/today/visit", headers={"User-Agent": MAC_SAFARI})
     assert response.status_code == 204
-    assert sample("page_views_total", **labels) == before + 1
+    assert sample("simple_daily_games_page_views_total", **labels) == before + 1
 
 
 def test_landing_page_can_report_a_visit_but_is_not_a_game():
@@ -63,14 +63,14 @@ def test_game_events_are_counted_after_the_database_write(monkeypatch):
     monkeypatch.setattr(main, "update_start", lambda day, game: {})
     monkeypatch.setattr(main, "update_success", lambda day, game, attempts: {})
     monkeypatch.setattr(main, "update_failed", lambda day, game: {})
-    before = (sample("game_started_total", game="grayscale"), sample("game_won_total", game="grayscale", attempts="3"),
-              sample("game_won_total", game="grayscale", attempts="7+"), sample("game_failed_total", game="grayscale"))
+    before = (sample("simple_daily_games_game_started_total", game="grayscale"), sample("simple_daily_games_game_won_total", game="grayscale", attempts="3"),
+              sample("simple_daily_games_game_won_total", game="grayscale", attempts="7+"), sample("simple_daily_games_game_failed_total", game="grayscale"))
     client.post("/games/grayscale/today/start_game")
     client.post("/games/grayscale/today/success_game/3")
     client.post("/games/grayscale/today/success_game/67")
     client.post("/games/grayscale/today/failed_game")
-    assert (sample("game_started_total", game="grayscale"), sample("game_won_total", game="grayscale", attempts="3"),
-            sample("game_won_total", game="grayscale", attempts="7+"), sample("game_failed_total", game="grayscale")) \
+    assert (sample("simple_daily_games_game_started_total", game="grayscale"), sample("simple_daily_games_game_won_total", game="grayscale", attempts="3"),
+            sample("simple_daily_games_game_won_total", game="grayscale", attempts="7+"), sample("simple_daily_games_game_failed_total", game="grayscale")) \
         == tuple(n + 1 for n in before)
 
 
@@ -78,44 +78,44 @@ def test_a_failed_database_write_is_not_counted(monkeypatch):
     def boom(*args):
         raise OperationalError("down")
     monkeypatch.setattr(main, "update_start", boom)
-    before = sample("game_started_total", game="countryle")
+    before = sample("simple_daily_games_game_started_total", game="countryle")
     assert client.post("/games/countryle/today/start_game").status_code == 503
-    assert sample("game_started_total", game="countryle") == before
+    assert sample("simple_daily_games_game_started_total", game="countryle") == before
 
 
 def test_requests_are_labelled_by_route_template_not_url(monkeypatch):
     monkeypatch.setattr(main, "get_stats_by_game_and_date", lambda game, day: {})
     labels = dict(method="GET", route="/games/{game_id}/today/stats", status="200")
-    before = sample("http_requests_total", **labels)
+    before = sample("simple_daily_games_http_requests_total", **labels)
     client.get("/games/capitale/today/stats")
     client.get("/games/invertedle/today/stats")
-    assert sample("http_requests_total", **labels) == before + 2
+    assert sample("simple_daily_games_http_requests_total", **labels) == before + 2
 
 
 def test_unknown_paths_and_methods_share_bounded_labels():
     unmatched = dict(method="other", route="unmatched", status="404")
-    before = sample("http_requests_total", **unmatched)
+    before = sample("simple_daily_games_http_requests_total", **unmatched)
     client.request("BREW", "/random-path-1")
     client.request("BREW", "/random-path-2")
-    assert sample("http_requests_total", **unmatched) == before + 2
+    assert sample("simple_daily_games_http_requests_total", **unmatched) == before + 2
 
 
 def test_probes_are_not_counted_as_traffic(monkeypatch):
     monkeypatch.setattr(main, "test_connection", lambda: {"db": "up"})
-    before = sample("http_requests_total", method="GET", route="/health", status="200")
+    before = sample("simple_daily_games_http_requests_total", method="GET", route="/health", status="200")
     client.get("/health")
     client.get("/readiness")
-    assert sample("http_requests_total", method="GET", route="/health", status="200") == before
-    assert sample("http_requests_total", method="GET", route="/readiness", status="200") == 0
+    assert sample("simple_daily_games_http_requests_total", method="GET", route="/health", status="200") == before
+    assert sample("simple_daily_games_http_requests_total", method="GET", route="/readiness", status="200") == 0
 
 
 def test_database_health_gauge_follows_readiness(monkeypatch):
     monkeypatch.setattr(main, "test_connection", lambda: {"db": "up"})
     assert client.get("/readiness").status_code == 200
-    assert sample("app_db_up") == 1
+    assert sample("simple_daily_games_db_up") == 1
 
     def boom():
         raise OperationalError("down")
     monkeypatch.setattr(main, "test_connection", boom)
     assert client.get("/readiness").status_code == 503
-    assert sample("app_db_up") == 0
+    assert sample("simple_daily_games_db_up") == 0

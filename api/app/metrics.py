@@ -5,6 +5,7 @@ from time import perf_counter
 
 from prometheus_client import Counter, Gauge, Histogram, start_http_server # pyright: ignore[reportMissingImports]
 
+# Every name carries the app prefix, so one Prometheus can hold several apps without their metrics mixing.
 # Served on its own port, which the Service names but the ingress never routes to, so it stays in-cluster.
 METRICS_PORT = int(getenv("METRICS_PORT", "9100"))
 
@@ -12,14 +13,14 @@ METRICS_PORT = int(getenv("METRICS_PORT", "9100"))
 PROBE_ROUTES = {"/health", "/readiness"}
 KNOWN_METHODS = {"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
 
-HTTP_REQUESTS = Counter("http_requests_total", "HTTP requests handled", ["method", "route", "status"])
-HTTP_DURATION = Histogram("http_request_duration_seconds", "HTTP request duration", ["method", "route"])
-DB_UP = Gauge("app_db_up", "1 if the last database check succeeded, 0 if it failed")
+HTTP_REQUESTS = Counter("simple_daily_games_http_requests_total", "HTTP requests handled", ["method", "route", "status"])
+HTTP_DURATION = Histogram("simple_daily_games_http_request_duration_seconds", "HTTP request duration", ["method", "route"])
+DB_UP = Gauge("simple_daily_games_db_up", "1 if the last database check succeeded, 0 if it failed")
 
-GAME_STARTED = Counter("game_started_total", "Games started", ["game"])
-GAME_WON = Counter("game_won_total", "Games won, by number of attempts (1-6, 7+)", ["game", "attempts"])
-GAME_FAILED = Counter("game_failed_total", "Games failed or given up", ["game"])
-PAGE_VIEWS = Counter("page_views_total", "Page views, by coarse client class", ["game", "browser", "os", "device"])
+GAME_STARTED = Counter("simple_daily_games_game_started_total", "Games started", ["game"])
+GAME_WON = Counter("simple_daily_games_game_won_total", "Games won, by number of attempts (1-6, 7+)", ["game", "attempts"])
+GAME_FAILED = Counter("simple_daily_games_game_failed_total", "Games failed or given up", ["game"])
+PAGE_VIEWS = Counter("simple_daily_games_page_views_total", "Page views, by coarse client class", ["game", "browser", "os", "device"])
 
 # First match wins, so more specific agents go first (Edge and Opera also say Chrome, iPads also say Mac OS X).
 BROWSERS = [("edge", compile(r"Edg(e|A|iOS)?/")), ("opera", compile(r"OPR/|Opera")), ("firefox", compile(r"Firefox|FxiOS")),

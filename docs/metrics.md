@@ -10,15 +10,20 @@ example `release: <name>`), add it to that file.
 
 ## Metrics
 
+Every metric the app defines starts with `simple_daily_games_`, so dashboards and alerts for
+this app never pick up another app's metrics. The process metrics come from the client
+library's default collectors and keep their standard names, so filter them by `namespace`
+and `job="api"`.
+
 | Metric | Type | Labels | Meaning |
 | --- | --- | --- | --- |
-| `http_requests_total` | counter | `method`, `route`, `status` | Requests handled. `route` is the route template, so `/games/{game_id}/today/stats`, not the URL. Unknown paths share `unmatched` and unknown methods share `other`. Probe routes (`/health`, `/readiness`) are not counted. |
-| `http_request_duration_seconds` | histogram | `method`, `route` | Request latency. |
-| `app_db_up` | gauge | | `1` if the last database check succeeded, `0` if it failed. Updated by `/readiness` (every 10 seconds) and by any database error. |
-| `game_started_total` | counter | `game` | Games started. |
-| `game_won_total` | counter | `game`, `attempts` | Games won. `attempts` is `1` to `6`, or `7+`. |
-| `game_failed_total` | counter | `game` | Games failed or given up. |
-| `page_views_total` | counter | `game`, `browser`, `os`, `device` | Page views. `game` is a game id or `landing`. |
+| `simple_daily_games_http_requests_total` | counter | `method`, `route`, `status` | Requests handled. `route` is the route template, so `/games/{game_id}/today/stats`, not the URL. Unknown paths share `unmatched` and unknown methods share `other`. Probe routes (`/health`, `/readiness`) are not counted. |
+| `simple_daily_games_http_request_duration_seconds` | histogram | `method`, `route` | Request latency. |
+| `simple_daily_games_db_up` | gauge | | `1` if the last database check succeeded, `0` if it failed. Updated by `/readiness` (every 10 seconds) and by any database error. |
+| `simple_daily_games_game_started_total` | counter | `game` | Games started. |
+| `simple_daily_games_game_won_total` | counter | `game`, `attempts` | Games won. `attempts` is `1` to `6`, or `7+`. |
+| `simple_daily_games_game_failed_total` | counter | `game` | Games failed or given up. |
+| `simple_daily_games_page_views_total` | counter | `game`, `browser`, `os`, `device` | Page views. `game` is a game id or `landing`. |
 | `process_*`, `python_gc_*` | | | Process CPU, memory and file descriptors, from the default collectors (Linux only). |
 
 Prometheus's own `up{job=...}` tells you whether the API is reachable at all.
@@ -48,26 +53,26 @@ Known limits:
 
 ```promql
 # Games started per day, per game
-sum by (game) (increase(game_started_total[1d]))
+sum by (game) (increase(simple_daily_games_game_started_total[1d]))
 
 # Win rate over the last 7 days
-sum(increase(game_won_total[7d])) / sum(increase(game_started_total[7d]))
+sum(increase(simple_daily_games_game_won_total[7d])) / sum(increase(simple_daily_games_game_started_total[7d]))
 
 # Distribution of attempts for one game
-sum by (attempts) (increase(game_won_total{game="capitale"}[7d]))
+sum by (attempts) (increase(simple_daily_games_game_won_total{game="capitale"}[7d]))
 
 # Share of page views by browser, bots excluded
-sum by (browser) (increase(page_views_total{device!="bot"}[7d]))
+sum by (browser) (increase(simple_daily_games_page_views_total{device!="bot"}[7d]))
 
 # Mobile vs desktop
-sum by (device) (increase(page_views_total[7d]))
+sum by (device) (increase(simple_daily_games_page_views_total[7d]))
 
 # API 5xx ratio and p95 latency
-sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))
-histogram_quantile(0.95, sum by (le, route) (rate(http_request_duration_seconds_bucket[5m])))
+sum(rate(simple_daily_games_http_requests_total{status=~"5.."}[5m])) / sum(rate(simple_daily_games_http_requests_total[5m]))
+histogram_quantile(0.95, sum by (le, route) (rate(simple_daily_games_http_request_duration_seconds_bucket[5m])))
 
 # Database down
-app_db_up == 0
+simple_daily_games_db_up == 0
 ```
 
 ## Base image
@@ -79,5 +84,6 @@ must provide `prometheus-client`. CI installs `prometheus-client` for the API te
 
 `docs/grafana-dashboard.json` is an example Grafana dashboard built on these metrics
 (import it via Dashboards > New > Import, or load it from a ConfigMap with the `grafana_dashboard` label; a Data source dropdown picks Prometheus). It has
-a game variable and rows for the overview, games, audience and API health. It has not
+data source, namespace and game variables (the namespace is the label the Prometheus Operator
+adds on scrape) and rows for the overview, games, audience and API health. It has not
 been tested against a live Grafana, so expect to adjust some panels.
