@@ -127,7 +127,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0,
+          "noValue": "0"
+        },
         "overrides": []
       },
       "options": {}
@@ -162,7 +165,9 @@
         "defaults": {
           "unit": "percentunit",
           "min": 0,
-          "max": 1
+          "max": 1,
+          "noValue": "\u2013",
+          "decimals": 1
         },
         "overrides": []
       },
@@ -195,7 +200,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0,
+          "noValue": "0"
+        },
         "overrides": []
       },
       "options": {}
@@ -245,7 +253,8 @@
                 "value": 0.05
               }
             ]
-          }
+          },
+          "noValue": "0%"
         },
         "overrides": []
       },
@@ -363,7 +372,7 @@
     {
       "id": 9,
       "type": "timeseries",
-      "title": "Games started per day",
+      "title": "Games started over time",
       "datasource": {
         "type": "prometheus",
         "uid": "${ds}"
@@ -381,7 +390,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_game_started_total{namespace=~\"$namespace\",game=~\"$game\"}[$__rate_interval]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -392,18 +401,22 @@
             "fillOpacity": 60,
             "stacking": {
               "mode": "normal"
-            }
-          }
+            },
+            "axisSoftMin": 0,
+            "axisSoftMax": 5
+          },
+          "decimals": 0,
+          "min": 0
         },
         "overrides": []
       },
       "options": {},
-      "description": "increase over a 1d window, evaluated at each step"
+      "description": "Events per step of the selected time range"
     },
     {
       "id": 10,
       "type": "timeseries",
-      "title": "Win rate by game",
+      "title": "Win rate by game (rolling 24h)",
       "datasource": {
         "type": "prometheus",
         "uid": "${ds}"
@@ -457,11 +470,19 @@
           },
           "refId": "A",
           "expr": "sum by (attempts) (increase(simple_daily_games_game_won_total{namespace=~\"$namespace\",game=~\"$game\"}[$__range]))",
-          "legendFormat": "{{attempts}}"
+          "legendFormat": "{{attempts}}",
+          "format": "table"
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0,
+          "min": 0,
+          "custom": {
+            "axisSoftMin": 0,
+            "axisSoftMax": 5
+          }
+        },
         "overrides": []
       },
       "options": {
@@ -473,11 +494,11 @@
       "description": "Instant series per attempts bucket; rename or reshape in the panel if your Grafana version renders it differently.",
       "transformations": [
         {
-          "id": "reduce",
+          "id": "organize",
           "options": {
-            "reducers": [
-              "lastNotNull"
-            ]
+            "excludeByName": {
+              "Time": true
+            }
           }
         }
       ]
@@ -519,7 +540,10 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0,
+          "min": 0
+        },
         "overrides": []
       },
       "options": {
@@ -548,7 +572,7 @@
     {
       "id": 14,
       "type": "timeseries",
-      "title": "Page views per day",
+      "title": "Page views over time",
       "datasource": {
         "type": "prometheus",
         "uid": "${ds}"
@@ -566,7 +590,7 @@
             "uid": "${ds}"
           },
           "refId": "A",
-          "expr": "sum by (game) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[1d]))",
+          "expr": "sum by (game) (increase(simple_daily_games_page_views_total{namespace=~\"$namespace\",game=~\"$game\",device!=\"bot\"}[$__rate_interval]))",
           "legendFormat": "{{game}}"
         }
       ],
@@ -577,17 +601,22 @@
             "fillOpacity": 60,
             "stacking": {
               "mode": "normal"
-            }
-          }
+            },
+            "axisSoftMin": 0,
+            "axisSoftMax": 5
+          },
+          "decimals": 0,
+          "min": 0
         },
         "overrides": []
       },
-      "options": {}
+      "options": {},
+      "description": "Events per step of the selected time range"
     },
     {
       "id": 15,
       "type": "timeseries",
-      "title": "Bot share of page views",
+      "title": "Bot share of page views (rolling 24h)",
       "datasource": {
         "type": "prometheus",
         "uid": "${ds}"
@@ -646,7 +675,9 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0
+        },
         "overrides": []
       },
       "options": {
@@ -692,7 +723,9 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0
+        },
         "overrides": []
       },
       "options": {
@@ -738,7 +771,9 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "decimals": 0
+        },
         "overrides": []
       },
       "options": {
