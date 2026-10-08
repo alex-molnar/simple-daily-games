@@ -78,6 +78,6 @@ must provide `prometheus-client`. CI installs `prometheus-client` for the API te
 ## Example dashboard
 
 `docs/grafana-dashboard.json` is an example Grafana dashboard built on these metrics
-(import it via Dashboards > New > Import and pick your Prometheus data source). It has
+(import it via Dashboards > New > Import, or load it from a ConfigMap with the `grafana_dashboard` label; a Data source dropdown picks Prometheus). It has
 a game variable and rows for the overview, games, audience and API health. It has not
 been tested against a live Grafana, so expect to adjust some panels.

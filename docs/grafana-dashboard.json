@@ -1,11 +1,16 @@
 {
-  "__inputs": [
+  "__requires": [
     {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    },
+    {
       "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
     }
   ],
   "title": "Simple Daily Games",
@@ -26,12 +31,22 @@
   "templating": {
     "list": [
       {
+        "name": "ds",
+        "label": "Data source",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": {},
+        "hide": 0,
+        "refresh": 1,
+        "regex": ""
+      },
+      {
         "name": "game",
         "label": "Game",
         "type": "query",
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "${ds}"
         },
         "query": {
           "query": "label_values(game_started_total, game)",
@@ -68,7 +83,7 @@
       "title": "Games started",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -80,7 +95,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum(increase(game_started_total{game=~\"$game\"}[$__range]))",
@@ -100,7 +115,7 @@
       "title": "Win rate",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 4,
@@ -112,7 +127,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum(increase(game_won_total{game=~\"$game\"}[$__range])) / sum(increase(game_started_total{game=~\"$game\"}[$__range]))",
@@ -136,7 +151,7 @@
       "title": "Page views (no bots)",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 8,
@@ -148,7 +163,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum(increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
@@ -168,7 +183,7 @@
       "title": "API 5xx ratio",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -180,7 +195,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum(increase(http_requests_total{status=~\"5..\"}[$__range])) / sum(increase(http_requests_total[$__range]))",
@@ -219,7 +234,7 @@
       "title": "Database",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 16,
@@ -231,7 +246,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "min(app_db_up)",
@@ -267,7 +282,7 @@
       "title": "API scrape",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 20,
@@ -279,7 +294,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "min(up{job=~\".*api.*\"})",
@@ -328,7 +343,7 @@
       "title": "Games started per day",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -340,7 +355,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (game) (increase(game_started_total{game=~\"$game\"}[1d]))",
@@ -368,7 +383,7 @@
       "title": "Win rate by game",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -380,7 +395,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (game) (increase(game_won_total{game=~\"$game\"}[1d])) / sum by (game) (increase(game_started_total{game=~\"$game\"}[1d]))",
@@ -403,7 +418,7 @@
       "title": "Attempts distribution (wins)",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -415,7 +430,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (attempts) (increase(game_won_total{game=~\"$game\"}[$__range]))",
@@ -450,7 +465,7 @@
       "title": "Wins vs failures by game",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -462,7 +477,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (game) (increase(game_won_total{game=~\"$game\"}[$__range]))",
@@ -472,7 +487,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "B",
           "expr": "sum by (game) (increase(game_failed_total{game=~\"$game\"}[$__range]))",
@@ -513,7 +528,7 @@
       "title": "Page views per day",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -525,7 +540,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (game) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[1d]))",
@@ -552,7 +567,7 @@
       "title": "Bot share of page views",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -564,7 +579,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum(increase(page_views_total{device=\"bot\"}[1d])) / sum(increase(page_views_total[1d]))",
@@ -587,7 +602,7 @@
       "title": "Browser",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -599,7 +614,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (browser) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
@@ -633,7 +648,7 @@
       "title": "OS",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 8,
@@ -645,7 +660,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (os) (increase(page_views_total{game=~\"$game|landing\",device!=\"bot\"}[$__range]))",
@@ -679,7 +694,7 @@
       "title": "Device",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 16,
@@ -691,7 +706,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (device) (increase(page_views_total{game=~\"$game|landing\"}[$__range]))",
@@ -738,7 +753,7 @@
       "title": "Request rate by status",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -750,7 +765,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "sum by (status) (rate(http_requests_total[5m]))",
@@ -771,7 +786,7 @@
       "title": "p95 latency by route",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -783,7 +798,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "histogram_quantile(0.95, sum by (le, route) (rate(http_request_duration_seconds_bucket[5m])))",
@@ -804,7 +819,7 @@
       "title": "Process CPU and memory",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 0,
@@ -816,7 +831,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "rate(process_cpu_seconds_total[5m])",
@@ -825,7 +840,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "B",
           "expr": "process_resident_memory_bytes",
@@ -845,7 +860,7 @@
       "title": "Database up",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${ds}"
       },
       "gridPos": {
         "x": 12,
@@ -857,7 +872,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${ds}"
           },
           "refId": "A",
           "expr": "app_db_up",
