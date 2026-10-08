@@ -34,3 +34,8 @@ export async function postRequest(gameTitle, result, optionalPathPart) {
 	}
 }
 
+
+// Fire and forget: counts a page view for the metrics, and must never get in the way of the page.
+export function recordVisit(page) {
+	postRequest(page, 'visit').catch(() => {})
+}

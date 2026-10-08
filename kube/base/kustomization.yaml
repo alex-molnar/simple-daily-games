@@ -6,3 +6,4 @@ kind: Kustomization
 resources:
   - static.yaml
   - api.yaml
+  - api-servicemonitor.yaml

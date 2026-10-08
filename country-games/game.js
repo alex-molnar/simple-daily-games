@@ -6,6 +6,9 @@ import { loadGame, getStats, updateStats, markGivenUp, hasGivenUp } from '/share
 import { launchConfetti } from '/shared/animations.js'
 import { countryData, countryNames } from '/shared/countryData.js'
 import { createStatsPopup } from '/shared/statsPopup.js'
+import { recordVisit } from '/shared/sendRequest.js'
+
+recordVisit(gameTitle)
 
 let five_mil = 5000000
 let mil = 1000000
