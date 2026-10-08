@@ -74,3 +74,10 @@ app_db_up == 0
 
 `api/Dockerfile` uses `kingbrady/fast-api-base:1.1.1-multi-architecture`, which
 must provide `prometheus-client`. CI installs `prometheus-client` for the API tests.
+
+## Example dashboard
+
+`docs/grafana-dashboard.json` is an example Grafana dashboard built on these metrics
+(import it via Dashboards > New > Import and pick your Prometheus data source). It has
+a game variable and rows for the overview, games, audience and API health. It has not
+been tested against a live Grafana, so expect to adjust some panels.
