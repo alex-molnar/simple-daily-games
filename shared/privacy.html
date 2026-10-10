@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f0e5">
+    <meta name="description" content="What Daily Games sends to its server, what stays on your device, and what is never collected.">
+    <title>Privacy · Daily Games</title>
+    <style>
+        /* Served at /privacy on every game host (static/common.conf), so it only uses shared assets. */
+        @font-face {
+            font-family: "DM Sans";
+            src: url("/assets/landing/dm-sans-latin.woff2") format("woff2");
+            font-weight: 400 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: Fraunces;
+            src: url("/assets/landing/fraunces-latin.woff2") format("woff2");
+            font-weight: 400 600;
+            font-display: swap;
+        }
+
+        :root {
+            color-scheme: light;
+            --paper: #f5f0e5;
+            --paper-deep: #eee5d4;
+            --ink: #103b3d;
+            --ink-soft: #49605f;
+            --coral: #b93f2c;
+            --rule: rgb(16 59 61 / 20%);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "DM Sans", "Avenir Next", Avenir, sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main {
+            max-width: 42rem;
+            margin: 0 auto;
+            padding: clamp(2rem, 6vw, 4rem) 1rem 4rem;
+        }
+
+        h1, h2 {
+            font-family: Fraunces, Georgia, serif;
+            font-weight: 600;
+            line-height: 1.2;
+            text-wrap: balance;
+        }
+
+        h1 { font-size: clamp(2rem, 6vw, 2.75rem); margin: 0.5rem 0 0.25rem; }
+        h2 { font-size: 1.35rem; margin: 2.5rem 0 0.5rem; }
+
+        a { color: var(--coral); text-underline-offset: 0.15em; }
+        a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+
+        .updated, .back { color: var(--ink-soft); font-size: 0.95rem; }
+
+        .summary {
+            margin: 1.5rem 0 0;
+            padding: 1rem 1.25rem;
+            background: var(--paper-deep);
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        th, td { padding: 0.5rem 0.5rem 0.5rem 0; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+        th { font-weight: 600; }
+        code { font-size: 0.9em; overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+    <main>
+        <a class="back" id="home-link" href="https://home.games.kak.im">← Daily Games</a>
+        <h1>Privacy</h1>
+        <p class="updated">Last updated 10 October 2026</p>
+
+        <p class="summary">
+            Daily Games has no accounts, cookies, ads or trackers. The server only counts things: how many people
+            visited, started, won or lost today's game. Nothing it stores can tell you apart from any other player.
+        </p>
+
+        <h2>What your browser sends to our server</h2>
+        <p>The games talk to <code>api.games.kak.im</code>. These are the only requests, and none of them carries a body, a cookie or an ID:</p>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th scope="col">When</th><th scope="col">What is sent</th><th scope="col">What the server keeps</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>You open a page</td>
+                        <td>The page name (for example <code>capitale</code>)</td>
+                        <td>A page view count, split by browser family, operating system and device type (desktop, mobile, tablet). It derives these from the browser's standard User-Agent header and then throws the header away.</td>
+                    </tr>
+                    <tr>
+                        <td>You start a game (Geo Funfactle)</td>
+                        <td>The game name</td>
+                        <td>Today's "games started" count goes up by one</td>
+                    </tr>
+                    <tr>
+                        <td>You finish a game</td>
+                        <td>The game name, whether you won, and in how many guesses</td>
+                        <td>Today's count for that result goes up by one</td>
+                    </tr>
+                    <tr>
+                        <td>You open the stats</td>
+                        <td>The game name</td>
+                        <td>Nothing. It only reads today's totals for everyone</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            The counts are kept per game and per day. They feed the "everyone today" statistics in the game and our
+            own dashboards for keeping the service running. They are never linked to a person, a device or a session.
+        </p>
+
+        <h2>What stays on your device</h2>
+        <p>
+            Your guesses for today, whether you gave up, and your personal win statistics are saved in your
+            browser's local storage, so a reload doesn't lose your game. They are never sent anywhere. You can
+            remove them at any time by clearing this site's data in your browser.
+        </p>
+
+        <h2>Server logs</h2>
+        <p>
+            Like almost every website, the web servers that host Daily Games write standard technical logs: your IP
+            address, the time, the address requested and your browser's User-Agent. We use them only to keep the
+            service running and secure, such as finding errors or blocking abuse. They are kept only briefly, are
+            not combined with anything else and are never used to track or profile you. Our legal basis for this
+            is our legitimate interest in running a working, secure service (Article 6(1)(f) GDPR).
+        </p>
+
+        <h2>Third parties</h2>
+        <p>
+            None. Fonts and images are served from our own servers, so opening a game contacts no one but us. The
+            "Buy me a coffee" button in the stats links to Ko-fi. Ko-fi only learns about your visit if you click
+            it, and then its own privacy policy applies.
+        </p>
+
+        <h2>Questions</h2>
+        <p>
+            Daily Games is run by Alex Molnar. For questions about this statement, or about your rights under
+            the GDPR (access, erasure, objection), email
+            <a href="mailto:alex.molnar@lunatech.nl">alex.molnar@lunatech.nl</a>. Because we store nothing that
+            identifies you, there will usually be nothing about you to hand over or delete.
+        </p>
+    </main>
+
+    <script type="module">
+        // Test hosts must link back to the test landing page.
+        import { siteUrl } from "/shared/env.js"
+        document.getElementById("home-link").href = siteUrl("home.games")
+    </script>
+</body>
+</html>

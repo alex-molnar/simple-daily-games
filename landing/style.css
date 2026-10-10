@@ -524,3 +524,14 @@ h2:focus-visible {
         animation-iteration-count: 1 !important;
     }
 }
+
+.site-footer {
+    padding: var(--space-4) var(--page-gutter) var(--space-5);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: var(--ink-soft);
+    text-underline-offset: 0.15em;
+}

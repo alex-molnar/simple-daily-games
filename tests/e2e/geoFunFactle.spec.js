@@ -12,7 +12,6 @@ const postedActions = calls => calls.filter(call => call.startsWith('POST ') && 
 const setFixedClock = page => page.clock.install({ time: fixedTime })
 
 async function mockApi(page, calls = []) {
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, route => {
         const url = new URL(route.request().url())
         calls.push(`${route.request().method()} ${url.pathname}`)
@@ -86,7 +85,7 @@ test('welcome, skip, restored progress, keyboard selection, completion, and comp
     await expect(globalTab).toBeFocused()
     await closeStats.focus()
     await page.keyboard.press('Shift+Tab')
-    await expect(page.locator('.stats-popup').getByRole('link')).toBeFocused()
+    await expect(page.locator('.stats-popup-privacy')).toBeFocused()
     await page.keyboard.press('Tab')
     await expect(closeStats).toBeFocused()
     await page.keyboard.press('Escape')
@@ -214,7 +213,6 @@ test('invalid input and unavailable storage do not consume or block attempts', a
 
 test('a failed completion request keeps the result and never retries on restore', async ({ page }) => {
     const calls = []
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, route => {
         const path = new URL(route.request().url()).pathname
         calls.push(`${route.request().method()} ${path}`)
@@ -236,7 +234,6 @@ test('local completion stats show while the completion POST is pending', async (
     const calls = []
     let releasePost
     const pendingPost = new Promise(resolve => { releasePost = resolve })
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, async route => {
         const request = route.request()
         const path = new URL(request.url()).pathname
@@ -309,7 +306,6 @@ test('test host uses the test API and navigation destinations', async ({ page })
         apiHosts.add(new URL(route.request().url()).hostname)
         return route.fulfill({ json: zeros })
     })
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await setFixedClock(page)
     await page.goto('http://test.geo-fun-factle.localhost:8080/')
     await expect(page.locator('#nav-prev')).toHaveAttribute('href', 'https://test.home.games.kak.im')
