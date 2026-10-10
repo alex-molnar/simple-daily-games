@@ -15,7 +15,7 @@ let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)
 let todaysSolution = countryData[todaysSolutionName]
 let stats = getStats(gameTitle)
 // One popup for the whole visit: it starts loading global stats now, so the stats button has something to show.
-const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle, kofiImageNumber: 6})
+const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle})
 
 const explanations = {
     "grayscale": "Guess the country which's flag is displayed in grayscale above. Wrong guesses give you additional hints.",

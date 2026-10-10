@@ -318,9 +318,9 @@ for (const [host, game] of [['capitale', 'capitale'], ['countryle', 'countryle']
     })
 }
 
-// The privacy page promises that opening a game contacts no one but us, stats popup (Ko-fi image) included.
+// The privacy page promises that opening a page contacts no one but us; the footer links only leave on click.
 for (const host of ['capitale', 'countryle', 'grayscale', 'invertedle', 'geo-fun-factle', 'home.games']) {
-    test(`${host} contacts no third party and links to the privacy page`, async ({ page }) => {
+    test(`${host} has the site footer, contacts no third party and links to the privacy page`, async ({ page }) => {
         const external = []
         page.on('request', r => {
             const { hostname } = new URL(r.url())
@@ -329,14 +329,14 @@ for (const host of ['capitale', 'countryle', 'grayscale', 'invertedle', 'geo-fun
         await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
         await page.goto(`http://${host}.localhost:8080/`)
 
-        if (host === 'home.games') {
-            await page.locator('footer a[href="/privacy"]').click()
-        } else {
-            await page.locator(host === 'geo-fun-factle' ? '#header-stats-button' : '#stats-button').click()
-            await expect.poll(() => page.locator('.stats-popup-kofi img').evaluate(img => img.naturalWidth)).toBeGreaterThan(0)
-            await page.locator('.stats-popup-privacy').click()
-        }
+        const footer = page.locator('footer.site-footer')
+        await expect(footer.getByRole('link')).toHaveText(['Privacy', 'Email', 'GitHub', 'Buy me a coffee'])
+        await expect(footer.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:molnar.alex98@gmail.com')
+        await expect(footer.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/alex-molnar/simple-daily-games')
+        await expect(footer.getByRole('link', { name: 'Buy me a coffee' })).toHaveAttribute('href', 'https://ko-fi.com/R5H524XXQ8')
+        await expect(footer.locator('.coffee-button')).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
 
+        await footer.getByRole('link', { name: 'Privacy' }).click()
         await expect(page).toHaveURL(`http://${host}.localhost:8080/privacy`)
         await expect(page.locator('h1')).toHaveText('Privacy')
         await expect(page.locator('#home-link')).toHaveAttribute('href', 'https://home.games.kak.im')

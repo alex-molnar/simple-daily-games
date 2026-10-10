@@ -85,7 +85,7 @@ test('welcome, skip, restored progress, keyboard selection, completion, and comp
     await expect(globalTab).toBeFocused()
     await closeStats.focus()
     await page.keyboard.press('Shift+Tab')
-    await expect(page.locator('.stats-popup-privacy')).toBeFocused()
+    await expect(page.getByRole('tabpanel')).toBeFocused()
     await page.keyboard.press('Tab')
     await expect(closeStats).toBeFocused()
     await page.keyboard.press('Escape')

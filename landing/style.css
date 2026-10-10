@@ -526,12 +526,7 @@ h2:focus-visible {
 }
 
 .site-footer {
-    padding: var(--space-4) var(--page-gutter) var(--space-5);
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-.site-footer a {
-    color: var(--ink-soft);
-    text-underline-offset: 0.15em;
+    --footer-ink: var(--ink-soft);
+    --footer-accent: var(--coral);
+    padding-bottom: var(--space-5);
 }
