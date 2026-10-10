@@ -5,7 +5,6 @@ const zeros = { started: 0, attempts1: 0, attempts2: 0, attempts3: 0, attempts4:
 for (const game of ['grayscale', 'invertedle']) {
     test(`${game} keeps its daily flag on reload without repeating the reported date pair`, async ({ page }) => {
         await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
-        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
         await page.clock.setFixedTime(new Date('2026-09-30T12:00:00Z'))
         await page.goto(`http://${game}.localhost:8080/`)
         const flag = page.locator('#flag-image')
@@ -27,10 +26,9 @@ for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
         page.on('pageerror', e => errors.push(e.message))
         page.on('request', r => {
             const { hostname } = new URL(r.url())
-            if (!hostname.endsWith('.localhost') && hostname !== 'api.games.kak.im' && !/google|kofi|ko-fi/.test(hostname)) external.push(r.url())
+            if (!hostname.endsWith('.localhost') && hostname !== 'api.games.kak.im') external.push(r.url())
         })
         await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
-        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
 
         await page.goto(`http://${game}.localhost:8080/`)
         await expect(page.locator('#game-title')).toHaveText(new RegExp(game, 'i'))
@@ -152,7 +150,6 @@ test('invalid guess shows an inline message instead of an alert', async ({ page 
     let dialogs = 0
     page.on('dialog', d => { dialogs++; d.dismiss() })
     await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
 
     await page.goto('http://countryle.localhost:8080/')
     await page.locator('#guess-input').fill('zzzz')
@@ -170,7 +167,6 @@ test('test.* hosts pick the game after the prefix and only talk to the test API'
     const apiHosts = new Set()
     page.on('request', r => { const { hostname } = new URL(r.url()); if (hostname.includes('api.games')) apiHosts.add(hostname) })
     await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
 
     await page.goto('http://test.grayscale.localhost:8080/')
     await expect(page.locator('#game-title')).toHaveText(/grayscale/i)
@@ -201,7 +197,6 @@ const finishedGame = game => {
 test('stats popup opens while the global stats request is still pending', async ({ page }) => {
     let answer
     const pending = new Promise(resolve => { answer = resolve })
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im\/.*\/stats$/, async route => { await pending; await route.fulfill({ json: { ...zeros, attempts2: 5 } }) })
     await page.route(/api\.games\.kak\.im/, route => route.fallback())
     await page.addInitScript(finishedGame, 'grayscale')
@@ -218,7 +213,6 @@ test('stats popup opens while the global stats request is still pending', async 
 })
 
 test('stats popup still opens when the API is down', async ({ page }) => {
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, route => route.abort())
     await page.addInitScript(finishedGame, 'grayscale')
 
@@ -231,7 +225,6 @@ test('stats popup still opens when the API is down', async ({ page }) => {
 // Records every API call in order, e.g. "GET stats", "POST failed_game".
 async function recordApi(page, statsBody) {
     const calls = []
-    await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, route => {
         const path = new URL(route.request().url()).pathname
         // Visits feed the metrics only; these tests are about game calls.
@@ -299,7 +292,6 @@ test('giving up records a failed game, survives a reload and opens the stats', a
 for (const width of [320, 390]) {
     test(`every game fits a ${width}px wide phone screen`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 })
-        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
         await page.route(/api\.games\.kak\.im/, route => route.fulfill({ json: zeros }))
         for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
             await page.goto(`http://${game}.localhost:8080/`)
@@ -317,12 +309,37 @@ for (const width of [320, 390]) {
 for (const [host, game] of [['capitale', 'capitale'], ['countryle', 'countryle'], ['grayscale', 'grayscale'], ['invertedle', 'invertedle'], ['home.games', 'landing']]) {
     test(`${host} reports one visit for the metrics`, async ({ page }) => {
         const visits = []
-        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
         await page.route(/api\.games\.kak\.im/, route => {
             if (route.request().url().endsWith('/visit')) visits.push(new URL(route.request().url()).pathname)
             return route.fulfill({ json: zeros })
         })
         await page.goto(`http://${host}.localhost:8080/`)
         await expect.poll(() => visits).toEqual([`/games/${game}/today/visit`])
+    })
+}
+
+// The privacy page promises that opening a game contacts no one but us, stats popup (Ko-fi image) included.
+for (const host of ['capitale', 'countryle', 'grayscale', 'invertedle', 'geo-fun-factle', 'home.games']) {
+    test(`${host} contacts no third party and links to the privacy page`, async ({ page }) => {
+        const external = []
+        page.on('request', r => {
+            const { hostname } = new URL(r.url())
+            if (!hostname.endsWith('.localhost') && hostname !== 'api.games.kak.im') external.push(r.url())
+        })
+        await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
+        await page.goto(`http://${host}.localhost:8080/`)
+
+        if (host === 'home.games') {
+            await page.locator('footer a[href="/privacy"]').click()
+        } else {
+            await page.locator(host === 'geo-fun-factle' ? '#header-stats-button' : '#stats-button').click()
+            await expect.poll(() => page.locator('.stats-popup-kofi img').evaluate(img => img.naturalWidth)).toBeGreaterThan(0)
+            await page.locator('.stats-popup-privacy').click()
+        }
+
+        await expect(page).toHaveURL(`http://${host}.localhost:8080/privacy`)
+        await expect(page.locator('h1')).toHaveText('Privacy')
+        await expect(page.locator('#home-link')).toHaveAttribute('href', 'https://home.games.kak.im')
+        expect(external).toEqual([])
     })
 }

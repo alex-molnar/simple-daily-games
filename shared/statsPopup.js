@@ -363,7 +363,8 @@ export function createStatsPopup(statsInput, options = {}) {
         const img = document.createElement("img")
         img.height = 36
         img.style.cssText = "border:0px;height:36px;"
-        img.src = `https://storage.ko-fi.com/cdn/kofi${kofiImageNumber}.png?v=6`
+        // Served locally so opening the stats does not contact Ko-fi; only clicking the link does.
+        img.src = `/assets/images/kofi${kofiImageNumber}.png`
         img.alt = "Buy Me a Coffee at ko-fi.com"
 
         anchor.appendChild(img)
@@ -380,7 +381,12 @@ export function createStatsPopup(statsInput, options = {}) {
     if (!hasProvidedElements) {
         const header = buildStatsElement("div", "stats-popup-header")
         header.append(heading, closeButton)
-        popup.append(header, tabs, panel, kofiButton)
+        const privacyLink = document.createElement("a")
+        privacyLink.href = "/privacy"
+        privacyLink.textContent = "Privacy: what we send"
+        privacyLink.className = "stats-popup-privacy"
+        privacyLink.style.cssText = "display:block;margin-top:8px;text-align:center;font-size:0.85rem;color:inherit;opacity:0.75;"
+        popup.append(header, tabs, panel, kofiButton, privacyLink)
         overlay.appendChild(popup)
     } else if (!tabs.isConnected) {
         popup.insertBefore(tabs, panel)

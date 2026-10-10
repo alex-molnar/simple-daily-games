@@ -1,3 +1,10 @@
+/* Fonts are self-hosted so no third party sees the visitor (see the privacy page). */
+@font-face {
+    font-family: "Pacifico";
+    src: url("/assets/fonts/pacifico-latin.woff2") format("woff2");
+    font-display: swap;
+}
+
 :root {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
