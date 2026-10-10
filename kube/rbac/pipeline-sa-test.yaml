@@ -14,7 +14,7 @@ roleRef:
   name: admin
   apiGroup: rbac.authorization.k8s.io
 ---
-# The built-in admin ClusterRole does not cover Traefik CRDs.
+# The built-in admin ClusterRole does not cover Traefik or Prometheus Operator CRDs.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -23,6 +23,10 @@ metadata:
 rules:
   - apiGroups: ["traefik.io"]
     resources: ["middlewares"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # The ServiceMonitor that makes the Prometheus Operator scrape the API.
+  - apiGroups: ["monitoring.coreos.com"]
+    resources: ["servicemonitors"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

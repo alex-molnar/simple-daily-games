@@ -2,12 +2,13 @@ import { countryData, countryNames } from '../shared/countryData.js'
 import { getRandomSelectionForToday } from '../shared/mathHelpers.js'
 import { siteUrl } from '../shared/env.js'
 import { getStats, updateStats } from '../shared/gameHandler.js'
-import { postRequest } from '../shared/sendRequest.js'
+import { postRequest, recordVisit } from '../shared/sendRequest.js'
 import { launchConfetti } from '../shared/animations.js'
 import { createStatsPopup } from '../shared/statsPopup.js'
 import { applyAttempt, formatPopulation, hasCompleteClues } from './gameState.js'
 
 const gameId = 'geo-fun-factle'
+recordVisit(gameId)
 const eligibleCountries = countryNames.filter(name => hasCompleteClues(countryData[name]))
 const clueLabels = ['National sport', 'Most visited landmark is:', 'Population', 'National animal', 'National dish', 'Most popular religion']
 const clueValues = record => [record.nationalSport, record.mostVisitedLandmarkCategory, formatPopulation(record.country.population), record.nationalAnimal, record.nationalDish, record.mostPopularReligion]

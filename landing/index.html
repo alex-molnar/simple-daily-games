@@ -94,6 +94,8 @@
     <script type="module">
         // Test-host landing pages must link only to test games.
         import { siteUrl } from "/shared/env.js"
+        import { recordVisit } from "/shared/sendRequest.js"
+        recordVisit("landing")
         for (const tile of document.querySelectorAll("a.game-tile")) {
             tile.href = siteUrl(new URL(tile.href).hostname.split(".")[0])
         }

@@ -234,7 +234,8 @@ async function recordApi(page, statsBody) {
     await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
     await page.route(/api\.games\.kak\.im/, route => {
         const path = new URL(route.request().url()).pathname
-        calls.push(`${route.request().method()} ${path.split('/').slice(4).join('/')}`)
+        // Visits feed the metrics only; these tests are about game calls.
+        if (!path.endsWith('/visit')) calls.push(`${route.request().method()} ${path.split('/').slice(4).join('/')}`)
         return route.fulfill({ json: path.endsWith('/stats') ? statsBody() : {} })
     })
     return calls
@@ -310,5 +311,18 @@ for (const width of [320, 390]) {
             expect(overflow.page, `${game} page`).toBeLessThanOrEqual(0)
             expect(overflow.arrows, `${game} nav arrows`).toBeLessThanOrEqual(0)
         }
+    })
+}
+
+for (const [host, game] of [['capitale', 'capitale'], ['countryle', 'countryle'], ['grayscale', 'grayscale'], ['invertedle', 'invertedle'], ['home.games', 'landing']]) {
+    test(`${host} reports one visit for the metrics`, async ({ page }) => {
+        const visits = []
+        await page.route(/fonts\.(googleapis|gstatic)\.com|ko-fi\.com/, route => route.abort())
+        await page.route(/api\.games\.kak\.im/, route => {
+            if (route.request().url().endsWith('/visit')) visits.push(new URL(route.request().url()).pathname)
+            return route.fulfill({ json: zeros })
+        })
+        await page.goto(`http://${host}.localhost:8080/`)
+        await expect.poll(() => visits).toEqual([`/games/${game}/today/visit`])
     })
 }

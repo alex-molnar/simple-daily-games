@@ -6,6 +6,9 @@ import { loadGame, getStats, updateStats } from '/shared/gameHandler.js'
 import { launchConfetti } from '/shared/animations.js'
 import { countryData, countryNames } from '/shared/countryData.js'
 import { createStatsPopup } from '/shared/statsPopup.js'
+import { recordVisit } from '/shared/sendRequest.js'
+
+recordVisit(gameTitle)
 
 const validCountries = countryNames.filter(country => countryData[country].flag !== undefined)
 let todaysSolutionName = getRandomSelectionForToday(validCountries, gameTitle)

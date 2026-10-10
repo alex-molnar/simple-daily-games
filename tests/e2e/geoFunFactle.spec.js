@@ -8,7 +8,7 @@ const eligible = countryNames.filter(name => hasCompleteClues(countryData[name])
 const fixedTime = new Date()
 fixedTime.setUTCHours(12, 0, 0, 0)
 const answerForToday = getRandomSelectionForToday(eligible, 'geo-fun-factle')
-const postedActions = calls => calls.filter(call => call.startsWith('POST ')).map(call => call.slice(call.indexOf('/today/') + '/today/'.length))
+const postedActions = calls => calls.filter(call => call.startsWith('POST ') && !call.endsWith('/visit')).map(call => call.slice(call.indexOf('/today/') + '/today/'.length))
 const setFixedClock = page => page.clock.install({ time: fixedTime })
 
 async function mockApi(page, calls = []) {
@@ -375,3 +375,10 @@ for (const width of [320, 390, 768, 1280]) {
         expect(overflow).toBeLessThanOrEqual(0)
     })
 }
+
+test('a page load reports one visit for the metrics', async ({ page }) => {
+    const calls = await mockApi(page)
+    await setFixedClock(page)
+    await page.goto('http://geo-fun-factle.localhost:8080/')
+    await expect.poll(() => calls.filter(call => call === 'POST /games/geo-fun-factle/today/visit')).toHaveLength(1)
+})

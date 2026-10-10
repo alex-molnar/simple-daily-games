@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api
+  namespace: simple-daily-games
+spec:
+  selector:
+    matchLabels:
+      app: api
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
