@@ -76,20 +76,6 @@
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-
-.stats-popup-kofi {
-  display: block;
-  margin-top: 14px;
-  text-align: center;
-}
-
-.stats-popup-kofi img {
-  transition: opacity 150ms ease;
-}
-
-.stats-popup-kofi:hover img {
-  opacity: 0.85;
-}
 */
 
 import {sendRequest} from "./sendRequest.js"
@@ -297,7 +283,6 @@ export function createStatsPopup(statsInput, options = {}) {
     const labels = { ...defaultLabels, ...(options.labels || {}) }
     const title = options.title || "Your previous performance"
     const mountTarget = options.mountTarget || document.body
-    const kofiImageNumber = options.kofiImageNumber ?? 5
     const order = Array.isArray(options.order) && options.order.length > 0
         ? options.order
         : typeof statsBarOrder !== "undefined" && Array.isArray(statsBarOrder) && statsBarOrder.length > 0
@@ -353,23 +338,6 @@ export function createStatsPopup(statsInput, options = {}) {
     panel.setAttribute("aria-labelledby", localTabButton.id)
     panel.append(summary, chart)
 
-    const kofiButton = options.kofiButton || (() => {
-        const anchor = document.createElement("a")
-        anchor.href = "https://ko-fi.com/R5H524XXQ8"
-        anchor.target = "_blank"
-        anchor.rel = "noopener noreferrer"
-        anchor.className = "stats-popup-kofi"
-
-        const img = document.createElement("img")
-        img.height = 36
-        img.style.cssText = "border:0px;height:36px;"
-        // Served locally so opening the stats does not contact Ko-fi; only clicking the link does.
-        img.src = `/assets/images/kofi${kofiImageNumber}.png`
-        img.alt = "Buy Me a Coffee at ko-fi.com"
-
-        anchor.appendChild(img)
-        return anchor
-    })()
 
     if (!localTabButton.isConnected) {
         tabs.appendChild(localTabButton)
@@ -381,12 +349,7 @@ export function createStatsPopup(statsInput, options = {}) {
     if (!hasProvidedElements) {
         const header = buildStatsElement("div", "stats-popup-header")
         header.append(heading, closeButton)
-        const privacyLink = document.createElement("a")
-        privacyLink.href = "/privacy"
-        privacyLink.textContent = "Privacy: what we send"
-        privacyLink.className = "stats-popup-privacy"
-        privacyLink.style.cssText = "display:block;margin-top:8px;text-align:center;font-size:0.85rem;color:inherit;opacity:0.75;"
-        popup.append(header, tabs, panel, kofiButton, privacyLink)
+        popup.append(header, tabs, panel)
         overlay.appendChild(popup)
     } else if (!tabs.isConnected) {
         popup.insertBefore(tabs, panel)

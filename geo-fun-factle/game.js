@@ -29,8 +29,7 @@ const statsPopup = createStatsPopup(getStats(gameId), {
     gameTitle: gameId,
     title: 'Geo Funfactle statistics',
     order: statsOrder,
-    labels: statsLabels,
-    kofiImageNumber: 6
+    labels: statsLabels
 })
 let currentDay = today()
 let gameState = freshState(currentDay)

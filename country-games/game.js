@@ -33,7 +33,7 @@ let todaysSolution = countryData[todaysSolutionCountry][gameTitleUnLe]
 let todaysSolutionName = getSolutionNameByGameTitle[gameTitle](countryData[todaysSolutionCountry])
 let stats = getStats(gameTitle)
 // One popup for the whole visit: it starts loading global stats now, so the stats button has something to show.
-const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle, kofiImageNumber: 5})
+const statsPopup = createStatsPopup(stats, {gameTitle: gameTitle})
 
 const guessTemplate = `
 <div class="guess-header">{10}</div>

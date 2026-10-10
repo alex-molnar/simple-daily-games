@@ -654,19 +654,6 @@ body {
   outline-offset: 2px;
 }
 
-.stats-popup-kofi {
-  display: block;
-  margin-top: 14px;
-  text-align: center;
-}
-
-.stats-popup-kofi img {
-  transition: opacity 150ms ease;
-}
-
-.stats-popup-kofi:hover img {
-  opacity: 0.85;
-}
 /* Invalid guess feedback */
 .guess-error {
     color: #e65c44;
@@ -711,4 +698,9 @@ body {
     @starting-style {
         .stats-popup { transform: none; }
     }
+}
+
+.site-footer {
+    --footer-ink: #555;
+    --footer-accent: #0b74de;
 }

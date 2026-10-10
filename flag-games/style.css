@@ -672,19 +672,6 @@ body {
   outline-offset: 2px;
 }
 
-.stats-popup-kofi {
-  display: block;
-  margin-top: 14px;
-  text-align: center;
-}
-
-.stats-popup-kofi img {
-  transition: opacity 150ms ease;
-}
-
-.stats-popup-kofi:hover img {
-  opacity: 0.85;
-}
 /* Invalid guess feedback */
 .guess-error {
     color: #e65c44;
@@ -729,4 +716,11 @@ body {
     @starting-style {
         .stats-popup { transform: none; }
     }
+}
+
+.site-footer {
+    --footer-ink: #a0a0b8;
+    /* Deeper than the #6c63ff accent so white text passes WCAG AA. */
+    --footer-accent: #5a52e0;
+    margin-top: auto;
 }
