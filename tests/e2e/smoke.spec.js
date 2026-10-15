@@ -29,7 +29,8 @@ for (const game of ['capitale', 'countryle', 'grayscale', 'invertedle']) {
             if (!hostname.endsWith('.localhost') && hostname !== 'api.games.kak.im') external.push(r.url())
         })
         await page.route('https://api.games.kak.im/**', route => route.fulfill({ json: zeros }))
-
+        // Fixed day: on a day when the first "a" suggestion is the answer, the guess wins and the win screen loads an external map.
+        await page.clock.setFixedTime(new Date('2026-09-30T12:00:00Z'))
         await page.goto(`http://${game}.localhost:8080/`)
         await expect(page.locator('#game-title')).toHaveText(new RegExp(game, 'i'))
 
