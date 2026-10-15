@@ -24,7 +24,7 @@ for country in data.values():
             grayscale_img.save(f'assets/grayscale/{name}.png')
             print(f'Successfully created grayscale image for {name}')
             img = Image.open(bytes)
-            inv_img = ImageChops.invert(img)
+            inv_img = ImageChops.invert(img.convert('RGB'))  # palette (P) images would invert indices, not colours
             inv_img.save(f'assets/invertedle/{name}.png')
             print(f'Successfully created inverted image for {name}')
             img.save(f'assets/original/{name}.png')
