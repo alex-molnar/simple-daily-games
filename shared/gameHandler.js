@@ -1,4 +1,4 @@
-import { capitalize, unLe } from "./stringUtils.js"
+import { capitalize, unLe, matchSolutions } from "./stringUtils.js"
 import { postRequest } from "./sendRequest.js"
 
 let selectedSuggestionIndex = -1
@@ -115,9 +115,8 @@ function submitGuess(e, gameTitle, solutions, displayRowsCallback) {
     let guessInput = document.getElementById("guess-input")
     let guess = guessInput.value
     if (!solutions.includes(guess)) {
-        let firstChoice = solutions
-            .filter(solution => !alreadyGuessed.includes(solution))
-            .find(solution => solution.toLowerCase().startsWith(guess.toLowerCase().trim()) || solution.toLowerCase().includes(`(${guess.toLowerCase().trim()}`))
+        let firstChoice = matchSolutions(solutions, guess)
+            .find(solution => !alreadyGuessed.includes(solution))
         if (firstChoice && guess.toLowerCase().trim().length > 0) {
             guessInput.value = firstChoice.trim()
             submitGuess(e, gameTitle, solutions, displayRowsCallback)
@@ -143,8 +142,7 @@ function searchForSolution(e, solutions) {
     selectedSuggestionIndex = -1
     
     if (guess.length > 0 && !solutions.includes(guess)) {
-        let filteredSolutions = solutions
-            .filter(solution => solution.toLowerCase().startsWith(guess.toLowerCase().trim()) || solution.toLowerCase().includes(`(${guess.toLowerCase().trim()}`))
+        let filteredSolutions = matchSolutions(solutions, guess)
             .filter(solution => !alreadyGuessed.includes(solution))
             .slice(0, 8) // Limit to 8 suggestions
         
