@@ -17,3 +17,13 @@ export const unLe = Object.defineProperty(String.prototype, 'unLe', {
   },
   enumerable: false
 });
+// Names containing the query anywhere (case-insensitive), names starting with it first.
+export function matchSolutions(solutions, query) {
+  const q = query.toLowerCase().trim()
+  if (!q) return []
+  const lower = name => name.toLowerCase()
+  return [
+    ...solutions.filter(s => lower(s).startsWith(q)),
+    ...solutions.filter(s => !lower(s).startsWith(q) && lower(s).includes(q)),
+  ]
+}
